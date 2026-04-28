@@ -44,6 +44,11 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;
 .hero-scroll{position:absolute;bottom:2rem;right:5vw;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:10px;opacity:0;animation:fadeUp .7s ease .8s forwards;}
 .hero-scroll::before{content:'';display:block;width:1px;height:40px;background:var(--muted2);}
 
+/* MOTIVATIONAL QUOTE BAND */
+.quote-band{border-bottom:1px solid var(--border);padding:1.5rem 5vw;display:flex;align-items:center;gap:1.5rem;background:var(--bg2);}
+.qmark{font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:900;color:var(--acid);line-height:1;opacity:.4;}
+.qtext{font-family:'Barlow Condensed',sans-serif;font-size:clamp(16px,2.5vw,22px);font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);font-style:italic;line-height:1.3;}
+
 /* MARQUEE */
 .mwrap{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1rem 0;background:var(--acid);}
 .mtrack{display:flex;gap:4rem;animation:marquee 20s linear infinite;white-space:nowrap;}
@@ -84,9 +89,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;
 
 /* WARM-UP */
 .wu-section{border-bottom:1px solid var(--border-strong);}
-.wu-hdr{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:3rem 5vw;border-bottom:1px solid var(--border);gap:2rem;cursor:crosshair;}
+.wu-hdr{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:3rem 5vw;border-bottom:1px solid var(--border);gap:2rem;}
 .wu-toggle{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--bg3);border:1px solid var(--border-strong);color:var(--text);padding:12px 24px;cursor:crosshair;transition:background .2s,color .2s;}
-.wu-toggle:hover,.wu-hdr:hover .wu-toggle{background:var(--acid);color:#000;}
+.wu-toggle:hover{background:var(--acid);color:#000;}
 .wu-body{display:none;padding:2rem 5vw 3rem;}
 .wu-body.open{display:block;}
 .wu-timer-row{display:flex;align-items:center;gap:2rem;flex-wrap:wrap;padding:1.5rem;background:var(--bg2);border:1px solid var(--border-strong);margin-bottom:1.5rem;}
@@ -170,6 +175,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;
 .tbtn2:hover{background:var(--bg4);}
 .tbtn2.go{background:var(--acid);color:#000;border-color:var(--acid);}
 .tbtn2.go:hover{opacity:.85;}
+.tkb-hint{font-size:11px;color:var(--muted2);letter-spacing:.08em;text-align:center;margin-top:1rem;}
 
 /* FACTS */
 .fsec{border-top:1px solid var(--border-strong);padding:5rem 5vw;}
@@ -267,21 +273,29 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;
 .trform{display:flex;flex-direction:column;gap:1.25rem;}
 .trig{display:flex;flex-direction:column;gap:6px;}
 .trlog{margin-top:1.5rem;border:1px solid var(--border);}
-.trrow{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--border);font-size:14px;}
+.trrow{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--border);font-size:14px;transition:background .15s;}
 .trrow:last-child{border-bottom:none;}
+.trrow.latest{border-left:3px solid var(--acid);background:var(--bg2);}
 .trw{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;}
 .trreps{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:var(--acid);}
 .trdate{font-size:12px;color:var(--muted);}
 .trdel{background:none;border:none;color:var(--muted2);cursor:crosshair;font-size:16px;transition:color .15s;padding:4px;}
 .trdel:hover{color:#ff6b35;}
-.trempty{padding:3rem;text-align:center;color:var(--muted);font-size:14px;}
+.trempty{padding:3rem;text-align:center;color:var(--muted);font-size:14px;border:1px dashed var(--border-strong);}
 .trnote{font-size:11px;color:var(--muted2);margin-top:1rem;line-height:1.6;}
 .trchart-lbl{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;}
 
 /* FOOTER */
-.footer{border-top:1px solid var(--border-strong);padding:2rem 5vw;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.footer{border-top:1px solid var(--border-strong);}
+.footer-main{padding:2rem 5vw;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;border-bottom:1px solid var(--border);}
 .fl{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);}
 .fr{font-size:12px;color:var(--muted2);letter-spacing:.05em;}
+
+/* AI DISCLAIMER */
+.disclaimer{padding:1.5rem 5vw;display:flex;align-items:flex-start;gap:1rem;flex-wrap:wrap;}
+.disc-badge{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#000;background:var(--muted);padding:3px 10px;white-space:nowrap;margin-top:2px;flex-shrink:0;}
+.disc-text{font-size:12px;color:var(--muted2);line-height:1.7;max-width:800px;}
+.disc-text a{color:var(--muted);text-decoration:underline;text-underline-offset:3px;}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
 @keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
@@ -302,26 +316,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;
   .scgrid{grid-template-columns:1fr;}
   .rwsel{flex-wrap:wrap;}
   .rwbtn{flex:1 0 45%;}
-}
-
-@media print{
-  body{background:#fff!important;color:#000!important;cursor:default!important;}
-  body::before,.toolbar,.pbar,.mwrap,.tsec,.trsec,.rsec,.bssec,.hero-scroll{display:none!important;}
-  .hero{min-height:auto;padding:2cm;border:none;}
-  .hero-bg,.hero-scroll{display:none!important;}
-  .hero-title{font-size:60pt;color:#000!important;}
-  .hero-title em,.eyebrow,.tiptag,.sec-eye,.wflbl,.wbignum,.sec-title em,.wftitle{color:#000!important;}
-  .hstat-val{color:#000!important;}
-  .wnav{position:static;background:#fff!important;}
-  .wnbtn{color:#000!important;}
-  .wnbtn.on{border-bottom:2px solid #000;}
-  .wnbtn::after{display:none;}
-  .wpanel{display:block!important;}
-  .exrow-reps{color:#000!important;}
-  .exrow::before,.exc::after{display:none;}
-  .fsec,.psec{background:#fff!important;}
-  .fbadge{background:#000!important;color:#fff!important;}
-  .wu-body{display:block!important;}
+  .disclaimer{flex-direction:column;}
 }
 </style>
 </head>
@@ -331,9 +326,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;
 
 <!-- TOOLBAR -->
 <div class="toolbar">
-  <button class="tb" onclick="window.print()">⎙ Drucken</button>
   <button class="tb" id="themeBtn" onclick="toggleTheme()">◑ <span id="themeTxt">Light</span></button>
   <button class="tb on" onclick="document.getElementById('tsec').scrollIntoView({behavior:'smooth'})">▶ Timer</button>
+  <button class="tb" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Top</button>
 </div>
 
 <!-- HERO -->
@@ -352,6 +347,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;
   </div>
   <div class="hero-scroll">Scrollen</div>
 </section>
+
+<!-- MOTIVATIONAL QUOTE -->
+<div class="quote-band">
+  <div class="qmark">"</div>
+  <div class="qtext" id="qtext">Der einzige schlechte Workout ist der, der nicht stattgefunden hat.</div>
+</div>
 
 <!-- MARQUEE -->
 <div class="mwrap"><div class="mtrack">
@@ -380,14 +381,14 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;
 
 <!-- WARM-UP -->
 <section class="wu-section">
-  <div class="wu-hdr" onclick="toggleWu()">
+  <div class="wu-hdr">
     <div>
       <div class="sec-eye">Vor jedem Training</div>
       <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(32px,5vw,60px);text-transform:uppercase;letter-spacing:-.02em;line-height:.9;">Warm-Up <em style="font-style:italic;color:var(--acid);">5 Min</em></div>
     </div>
     <div style="display:flex;align-items:center;gap:2rem;flex-wrap:wrap;">
       <div style="text-align:center;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:800;line-height:1;">6</div><div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:2px;">Übungen</div></div>
-      <button class="wu-toggle" id="wuToggle">Starten ↓</button>
+      <button class="wu-toggle" id="wuToggle" onclick="toggleWu()">Starten ↓</button>
     </div>
   </div>
   <div class="wu-body" id="wuBody">
@@ -497,7 +498,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;
 <section class="tsec" id="tsec">
   <div class="thdr">
     <div><div class="sec-eye">Live Training</div><div class="sec-title">Circuit<br><em>Timer</em></div></div>
-    <p style="font-size:14px;color:var(--muted);max-width:320px;line-height:1.7;">Führt dich durch alle Übungen und gibt automatisch Pause-Countdowns.</p>
+    <p style="font-size:14px;color:var(--muted);max-width:320px;line-height:1.7;">Führt dich durch alle Übungen und gibt automatisch Pause-Countdowns. <strong style="color:var(--text2);">Leertaste</strong> = Pause/Weiter.</p>
   </div>
   <div class="tbody">
     <div class="tsetup">
@@ -526,6 +527,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;
         <button class="tbtn2" onclick="timerStop()">■ Stopp</button>
       </div>
     </div>
+    <div class="tkb-hint" id="tkbhint" style="display:none;">Leertaste zum Pausieren / Fortsetzen</div>
   </div>
 </section>
 
@@ -654,13 +656,34 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer class="footer">
-  <div class="fl">Trainingsplan · Kein Gerät · 4 Wochen</div>
-  <div class="fr">Progressive Overload · Jeden 2. Tag · Keine Ausreden</div>
+  <div class="footer-main">
+    <div class="fl">Trainingsplan · Kein Gerät · 4 Wochen</div>
+    <div class="fr">Progressive Overload · Jeden 2. Tag · Keine Ausreden</div>
+  </div>
+  <div class="disclaimer">
+    <span class="disc-badge">KI-Hinweis</span>
+    <p class="disc-text">
+      Dieser KI-erstellte Plan dient nur der Information und ersetzt keinen Arztbesuch. Training auf eigene Gefahr. Bei Beschwerden bitte professionellen Rat einholen.
+    </p>
+  </div>
 </footer>
 
 <script>
 'use strict';
+
+/* QUOTES */
+const QUOTES=[
+  'Der einzige schlechte Workout ist der, der nicht stattgefunden hat.',
+  'Disziplin ist, was bleibt, wenn die Motivation weg ist.',
+  'Du bereust keinen Workout. Nur die, die du ausgelassen hast.',
+  'Stärke wächst nicht in der Komfortzone.',
+  'Ein Jahr von heute wirst du froh sein, dass du heute angefangen hast.',
+  'Schmerz ist vorübergehend. Stolz ist dauerhaft.',
+  'Kein Gerät. Keine Ausreden. Kein Limit.',
+];
+document.getElementById('qtext').textContent=QUOTES[Math.floor(Math.random()*QUOTES.length)];
 
 /* THEME */
 (function(){
@@ -690,7 +713,6 @@ function showW(n){
   document.querySelectorAll('.wnbtn').forEach(b=>b.classList.remove('on'));
   document.getElementById('w'+n).classList.add('on');
   document.querySelectorAll('.wnbtn')[n-1].classList.add('on');
-  document.querySelector('.wnav').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
 /* WARM-UP */
@@ -722,8 +744,10 @@ function toggleWu(){
 function wuStart(){
   if(wuOn){wuPause();return;}
   if(wuI>=WUX.length){wuReset();return;}
-  document.getElementById('wuBody').classList.add('open');
-  document.getElementById('wuToggle').textContent='Schließen ↑';
+  if(!document.getElementById('wuBody').classList.contains('open')){
+    document.getElementById('wuBody').classList.add('open');
+    document.getElementById('wuToggle').textContent='Schließen ↑';
+  }
   wuOn=true;
   document.getElementById('wuStartBtn').textContent='Pause';
   if(wuS===0) wuS=WUX[wuI].dur;
@@ -768,6 +792,7 @@ function timerStart(){
   tSt={rnd,rest,work,cr:1,ci:0,phase:'work',secs:work,elapsed:0,total:rnd*TEX.length*(work+rest)};
   document.getElementById('tpre').style.display='none';
   document.getElementById('tdisp').classList.add('vis');
+  document.getElementById('tkbhint').style.display='block';
   tIv=setInterval(tTick,1000);tRender();
 }
 function timerPause(){
@@ -779,6 +804,7 @@ function timerStop(){
   clearInterval(tIv);tIv=null;tSt=null;
   document.getElementById('tdisp').classList.remove('vis');
   document.getElementById('tpre').style.display='flex';
+  document.getElementById('tkbhint').style.display='none';
   document.getElementById('tpausebtn').textContent='⏸ Pause';
 }
 function tAdv(){
@@ -811,6 +837,11 @@ function tRender(){
   document.getElementById('tnxt').textContent=r?'Nächste: '+TEX[tSt.ci<TEX.length-1?tSt.ci+1:0]:(tSt.ci+1<TEX.length?'Weiter: '+TEX[tSt.ci+1]:'Dann: Pause');
   document.getElementById('tpfill').style.width=Math.min(100,(tSt.elapsed/tSt.total)*100)+'%';
 }
+
+/* SPACEBAR = PAUSE/RESUME */
+document.addEventListener('keydown',e=>{
+  if(e.code==='Space'&&tSt){e.preventDefault();timerPause();}
+});
 
 /* PROTEIN CALC */
 const FOODS=[
@@ -928,10 +959,12 @@ function trSave(){
 function trDel(id){trD=trD.filter(d=>d.id!==id);try{localStorage.setItem('tp_progress',JSON.stringify(trD));}catch(e){}trRender();}
 function trRender(){
   const log=document.getElementById('trlog');
-  if(!trD.length){log.innerHTML='<div class="trempty">Noch keine Einträge.<br>Trage deinen ersten Wert ein.</div>';}
-  else{
-    log.innerHTML='<div class="trlog">'+trD.slice().reverse().map(d=>`
-      <div class="trrow">
+  if(!trD.length){
+    log.innerHTML='<div class="trempty">Noch keine Einträge.<br>Trage deinen ersten Wert ein.</div>';
+  } else {
+    const reversed=trD.slice().reverse();
+    log.innerHTML='<div class="trlog">'+reversed.map((d,i)=>`
+      <div class="trrow${i===0?' latest':''}">
         <span class="trw">Woche ${d.week}</span>
         <span class="trreps">${d.reps} Klimmzüge${d.push?' · '+d.push+' Liegestütz':''}</span>
         <span class="trdate">${d.date}</span>
@@ -950,9 +983,19 @@ function trChart(){
   const ys=r=>H-pb-((r-mnR)/(mxR-mnR))*(H-pt-pb);
   let out='';
   for(let i=0;i<=5;i++){const v=Math.round(mnR+(mxR-mnR)*(i/5)),y=ys(v);out+=`<line x1="${pl}" y1="${y}" x2="${W-pr}" y2="${y}" stroke="rgba(128,128,128,.15)" stroke-width="1"/><text x="${pl-6}" y="${y+4}" text-anchor="end" font-size="11" font-family="Barlow Condensed,sans-serif" fill="#666">${v}</text>`;}
-  const path=trD.map((d,i)=>(i===0?'M':'L')+xs(d.week)+','+ys(d.reps)).join(' ');
-  out+=`<path d="${path}" fill="none" stroke="#CCFF00" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`;
-  trD.forEach(d=>{out+=`<circle cx="${xs(d.week)}" cy="${ys(d.reps)}" r="5" fill="#CCFF00"/><text x="${xs(d.week)}" y="${ys(d.reps)-10}" text-anchor="middle" font-size="11" font-family="Barlow Condensed,sans-serif" font-weight="700" fill="#CCFF00">${d.reps}</text><text x="${xs(d.week)}" y="${H-pb+16}" text-anchor="middle" font-size="10" font-family="Barlow Condensed,sans-serif" fill="#666">W${d.week}</text>`;});
+  if(trD.length>1){
+    const path=trD.map((d,i)=>(i===0?'M':'L')+xs(d.week)+','+ys(d.reps)).join(' ');
+    // Shaded area under the line
+    const areaPath=`M${xs(trD[0].week)},${H-pb} `+trD.map(d=>`L${xs(d.week)},${ys(d.reps)}`).join(' ')+` L${xs(trD[trD.length-1].week)},${H-pb} Z`;
+    out+=`<path d="${areaPath}" fill="#CCFF00" fill-opacity=".07"/>`;
+    out+=`<path d="${path}" fill="none" stroke="#CCFF00" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+  }
+  trD.forEach((d,i)=>{
+    const isLatest=i===trD.length-1;
+    out+=`<circle cx="${xs(d.week)}" cy="${ys(d.reps)}" r="${isLatest?7:5}" fill="#CCFF00" ${isLatest?'stroke="#fff" stroke-width="2"':''}/>`;
+    out+=`<text x="${xs(d.week)}" y="${ys(d.reps)-12}" text-anchor="middle" font-size="11" font-family="Barlow Condensed,sans-serif" font-weight="700" fill="#CCFF00">${d.reps}</text>`;
+    out+=`<text x="${xs(d.week)}" y="${H-pb+16}" text-anchor="middle" font-size="10" font-family="Barlow Condensed,sans-serif" fill="#666">W${d.week}</text>`;
+  });
   svg.innerHTML=out;
 }
 trRender();
