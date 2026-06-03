@@ -634,7 +634,7 @@ function renderHistory() {
   data.logs.forEach(l=>{ if(!byDate[l.date]) byDate[l.date]=[]; byDate[l.date].push(l); });
   const dates=Object.keys(byDate).sort().reverse();
   document.getElementById('historyCount').textContent = `${dates.length} Trainingstage · ${data.logs.length} Sätze`;
-  if (!dates.length) { document.getElementById('historyList').innerHTML=`<div class="empty-state"><div class="empty-state-text">Noch keine Einträge</div>Starte dein erstes Training!</div>`; return; }
+  if (!dates.length) { document.getElementById('historyList').innerHTML=`<div class="empty-state"><div class="empty-state-text">Noch keine Einträge</div>Starte dein erstes Training إن شاء الله</div>`; return; }
   document.getElementById('historyList').innerHTML = dates.map(date => {
     const logs=byDate[date];
     const entries=logs.map(log=>{
