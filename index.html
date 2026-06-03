@@ -33,16 +33,13 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { font-size: 16px; }
   body { font-family: 'DM Sans', sans-serif; background: var(--bg-base); color: var(--text-primary); min-height: 100vh; overflow-x: hidden; }
-
   .app-wrapper { max-width: 780px; margin: 0 auto; padding: 0 16px 100px; }
-
   /* HEADER */
   .header { display: flex; align-items: center; justify-content: space-between; padding: 24px 0 20px; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
   .logo { font-family: 'Bebas Neue', sans-serif; font-size: 38px; letter-spacing: 3px; color: var(--text-primary); line-height: 1; }
   .logo span { color: var(--accent); }
   .header-sub { font-size: 11px; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; margin-top: 2px; }
   .header-actions { display: flex; gap: 8px; }
-
   /* BUTTONS */
   .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; border: 1px solid var(--border); background: var(--bg-elevated); color: var(--text-secondary); transition: all .18s; text-decoration: none; white-space: nowrap; }
   .btn:hover { border-color: var(--border-accent); color: var(--text-primary); background: var(--bg-card); }
@@ -50,7 +47,6 @@
   .btn-primary:hover { background: #ea6a0a; border-color: #ea6a0a; }
   .btn svg { width: 16px; height: 16px; flex-shrink: 0; }
   .btn-sm { padding: 5px 10px; font-size: 12px; }
-
   /* TABS */
   .tabs { display: flex; gap: 2px; margin-bottom: 28px; background: var(--bg-surface); border-radius: var(--radius); padding: 4px; border: 1px solid var(--border); }
   .tab { flex: 1; padding: 9px 8px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; color: var(--text-muted); cursor: pointer; text-align: center; transition: all .18s; border: none; background: transparent; font-family: 'DM Sans', sans-serif; display: flex; align-items: center; justify-content: center; gap: 6px; }
@@ -60,19 +56,16 @@
   .tab svg { width: 16px; height: 16px; flex-shrink: 0; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke .18s; }
   .tab-label { display: none; }
   @media (min-width: 480px) { .tab-label { display: inline; } }
-
   /* SECTION */
   .section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
   .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 1.5px; color: var(--text-primary); }
   .section-subtitle { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
-
   /* STATS */
   .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 24px; }
   .stat-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
   .stat-val { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 1px; color: var(--text-primary); line-height: 1; }
   .stat-val.orange { color: var(--accent); }
   .stat-label { font-size: 11px; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; }
-
   /* INPUTS */
   .select-styled { width: 100%; padding: 12px 14px; background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-primary); font-family: 'DM Sans', sans-serif; font-size: 14px; appearance: none; cursor: pointer; }
   .select-styled:focus { outline: none; border-color: var(--border-accent); }
@@ -82,7 +75,6 @@
   .input-styled::placeholder { color: var(--text-muted); }
   .input-group { flex: 1; }
   .input-label { font-size: 11px; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
-
   /* LOG ENTRY */
   .log-entry { display: flex; align-items: center; gap: 14px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 8px; transition: border-color .18s; }
   .log-entry:hover { border-color: var(--border-accent); }
@@ -94,16 +86,13 @@
   .delete-btn { color: var(--text-muted); cursor: pointer; padding: 4px; border-radius: 4px; border: none; background: none; transition: color .18s; }
   .delete-btn:hover { color: var(--danger); }
   .delete-btn svg { width: 15px; height: 15px; display: block; }
-
   /* EMPTY STATE */
   .empty-state { text-align: center; padding: 48px 24px; color: var(--text-muted); font-size: 14px; }
   .empty-state-icon { font-size: 38px; margin-bottom: 12px; }
   .empty-state-text { margin-bottom: 6px; color: var(--text-secondary); font-weight: 500; font-size: 16px; }
-
   /* INFO BAR */
   .info-bar { background: var(--accent-subtle); border: 1px solid var(--border-accent); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 13px; color: var(--text-secondary); margin-bottom: 20px; display: flex; gap: 10px; align-items: center; }
   .info-bar svg { width: 16px; height: 16px; stroke: var(--accent); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
-
   /* HISTORY */
   .history-day-header { font-size: 11px; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; padding: 8px 0 10px; border-top: 1px solid var(--border); margin-top: 8px; }
   .history-day-header:first-child { border-top: none; margin-top: 0; }
@@ -111,7 +100,6 @@
   .history-name { flex: 1; font-size: 14px; font-weight: 500; }
   .history-reps { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--accent); letter-spacing: 1px; line-height: 1; }
   .history-unit { font-size: 11px; color: var(--text-muted); }
-
   /* EXERCISES */
   .ex-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 8px; transition: border-color .18s; }
   .ex-item:hover { border-color: var(--border-accent); }
@@ -120,11 +108,9 @@
   .ex-cat { font-size: 11px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; }
   .ex-unit { font-size: 12px; color: var(--text-muted); background: var(--bg-elevated); padding: 2px 8px; border-radius: 4px; }
   .ex-pb { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--pr-color); letter-spacing: 1px; line-height: 1; }
-
   .add-exercise-form { background: var(--bg-surface); border: 1px solid var(--border-accent); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 20px; }
   .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   @media (max-width: 500px) { .form-grid { grid-template-columns: 1fr; } }
-
   /* PROGRESS */
   .chart-container { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 16px; }
   .chart-head { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px; }
@@ -132,7 +118,6 @@
   .chart-best { font-size: 12px; color: var(--text-muted); text-align: right; }
   .chart-best span { color: var(--pr-color); font-weight: 600; }
   .chart-wrap { position: relative; height: 180px; }
-
   /* REP COUNTER */
   .rep-counter { display: flex; align-items: center; background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
   .rep-btn { width: 48px; height: 48px; background: none; border: none; color: var(--text-secondary); font-size: 24px; font-weight: 300; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .15s, color .15s; flex-shrink: 0; }
@@ -140,7 +125,6 @@
   .rep-input { flex: 1; text-align: center; background: none; border: none; font-family: 'Bebas Neue', sans-serif; font-size: 34px; letter-spacing: 2px; color: var(--accent); padding: 4px 0; -moz-appearance: textfield; }
   .rep-input::-webkit-outer-spin-button, .rep-input::-webkit-inner-spin-button { -webkit-appearance: none; }
   .rep-input:focus { outline: none; }
-
   /* MODAL */
   .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
   .modal-overlay.hidden { display: none; }
@@ -151,53 +135,176 @@
   .modal-close:hover { color: var(--text-primary); }
   .modal-close svg { width: 20px; height: 20px; display: block; }
   .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; }
-
   /* TODAY GREETING */
   .today-greeting { margin-bottom: 24px; }
   .today-greeting .day { font-family: 'Bebas Neue', sans-serif; font-size: 48px; letter-spacing: 2px; line-height: 1; }
-
   /* TOAST */
   .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary); padding: 12px 20px; border-radius: var(--radius); font-size: 14px; z-index: 200; white-space: nowrap; animation: toastIn .25s ease; pointer-events: none; }
   @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(8px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
-
   /* SCROLLBAR */
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
   /* CATEGORY COLORS */
   .cat-upper { color: #fb923c; } .dot-upper { background: #fb923c; }
   .cat-lower { color: #34d399; } .dot-lower { background: #34d399; }
   .cat-core   { color: #60a5fa; } .dot-core   { background: #60a5fa; }
   .cat-full   { color: #c084fc; } .dot-full   { background: #c084fc; }
-
   #importFile { display: none; }
+
+  /* ─── TUTORIAL ─────────────────────────────────────────── */
+  .tut-overlay {
+    position: fixed; inset: 0; z-index: 600;
+    pointer-events: none;
+    transition: opacity .35s ease;
+  }
+  .tut-overlay.active { pointer-events: all; }
+  .tut-overlay.hidden { display: none; }
+
+  /* Dark scrim behind everything */
+  .tut-scrim {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.82);
+    backdrop-filter: blur(1px);
+  }
+
+  /* Glowing highlight box around the target element */
+  .tut-highlight {
+    position: fixed;
+    border-radius: 12px;
+    border: 2px solid var(--accent);
+    box-shadow:
+      0 0 0 5px rgba(249,115,22,0.12),
+      0 0 32px rgba(249,115,22,0.3);
+    z-index: 602;
+    pointer-events: none;
+    transition: top .38s cubic-bezier(.34,1.2,.64,1),
+                left .38s cubic-bezier(.34,1.2,.64,1),
+                width .38s cubic-bezier(.34,1.2,.64,1),
+                height .38s cubic-bezier(.34,1.2,.64,1),
+                opacity .25s ease;
+  }
+  /* Pulse ring on the highlight */
+  .tut-highlight::after {
+    content: '';
+    position: absolute; inset: -6px;
+    border-radius: 16px;
+    border: 1px solid rgba(249,115,22,0.25);
+    animation: tutPulse 2s ease-in-out infinite;
+  }
+  @keyframes tutPulse {
+    0%,100% { opacity: 0.5; transform: scale(1); }
+    50%      { opacity: 0.15; transform: scale(1.04); }
+  }
+
+  /* The tooltip card */
+  .tut-card {
+    position: fixed;
+    z-index: 603;
+    width: min(360px, calc(100vw - 32px));
+    background: var(--bg-card);
+    border: 1px solid var(--border-accent);
+    border-radius: var(--radius-lg);
+    padding: 22px 22px 18px;
+    box-shadow:
+      0 24px 64px rgba(0,0,0,0.7),
+      0 0 0 1px rgba(249,115,22,0.08),
+      inset 0 1px 0 rgba(255,255,255,0.04);
+    animation: tutCardIn .35s cubic-bezier(.34,1.56,.64,1) both;
+  }
+  @keyframes tutCardIn {
+    from { opacity:0; transform: scale(0.9) translateY(12px); }
+    to   { opacity:1; transform: scale(1) translateY(0); }
+  }
+
+  /* Step dots */
+  .tut-dots {
+    display: flex; gap: 5px; margin-bottom: 14px; align-items: center;
+  }
+  .tut-dot {
+    height: 5px; width: 5px; border-radius: 99px;
+    background: var(--text-muted);
+    transition: width .25s ease, background .25s ease;
+  }
+  .tut-dot.active { width: 20px; background: var(--accent); }
+
+  /* Step number badge */
+  .tut-step-badge {
+    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--accent); font-weight: 600;
+    margin-left: auto;
+  }
+
+  .tut-card-icon {
+    font-size: 32px; line-height: 1; margin-bottom: 10px;
+  }
+  .tut-card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px; letter-spacing: 2px; line-height: 1.1;
+    margin-bottom: 8px; color: var(--text-primary);
+  }
+  .tut-card-title em { color: var(--accent); font-style: normal; }
+  .tut-card-body {
+    font-size: 13.5px; color: var(--text-secondary);
+    line-height: 1.65; margin-bottom: 18px;
+  }
+
+  /* Arrow connector between card and highlight */
+  .tut-arrow {
+    position: fixed; z-index: 602;
+    width: 0; height: 0; pointer-events: none;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+  }
+  .tut-arrow.down { border-top: 9px solid var(--border-accent); }
+  .tut-arrow.up   { border-bottom: 9px solid var(--border-accent); }
+
+  .tut-actions { display: flex; align-items: center; gap: 8px; }
+  .tut-skip {
+    font-size: 12px; color: var(--text-muted); cursor: pointer;
+    background: none; border: none; font-family: 'DM Sans', sans-serif;
+    margin-right: auto; padding: 4px 0;
+    transition: color .15s;
+  }
+  .tut-skip:hover { color: var(--text-secondary); }
+
+  /* Welcome step decoration */
+  .tut-welcome-deco {
+    display: flex; align-items: center; justify-content: center;
+    gap: 0; margin-bottom: 16px;
+  }
+  .tut-logo-big {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 44px; letter-spacing: 4px; line-height: 1;
+    color: var(--text-primary);
+  }
+  .tut-logo-big span { color: var(--accent); }
+  .tut-divider {
+    height: 1px; background: linear-gradient(90deg, transparent, var(--border-accent), transparent);
+    margin: 12px 0 14px;
+  }
 </style>
 </head>
 <body>
 <div class="app-wrapper">
-
   <!-- HEADER -->
   <div class="header">
     <div>
       <div class="logo">MAX<span>OUT</span></div>
       <div class="header-sub">Ein Satz. Alles geben إن شاء الله</div>
     </div>
-    <div class="header-actions">
+    <div class="header-actions" id="headerActions">
       <button class="btn btn-sm" onclick="exportData()" title="Exportieren">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        <span style="display:none" class="t-label">Export</span>
       </button>
       <button class="btn btn-sm" onclick="document.getElementById('importFile').click()" title="Importieren">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        <span style="display:none" class="t-label">Import</span>
       </button>
       <input type="file" id="importFile" accept=".json" onchange="importData(event)">
     </div>
   </div>
-
   <!-- TABS -->
-  <div class="tabs">
+  <div class="tabs" id="mainTabs">
     <button class="tab active" onclick="switchTab('today',this)">
       <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
       <span class="tab-label">Heute</span>
@@ -206,7 +313,7 @@
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
       <span class="tab-label">Historie</span>
     </button>
-    <button class="tab" onclick="switchTab('exercises',this)">
+    <button class="tab" id="tabExercises" onclick="switchTab('exercises',this)">
       <svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
       <span class="tab-label">Übungen</span>
     </button>
@@ -215,14 +322,12 @@
       <span class="tab-label">Fortschritt</span>
     </button>
   </div>
-
   <!-- TODAY -->
   <div id="tab-today">
     <div class="today-greeting">
       <div class="day" id="todayLabel">Heute</div>
-
     </div>
-    <div class="stats-row">
+    <div class="stats-row" id="statsRow">
       <div class="stat-card"><div class="stat-val orange" id="statToday">0</div><div class="stat-label">Heute</div></div>
       <div class="stat-card"><div class="stat-val" id="statStreak">0</div><div class="stat-label">Tage Serie</div></div>
       <div class="stat-card"><div class="stat-val" id="statTotal">0</div><div class="stat-label">Gesamt</div></div>
@@ -231,16 +336,15 @@
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
       Geh in jedem Satz bis zu deinem absoluten Maximum — kein Reps übrig lassen.
     </div>
-    <div class="section-head">
+    <div class="section-head" id="todaySectionHead">
       <div class="section-title">Heutiges Training</div>
-      <button class="btn btn-primary btn-sm" onclick="openLogModal()">
+      <button class="btn btn-primary btn-sm" id="newSetBtn" onclick="openLogModal()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         Neuer Satz
       </button>
     </div>
     <div id="todayLogs"></div>
   </div>
-
   <!-- HISTORY -->
   <div id="tab-history" style="display:none">
     <div class="section-head">
@@ -251,7 +355,6 @@
     </div>
     <div id="historyList"></div>
   </div>
-
   <!-- EXERCISES -->
   <div id="tab-exercises" style="display:none">
     <div class="section-head">
@@ -296,7 +399,6 @@
     </div>
     <div id="exerciseList"></div>
   </div>
-
   <!-- PROGRESS -->
   <div id="tab-progress" style="display:none">
     <div class="section-head">
@@ -307,7 +409,6 @@
     </div>
     <div id="progressCharts"></div>
   </div>
-
 </div><!-- /app-wrapper -->
 
 <!-- LOG MODAL -->
@@ -341,11 +442,27 @@
   </div>
 </div>
 
+<!-- ═══════════════ TUTORIAL OVERLAY ═══════════════ -->
+<div class="tut-overlay hidden" id="tutOverlay">
+  <div class="tut-scrim"></div>
+  <div class="tut-highlight" id="tutHighlight" style="opacity:0"></div>
+  <div class="tut-arrow" id="tutArrow" style="opacity:0"></div>
+  <div class="tut-card" id="tutCard">
+    <div class="tut-dots" id="tutDots"></div>
+    <div class="tut-card-icon" id="tutIcon" style="display:none"></div>
+    <div class="tut-card-title" id="tutTitle"></div>
+    <div class="tut-card-body"  id="tutBody"></div>
+    <div class="tut-actions">
+      <button class="tut-skip" id="tutSkipBtn" onclick="skipTutorial()">Überspringen</button>
+      <button class="btn" id="tutNextBtn" onclick="nextTutorialStep()">Weiter →</button>
+    </div>
+  </div>
+</div>
+
 <script>
+/* ─── DATA ──────────────────────────────────────────────── */
 const CAT_LABELS = { upper:'Oberkörper', lower:'Unterkörper', core:'Core', full:'Ganzkörper' };
 const CAT_COLORS = { upper:'#fb923c', lower:'#34d399', core:'#60a5fa', full:'#c084fc' };
-
-
 function loadData() {
   return {
     exercises: JSON.parse(localStorage.getItem('mo_exercises') || '[]'),
@@ -354,9 +471,7 @@ function loadData() {
 }
 function saveExercises(ex) { localStorage.setItem('mo_exercises', JSON.stringify(ex)); }
 function saveLogs(logs) { localStorage.setItem('mo_logs', JSON.stringify(logs)); }
-
 let data = loadData();
-
 function todayStr() { return new Date().toISOString().slice(0,10); }
 function formatDate(str) { return new Date(str+'T12:00:00').toLocaleDateString('de-DE',{weekday:'long',day:'numeric',month:'long'}); }
 function formatDateShort(str) { return new Date(str+'T12:00:00').toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'}); }
@@ -376,23 +491,22 @@ function getStreak() {
   return streak;
 }
 
-// TABS
+/* ─── TABS ──────────────────────────────────────────────── */
 function switchTab(name, btn) {
   document.querySelectorAll('[id^="tab-"]').forEach(t => t.style.display='none');
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.getElementById('tab-'+name).style.display='block';
   btn.classList.add('active');
-  if (name==='today') renderToday();
-  if (name==='history') renderHistory();
+  if (name==='today')     renderToday();
+  if (name==='history')   renderHistory();
   if (name==='exercises') renderExercises();
-  if (name==='progress') renderProgress();
+  if (name==='progress')  renderProgress();
 }
 
-// TODAY
+/* ─── TODAY ─────────────────────────────────────────────── */
 function renderToday() {
   const d = new Date();
   document.getElementById('todayLabel').innerHTML = `<span style="color:var(--accent);font-family:'Bebas Neue',sans-serif;font-size:48px;letter-spacing:2px;line-height:1">${d.toLocaleDateString('de-DE',{weekday:'long'})}</span>`;
-
   const todayLogs = getTodayLogs();
   document.getElementById('statToday').textContent = todayLogs.length;
   document.getElementById('statStreak').textContent = getStreak();
@@ -421,14 +535,13 @@ function renderToday() {
     </div>`;
   }).join('');
 }
-
 function deleteLog(id) {
   data.logs = data.logs.filter(l=>l.id!==id);
   saveLogs(data.logs);
   renderToday();
 }
 
-// LOG MODAL
+/* ─── LOG MODAL ─────────────────────────────────────────── */
 function openLogModal() {
   if (!data.exercises.length) { showToast('Erst eine Übung anlegen!'); switchTab('exercises', document.querySelectorAll('.tab')[2]); return; }
   const sel = document.getElementById('logExerciseSelect');
@@ -460,7 +573,7 @@ function saveLog() {
   showToast(isNewPR && pb!==null ? 'Neuer Persönlicher Rekord!' : 'Satz gespeichert.', isNewPR && pb!==null);
 }
 
-// HISTORY
+/* ─── HISTORY ───────────────────────────────────────────── */
 function renderHistory() {
   const byDate={};
   data.logs.forEach(l=>{ if(!byDate[l.date]) byDate[l.date]=[]; byDate[l.date].push(l); });
@@ -484,7 +597,7 @@ function renderHistory() {
   }).join('');
 }
 
-// EXERCISES
+/* ─── EXERCISES ─────────────────────────────────────────── */
 function renderExercises() {
   document.getElementById('exercisesCount').textContent = `${data.exercises.length} Übungen`;
   if (!data.exercises.length) {
@@ -528,7 +641,7 @@ function deleteExercise(id) {
   renderExercises(); showToast('Übung gelöscht.');
 }
 
-// PROGRESS
+/* ─── PROGRESS ──────────────────────────────────────────── */
 const chartInstances={};
 function renderProgress() {
   const container=document.getElementById('progressCharts');
@@ -567,7 +680,7 @@ function renderProgress() {
   });
 }
 
-// EXPORT / IMPORT
+/* ─── EXPORT / IMPORT ───────────────────────────────────── */
 function exportData() {
   const blob=new Blob([JSON.stringify({version:1,exported:new Date().toISOString(),exercises:data.exercises,logs:data.logs},null,2)],{type:'application/json'});
   const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`maxout_backup_${todayStr()}.json`; a.click();
@@ -588,7 +701,7 @@ function importData(event) {
   reader.readAsText(file); event.target.value='';
 }
 
-// TOAST
+/* ─── TOAST ─────────────────────────────────────────────── */
 let _tt;
 function showToast(msg, special=false) {
   const e=document.querySelector('.toast'); if(e) e.remove(); clearTimeout(_tt);
@@ -597,8 +710,266 @@ function showToast(msg, special=false) {
   document.body.appendChild(t); _tt=setTimeout(()=>t.remove(),2800);
 }
 
-// INIT
+/* ═══════════════════════════════════════════════════════════
+   TUTORIAL SYSTEM
+   ═══════════════════════════════════════════════════════════ */
+const TUT_KEY = 'mo_tutorial_v1_done';
+
+const TUT_STEPS = [
+  /* 0 — Welcome */
+  {
+    centered: true,
+    icon: '💪',
+    title: 'Willkommen bei <em>MAXOUT</em>',
+    body: 'Das Prinzip ist radikal einfach: Ein einziger Satz pro Übung — aber du gehst dabei bis an dein absolutes Limit. Keine Reserve. Kein Zurückhalten.\n\nIn 5 kurzen Schritten zeigen wir dir, wie alles funktioniert.',
+  },
+  /* 1 — Tabs */
+  {
+    targetId: 'mainTabs',
+    position: 'below',
+    icon: null,
+    title: 'Deine <em>Navigation</em>',
+    body: 'Vier Bereiche — alles was du brauchst:\n• Heute — dein tägliches Training\n• Historie — alle vergangenen Sätze\n• Übungen — deine Übungsbibliothek\n• Fortschritt — deine Kurvenverläufe',
+  },
+  /* 2 — Exercises tab */
+  {
+    targetId: 'tabExercises',
+    position: 'below',
+    icon: null,
+    title: '<em>Erst</em> Übungen anlegen',
+    body: 'Bevor du loggst: Klicke hier auf "Übungen" und lege deine Übungen an — Klimmzüge, Liegestütze, Dips, was auch immer du trainierst.',
+  },
+  /* 3 — Stats row */
+  {
+    targetId: 'statsRow',
+    position: 'below',
+    icon: null,
+    title: 'Dein täglicher <em>Überblick</em>',
+    body: 'Hier siehst du auf einen Blick: wie viele Sätze du heute gemacht hast, wie viele Tage deine aktuelle Tages-Serie läuft, und deine Gesamtzahl an Sätzen.',
+  },
+  /* 4 — New Set button */
+  {
+    targetId: 'newSetBtn',
+    position: 'above',
+    icon: null,
+    title: 'Satz <em>loggen</em>',
+    body: 'Drücke diesen Knopf nach jeder Übung. Wähle die Übung aus und trag dein Maximum ein. Das System zeigt dir automatisch deinen Rekord — und ob du ihn gebrochen hast.',
+  },
+  /* 5 — Export/Import */
+  {
+    targetId: 'headerActions',
+    position: 'below',
+    icon: null,
+    title: 'Backup & <em>Import</em>',
+    body: 'Exportiere deine Daten jederzeit als JSON-Datei und importiere sie auf einem anderen Gerät. Deine Fortschritte gehen nie verloren.',
+  },
+  /* 6 — Done */
+  {
+    centered: true,
+    icon: '🔥',
+    title: 'Bereit!',
+    body: 'Du kennst jetzt alles. Lege als Erstes deine Übungen an — dann kannst du deinen ersten Satz loggen.\n\nEin Satz. Alles geben.\nإن شاء الله',
+    finalBtn: 'Erste Übung anlegen →',
+  },
+];
+
+let tutStep = 0;
+
+function initTutorial() {
+  if (localStorage.getItem(TUT_KEY)) return;
+  setTimeout(startTutorial, 500);
+}
+
+function startTutorial() {
+  tutStep = 0;
+  const ov = document.getElementById('tutOverlay');
+  ov.classList.remove('hidden');
+  ov.classList.add('active');
+  renderTutStep();
+}
+
+function renderTutStep() {
+  const step = TUT_STEPS[tutStep];
+  const total = TUT_STEPS.length;
+
+  /* — dots — */
+  document.getElementById('tutDots').innerHTML =
+    TUT_STEPS.map((_,i) =>
+      `<div class="tut-dot ${i===tutStep?'active':''}"></div>`
+    ).join('') +
+    `<span class="tut-step-badge">${tutStep+1} / ${total}</span>`;
+
+  /* — content — */
+  const iconEl = document.getElementById('tutIcon');
+  if (step.icon) { iconEl.style.display='block'; iconEl.textContent=step.icon; }
+  else           { iconEl.style.display='none'; }
+
+  document.getElementById('tutTitle').innerHTML = step.title;
+
+  /* convert \n to <br> */
+  document.getElementById('tutBody').innerHTML =
+    step.body.replace(/\n/g,'<br>');
+
+  const nextBtn = document.getElementById('tutNextBtn');
+  const isLast  = tutStep === total - 1;
+  nextBtn.textContent = isLast
+    ? (step.finalBtn || 'Fertig ✓')
+    : 'Weiter →';
+
+  document.getElementById('tutSkipBtn').style.display = isLast ? 'none' : 'inline';
+
+  /* — re-trigger card animation — */
+  const card = document.getElementById('tutCard');
+  card.style.animation = 'none';
+  card.offsetHeight; // reflow
+  card.style.animation = '';
+
+  /* — position — */
+  if (step.centered) {
+    positionCentered(card);
+    hideHighlight();
+  } else {
+    const target = step.targetId
+      ? document.getElementById(step.targetId)
+      : null;
+    if (!target) { nextTutorialStep(); return; }
+    positionOnTarget(card, target, step.position);
+  }
+}
+
+function positionCentered(card) {
+  card.style.cssText = `
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    bottom: auto; right: auto;
+    width: min(380px, calc(100vw - 32px));
+  `;
+  hideHighlight();
+}
+
+function positionOnTarget(card, target, direction) {
+  const PAD  = 10;  /* highlight padding */
+  const GAP  = 14;  /* gap between highlight and card */
+  const MARH = 16;  /* horizontal viewport margin */
+
+  const rect = target.getBoundingClientRect();
+  const vw   = window.innerWidth;
+  const vh   = window.innerHeight;
+
+  /* — highlight — */
+  const hl = document.getElementById('tutHighlight');
+  hl.style.cssText = `
+    left:   ${rect.left - PAD}px;
+    top:    ${rect.top  - PAD}px;
+    width:  ${rect.width  + PAD*2}px;
+    height: ${rect.height + PAD*2}px;
+    opacity: 1;
+  `;
+
+  /* — card width & horizontal position — */
+  const cardW = Math.min(360, vw - MARH*2);
+  let cardLeft = rect.left + rect.width/2 - cardW/2;
+  cardLeft = Math.max(MARH, Math.min(cardLeft, vw - cardW - MARH));
+
+  /* — card vertical position — */
+  card.style.cssText = `
+    position: fixed;
+    width: ${cardW}px;
+    left: ${cardLeft}px;
+    bottom: auto; right: auto; top: auto;
+    transform: none;
+  `;
+
+  const arrowEl = document.getElementById('tutArrow');
+
+  if (direction === 'below') {
+    const top = rect.bottom + PAD + GAP;
+    /* if card would overflow bottom, flip to above */
+    if (top + 240 > vh) {
+      positionAbove(card, arrowEl, rect, PAD, GAP, cardLeft, cardW);
+    } else {
+      card.style.top = top + 'px';
+      /* arrow pointing up (card is below highlight) */
+      arrowEl.className = 'tut-arrow up';
+      const arrowLeft = Math.min(
+        Math.max(rect.left + rect.width/2 - 8, cardLeft + 16),
+        cardLeft + cardW - 24
+      );
+      arrowEl.style.cssText = `
+        left: ${arrowLeft}px;
+        top:  ${rect.bottom + PAD + GAP - 9}px;
+        opacity: 1;
+      `;
+    }
+  } else {
+    positionAbove(card, arrowEl, rect, PAD, GAP, cardLeft, cardW);
+  }
+}
+
+function positionAbove(card, arrowEl, rect, PAD, GAP, cardLeft, cardW) {
+  /* measure card height roughly */
+  const cardH = card.offsetHeight || 220;
+  const top = rect.top - PAD - GAP - cardH;
+  card.style.top = Math.max(8, top) + 'px';
+  /* arrow pointing down (card is above highlight) */
+  arrowEl.className = 'tut-arrow down';
+  const arrowLeft = Math.min(
+    Math.max(rect.left + rect.width/2 - 8, cardLeft + 16),
+    cardLeft + cardW - 24
+  );
+  arrowEl.style.cssText = `
+    left: ${arrowLeft}px;
+    top:  ${rect.top - PAD - GAP}px;
+    opacity: 1;
+  `;
+}
+
+function hideHighlight() {
+  document.getElementById('tutHighlight').style.opacity = '0';
+  document.getElementById('tutArrow').style.opacity    = '0';
+}
+
+function nextTutorialStep() {
+  const isLast = tutStep === TUT_STEPS.length - 1;
+  if (isLast) { completeTutorial(); return; }
+  tutStep++;
+  renderTutStep();
+}
+
+function skipTutorial() { completeTutorial(false); }
+
+function completeTutorial(goToExercises = true) {
+  localStorage.setItem(TUT_KEY, '1');
+  const ov = document.getElementById('tutOverlay');
+  ov.style.opacity = '0';
+  ov.style.transition = 'opacity .35s ease';
+  setTimeout(() => {
+    ov.classList.add('hidden');
+    ov.classList.remove('active');
+    ov.style.opacity = '';
+    ov.style.transition = '';
+  }, 360);
+  if (goToExercises) {
+    switchTab('exercises', document.querySelectorAll('.tab')[2]);
+    setTimeout(() => toggleAddForm(), 400);
+  }
+}
+
+/* reposition on resize */
+let _resizeTut;
+window.addEventListener('resize', () => {
+  clearTimeout(_resizeTut);
+  _resizeTut = setTimeout(() => {
+    if (!document.getElementById('tutOverlay').classList.contains('hidden')) {
+      renderTutStep();
+    }
+  }, 80);
+});
+
+/* ─── INIT ──────────────────────────────────────────────── */
 renderToday();
+initTutorial();
 </script>
 </body>
 </html>
