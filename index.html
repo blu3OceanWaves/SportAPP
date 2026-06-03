@@ -161,35 +161,43 @@
   .tut-overlay.active { pointer-events: all; }
   .tut-overlay.hidden { display: none; }
 
-  /* Dark scrim — only used for centered (welcome/done) steps */
+  /* Solid scrim — only for centered (welcome/done) steps */
   .tut-scrim {
     position: fixed; inset: 0;
     background: rgba(0,0,0,0.84);
-    backdrop-filter: blur(2px);
-    transition: opacity .25s;
+    z-index: 601;
   }
   .tut-scrim.hidden { display: none; }
 
-  /*
-   * Spotlight highlight box.
-   * The giant box-shadow (9999px spread) darkens everything OUTSIDE this box.
-   * The box itself has no background so the target element shows through clearly.
-   */
+  /* Four dark panels that surround the spotlight.
+     They literally leave a gap over the target — no z-index tricks. */
+  .tut-panel {
+    position: fixed;
+    background: rgba(0,0,0,0.82);
+    z-index: 601;
+    pointer-events: all;
+    transition:
+      left .35s cubic-bezier(.34,1.2,.64,1),
+      top .35s cubic-bezier(.34,1.2,.64,1),
+      width .35s cubic-bezier(.34,1.2,.64,1),
+      height .35s cubic-bezier(.34,1.2,.64,1);
+  }
+
+  /* Glowing border drawn over the spotlight gap */
   .tut-highlight {
     position: fixed;
     border-radius: 12px;
     border: 2px solid var(--accent);
     background: transparent;
     box-shadow:
-      0 0 0 9999px rgba(0,0,0,0.80),   /* the "dark overlay" cutout */
-      0 0 0 4px rgba(249,115,22,0.15), /* inner glow ring */
-      0 0 28px rgba(249,115,22,0.35);  /* outer glow */
-    z-index: 602;
+      0 0 0 4px rgba(249,115,22,0.12),
+      0 0 28px rgba(249,115,22,0.35);
+    z-index: 603;
     pointer-events: none;
-    transition: top .38s cubic-bezier(.34,1.2,.64,1),
-                left .38s cubic-bezier(.34,1.2,.64,1),
-                width .38s cubic-bezier(.34,1.2,.64,1),
-                height .38s cubic-bezier(.34,1.2,.64,1),
+    transition: top .35s cubic-bezier(.34,1.2,.64,1),
+                left .35s cubic-bezier(.34,1.2,.64,1),
+                width .35s cubic-bezier(.34,1.2,.64,1),
+                height .35s cubic-bezier(.34,1.2,.64,1),
                 opacity .25s ease;
   }
   /* Pulse ring on the highlight */
@@ -452,7 +460,11 @@
 
 <!-- ═══════════════ TUTORIAL OVERLAY ═══════════════ -->
 <div class="tut-overlay hidden" id="tutOverlay">
-  <div class="tut-scrim" id="tutScrim"></div>
+  <div class="tut-scrim hidden" id="tutScrim"></div>
+  <div class="tut-panel" id="tutPanelTop"></div>
+  <div class="tut-panel" id="tutPanelBottom"></div>
+  <div class="tut-panel" id="tutPanelLeft"></div>
+  <div class="tut-panel" id="tutPanelRight"></div>
   <div class="tut-highlight" id="tutHighlight" style="opacity:0"></div>
   <div class="tut-arrow" id="tutArrow" style="opacity:0"></div>
   <div class="tut-card" id="tutCard">
@@ -846,8 +858,10 @@ function renderTutStep() {
 }
 
 function positionCentered(card) {
-  /* Centered steps: use solid scrim, no spotlight highlight */
+  /* Show solid scrim, hide panels and highlight */
   document.getElementById('tutScrim').classList.remove('hidden');
+  hidePanels();
+  hideHighlight();
   card.style.cssText = `
     position: fixed;
     top: 50%; left: 50%;
@@ -855,11 +869,10 @@ function positionCentered(card) {
     bottom: auto; right: auto;
     width: min(380px, calc(100vw - 32px));
   `;
-  hideHighlight();
 }
 
 function positionOnTarget(card, target, direction) {
-  /* Spotlight steps: hide solid scrim — the highlight's box-shadow creates the overlay */
+  /* Hide scrim, use 4 panels instead */
   document.getElementById('tutScrim').classList.add('hidden');
 
   const PAD  = 10;  /* highlight padding */
@@ -870,7 +883,10 @@ function positionOnTarget(card, target, direction) {
   const vw   = window.innerWidth;
   const vh   = window.innerHeight;
 
-  /* — highlight — */
+  /* — spotlight panels — */
+  setSpotlightPanels(rect, PAD);
+
+  /* — highlight border — */
   const hl = document.getElementById('tutHighlight');
   hl.style.cssText = `
     left:   ${rect.left - PAD}px;
@@ -938,9 +954,34 @@ function positionAbove(card, arrowEl, rect, PAD, GAP, cardLeft, cardW) {
   `;
 }
 
+function setSpotlightPanels(rect, pad) {
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  const x1 = Math.max(0, rect.left  - pad);
+  const y1 = Math.max(0, rect.top   - pad);
+  const x2 = Math.min(vw, rect.right  + pad);
+  const y2 = Math.min(vh, rect.bottom + pad);
+  setPanel('tutPanelTop',    0,  0,  vw,      y1);
+  setPanel('tutPanelBottom', 0,  y2, vw,      vh - y2);
+  setPanel('tutPanelLeft',   0,  y1, x1,      y2 - y1);
+  setPanel('tutPanelRight',  x2, y1, vw - x2, y2 - y1);
+}
+function setPanel(id, x, y, w, h) {
+  const el = document.getElementById(id);
+  el.style.left   = x + 'px';
+  el.style.top    = y + 'px';
+  el.style.width  = Math.max(0, w) + 'px';
+  el.style.height = Math.max(0, h) + 'px';
+  el.style.display = (w > 0 && h > 0) ? 'block' : 'none';
+}
+function hidePanels() {
+  ['tutPanelTop','tutPanelBottom','tutPanelLeft','tutPanelRight']
+    .forEach(id => { document.getElementById(id).style.display = 'none'; });
+}
 function hideHighlight() {
   document.getElementById('tutHighlight').style.opacity = '0';
   document.getElementById('tutArrow').style.opacity    = '0';
+  hidePanels();
 }
 
 function nextTutorialStep() {
