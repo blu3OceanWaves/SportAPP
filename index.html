@@ -232,6 +232,41 @@
     from { opacity:0; transform: scale(0.9) translateY(12px); }
     to   { opacity:1; transform: scale(1) translateY(0); }
   }
+  /* ── Mobile: full-width bottom sheet ── */
+  @media (max-width: 600px) {
+    .tut-card {
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      top: auto !important;
+      transform: none !important;
+      width: 100% !important;
+      border-radius: 20px 20px 0 0 !important;
+      border-left: none !important;
+      border-right: none !important;
+      border-bottom: none !important;
+      padding: 20px 20px 36px !important;
+      animation: tutSlideUp .35s cubic-bezier(.34,1.2,.64,1) both !important;
+    }
+    /* drag handle pill */
+    .tut-card::before {
+      content: '';
+      display: block;
+      width: 36px; height: 4px;
+      background: var(--text-muted);
+      border-radius: 2px;
+      margin: 0 auto 16px;
+      opacity: 0.4;
+    }
+    @keyframes tutSlideUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    /* arrow connector not needed on mobile */
+    .tut-arrow { display: none !important; }
+    /* keep highlight visible but don't let it push layout */
+    .tut-highlight { z-index: 603; }
+  }
 
   /* Step dots */
   .tut-dots {
@@ -741,7 +776,7 @@ const TUT_STEPS = [
     centered: true,
     icon: '💪',
     title: 'Willkommen bei <em>MAXOUT</em>',
-    body: 'Das Prinzip ist einfach: Ein einziger Satz pro Übung — aber du gehst dabei bis an dein absolutes Limit. Keine Reserve. Kein Zurückhalten.\n\nIn 5 kurzen Schritten zeigen wir dir, wie alles funktioniert إن شاء الله',
+    body: 'Das Prinzip ist einfach: Ein einziger Satz pro Übung — aber du gehst dabei bis an dein absolutes Limit. Keine Reserve. Kein Zurückhalten.\n\nIn 5 kurzen Schritten zeigen wir dir, wie alles funktioniert.',
   },
   /* 1 — Tabs */
   {
@@ -749,7 +784,7 @@ const TUT_STEPS = [
     position: 'below',
     icon: null,
     title: 'Deine <em>Navigation</em>',
-    body: 'Vier Bereiche — alles was du brauchst:\n• Heute — dein tägliches Training\n• Historie — alle vergangenen Sätze\n• Übungen — deine Übungsbibliothek\n• Fortschritt — deine Kurvenverläufe',
+    body: 'Vier Bereiche — alles was du brauchst:\n• Heute — dein tägliches Training\n• Historie — alle vergangenen Sätze\n• Übungen — deine Übungsbibliothek\n• Fortschritt — deine Kurvenverläufe إن شاء الله',
   },
   /* 2 — Exercises tab */
   {
@@ -781,7 +816,7 @@ const TUT_STEPS = [
     position: 'below',
     icon: null,
     title: 'Backup & <em>Import</em>',
-    body: 'Exportiere deine Daten jederzeit als JSON-Datei und importiere sie auf einem anderen Gerät. Deine Fortschritte gehen إن شاء الله nicht verloren.',
+    body: 'Exportiere deine Daten jederzeit als JSON-Datei und importiere sie auf einem anderen Gerät. Deine Fortschritte gehen nie verloren.',
   },
   /* 6 — Done */
   {
@@ -857,22 +892,27 @@ function renderTutStep() {
   }
 }
 
+const IS_MOBILE = () => window.innerWidth <= 600;
+
 function positionCentered(card) {
-  /* Show solid scrim, hide panels and highlight */
   document.getElementById('tutScrim').classList.remove('hidden');
   hidePanels();
   hideHighlight();
-  card.style.cssText = `
-    position: fixed;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    bottom: auto; right: auto;
-    width: min(380px, calc(100vw - 32px));
-  `;
+  if (IS_MOBILE()) {
+    /* bottom sheet — CSS handles it, just reset inline styles */
+    card.style.cssText = 'position: fixed;';
+  } else {
+    card.style.cssText = `
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      bottom: auto; right: auto;
+      width: min(380px, calc(100vw - 32px));
+    `;
+  }
 }
 
 function positionOnTarget(card, target, direction) {
-  /* Hide scrim, use 4 panels instead */
   document.getElementById('tutScrim').classList.add('hidden');
 
   const PAD  = 10;  /* highlight padding */
@@ -895,6 +935,9 @@ function positionOnTarget(card, target, direction) {
     height: ${rect.height + PAD*2}px;
     opacity: 1;
   `;
+
+  /* On mobile, CSS pins the card as a bottom sheet — skip JS positioning */
+  if (IS_MOBILE()) return;
 
   /* — card width & horizontal position — */
   const cardW = Math.min(360, vw - MARH*2);
@@ -961,8 +1004,12 @@ function setSpotlightPanels(rect, pad) {
   const y1 = Math.max(0, rect.top   - pad);
   const x2 = Math.min(vw, rect.right  + pad);
   const y2 = Math.min(vh, rect.bottom + pad);
+
+  /* On mobile the card is a bottom sheet — leave ~260px at the bottom free */
+  const bottomLimit = IS_MOBILE() ? vh - 260 : vh;
+
   setPanel('tutPanelTop',    0,  0,  vw,      y1);
-  setPanel('tutPanelBottom', 0,  y2, vw,      vh - y2);
+  setPanel('tutPanelBottom', 0,  y2, vw,      bottomLimit - y2);
   setPanel('tutPanelLeft',   0,  y1, x1,      y2 - y1);
   setPanel('tutPanelRight',  x2, y1, vw - x2, y2 - y1);
 }
