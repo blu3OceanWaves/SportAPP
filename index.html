@@ -161,21 +161,29 @@
   .tut-overlay.active { pointer-events: all; }
   .tut-overlay.hidden { display: none; }
 
-  /* Dark scrim behind everything */
+  /* Dark scrim — only used for centered (welcome/done) steps */
   .tut-scrim {
     position: fixed; inset: 0;
-    background: rgba(0,0,0,0.82);
-    backdrop-filter: blur(1px);
+    background: rgba(0,0,0,0.84);
+    backdrop-filter: blur(2px);
+    transition: opacity .25s;
   }
+  .tut-scrim.hidden { display: none; }
 
-  /* Glowing highlight box around the target element */
+  /*
+   * Spotlight highlight box.
+   * The giant box-shadow (9999px spread) darkens everything OUTSIDE this box.
+   * The box itself has no background so the target element shows through clearly.
+   */
   .tut-highlight {
     position: fixed;
     border-radius: 12px;
     border: 2px solid var(--accent);
+    background: transparent;
     box-shadow:
-      0 0 0 5px rgba(249,115,22,0.12),
-      0 0 32px rgba(249,115,22,0.3);
+      0 0 0 9999px rgba(0,0,0,0.80),   /* the "dark overlay" cutout */
+      0 0 0 4px rgba(249,115,22,0.15), /* inner glow ring */
+      0 0 28px rgba(249,115,22,0.35);  /* outer glow */
     z-index: 602;
     pointer-events: none;
     transition: top .38s cubic-bezier(.34,1.2,.64,1),
@@ -444,7 +452,7 @@
 
 <!-- ═══════════════ TUTORIAL OVERLAY ═══════════════ -->
 <div class="tut-overlay hidden" id="tutOverlay">
-  <div class="tut-scrim"></div>
+  <div class="tut-scrim" id="tutScrim"></div>
   <div class="tut-highlight" id="tutHighlight" style="opacity:0"></div>
   <div class="tut-arrow" id="tutArrow" style="opacity:0"></div>
   <div class="tut-card" id="tutCard">
@@ -838,6 +846,8 @@ function renderTutStep() {
 }
 
 function positionCentered(card) {
+  /* Centered steps: use solid scrim, no spotlight highlight */
+  document.getElementById('tutScrim').classList.remove('hidden');
   card.style.cssText = `
     position: fixed;
     top: 50%; left: 50%;
@@ -849,6 +859,9 @@ function positionCentered(card) {
 }
 
 function positionOnTarget(card, target, direction) {
+  /* Spotlight steps: hide solid scrim — the highlight's box-shadow creates the overlay */
+  document.getElementById('tutScrim').classList.add('hidden');
+
   const PAD  = 10;  /* highlight padding */
   const GAP  = 14;  /* gap between highlight and card */
   const MARH = 16;  /* horizontal viewport margin */
