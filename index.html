@@ -1,1056 +1,1076 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Talib al-ʿIlm — Islamic Study Notes</title>
+<title>MAXOUT — Kraft bis zum Limit</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230b0b0b'/%3E%3Ctext x='32' y='46' font-family='Georgia,serif' font-size='42' font-weight='700' fill='%23f97316' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap');
+  :root {
+    --bg-base: #0b0b0b;
+    --bg-surface: #141414;
+    --bg-elevated: #1c1c1c;
+    --bg-card: #202020;
+    --bg-input: #181818;
+    --accent: #f97316;
+    --accent-dim: #c2570a;
+    --accent-subtle: rgba(249,115,22,0.08);
+    --text-primary: #f5f0e8;
+    --text-secondary: #9a9080;
+    --text-muted: #585048;
+    --border: rgba(255,255,255,0.06);
+    --border-accent: rgba(249,115,22,0.25);
+    --danger: #ef4444;
+    --pr-color: #facc15;
+    --radius: 10px;
+    --radius-sm: 6px;
+    --radius-lg: 16px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg-base); color: var(--text-primary); min-height: 100vh; overflow-x: hidden; }
+  .app-wrapper { max-width: 780px; margin: 0 auto; padding: 0 16px 100px; }
+  /* HEADER */
+  .header { display: flex; align-items: center; justify-content: space-between; padding: 24px 0 20px; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
+  .logo { font-family: 'Bebas Neue', sans-serif; font-size: 38px; letter-spacing: 3px; color: var(--text-primary); line-height: 1; }
+  .logo span { color: var(--accent); }
+  .header-sub { font-size: 11px; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; margin-top: 2px; }
+  .header-actions { display: flex; gap: 8px; }
+  /* BUTTONS */
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; border: 1px solid var(--border); background: var(--bg-elevated); color: var(--text-secondary); transition: all .18s; text-decoration: none; white-space: nowrap; }
+  .btn:hover { border-color: var(--border-accent); color: var(--text-primary); background: var(--bg-card); }
+  .btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+  .btn-primary:hover { background: #ea6a0a; border-color: #ea6a0a; }
+  .btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+  .btn-sm { padding: 5px 10px; font-size: 12px; }
+  /* TABS */
+  .tabs { display: flex; gap: 2px; margin-bottom: 28px; background: var(--bg-surface); border-radius: var(--radius); padding: 4px; border: 1px solid var(--border); }
+  .tab { flex: 1; padding: 9px 8px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; color: var(--text-muted); cursor: pointer; text-align: center; transition: all .18s; border: none; background: transparent; font-family: 'DM Sans', sans-serif; display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .tab:hover { color: var(--text-secondary); }
+  .tab.active { background: var(--bg-card); color: var(--text-primary); box-shadow: inset 0 0 0 1px var(--border); }
+  .tab.active svg { stroke: var(--accent); }
+  .tab svg { width: 16px; height: 16px; flex-shrink: 0; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke .18s; }
+  .tab-label { display: none; }
+  @media (min-width: 480px) { .tab-label { display: inline; } }
+  /* SECTION */
+  .section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 1.5px; color: var(--text-primary); }
+  .section-subtitle { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+  /* STATS */
+  .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 24px; }
+  .stat-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
+  .stat-val { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 1px; color: var(--text-primary); line-height: 1; }
+  .stat-val.orange { color: var(--accent); }
+  .stat-label { font-size: 11px; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; }
+  /* INPUTS */
+  .select-styled { width: 100%; padding: 12px 14px; background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-primary); font-family: 'DM Sans', sans-serif; font-size: 14px; appearance: none; cursor: pointer; }
+  .select-styled:focus { outline: none; border-color: var(--border-accent); }
+  .select-styled option { background: #1c1c1c; }
+  .input-styled { width: 100%; padding: 12px 14px; background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-primary); font-family: 'DM Sans', sans-serif; font-size: 14px; }
+  .input-styled:focus { outline: none; border-color: var(--border-accent); }
+  .input-styled::placeholder { color: var(--text-muted); }
+  .input-group { flex: 1; }
+  .input-label { font-size: 11px; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+  /* LOG ENTRY */
+  .log-entry { display: flex; align-items: center; gap: 14px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 8px; transition: border-color .18s; }
+  .log-entry:hover { border-color: var(--border-accent); }
+  .log-entry-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .log-entry-name { font-weight: 500; font-size: 15px; flex: 1; }
+  .log-entry-reps { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 1px; color: var(--accent); line-height: 1; }
+  .log-entry-unit { font-size: 11px; color: var(--text-muted); text-align: right; }
+  .pr-badge { background: rgba(250,204,21,0.12); border: 1px solid rgba(250,204,21,0.3); color: var(--pr-color); font-size: 10px; font-weight: 700; letter-spacing: 1.5px; padding: 3px 7px; border-radius: 4px; text-transform: uppercase; }
+  .delete-btn { color: var(--text-muted); cursor: pointer; padding: 4px; border-radius: 4px; border: none; background: none; transition: color .18s; }
+  .delete-btn:hover { color: var(--danger); }
+  .delete-btn svg { width: 15px; height: 15px; display: block; }
+  /* EMPTY STATE */
+  .empty-state { text-align: center; padding: 48px 24px; color: var(--text-muted); font-size: 14px; }
+  .empty-state-icon { font-size: 38px; margin-bottom: 12px; }
+  .empty-state-text { margin-bottom: 6px; color: var(--text-secondary); font-weight: 500; font-size: 16px; }
+  /* INFO BAR */
+  .info-bar { background: var(--accent-subtle); border: 1px solid var(--border-accent); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 13px; color: var(--text-secondary); margin-bottom: 20px; display: flex; gap: 10px; align-items: center; }
+  .info-bar svg { width: 16px; height: 16px; stroke: var(--accent); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+  /* HISTORY */
+  .history-day-header { font-size: 11px; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; padding: 8px 0 10px; border-top: 1px solid var(--border); margin-top: 8px; }
+  .history-day-header:first-child { border-top: none; margin-top: 0; }
+  .history-entry { display: flex; align-items: center; gap: 12px; padding: 11px 14px; margin-bottom: 6px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius); }
+  .history-name { flex: 1; font-size: 14px; font-weight: 500; }
+  .history-reps { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--accent); letter-spacing: 1px; line-height: 1; }
+  .history-unit { font-size: 11px; color: var(--text-muted); }
+  /* EXERCISES */
+  .ex-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 8px; transition: border-color .18s; }
+  .ex-item:hover { border-color: var(--border-accent); }
+  .ex-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .ex-name { flex: 1; font-weight: 500; font-size: 15px; }
+  .ex-cat { font-size: 11px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; }
+  .ex-unit { font-size: 12px; color: var(--text-muted); background: var(--bg-elevated); padding: 2px 8px; border-radius: 4px; }
+  .ex-pb { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--pr-color); letter-spacing: 1px; line-height: 1; }
+  .add-exercise-form { background: var(--bg-surface); border: 1px solid var(--border-accent); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 20px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 500px) { .form-grid { grid-template-columns: 1fr; } }
+  /* PROGRESS */
+  .chart-container { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 16px; }
+  .chart-head { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px; }
+  .chart-title { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 1px; }
+  .chart-best { font-size: 12px; color: var(--text-muted); text-align: right; }
+  .chart-best span { color: var(--pr-color); font-weight: 600; }
+  .chart-wrap { position: relative; height: 180px; }
+  /* REP COUNTER */
+  .rep-counter { display: flex; align-items: center; background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .rep-btn { width: 48px; height: 48px; background: none; border: none; color: var(--text-secondary); font-size: 24px; font-weight: 300; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .15s, color .15s; flex-shrink: 0; }
+  .rep-btn:hover { background: var(--bg-elevated); color: var(--accent); }
+  .rep-input { flex: 1; text-align: center; background: none; border: none; font-family: 'Bebas Neue', sans-serif; font-size: 34px; letter-spacing: 2px; color: var(--accent); padding: 4px 0; -moz-appearance: textfield; }
+  .rep-input::-webkit-outer-spin-button, .rep-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+  .rep-input:focus { outline: none; }
+  /* MODAL */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
+  .modal-overlay.hidden { display: none; }
+  .modal { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px; width: 100%; max-width: 420px; position: relative; }
+  .modal-title { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; margin-bottom: 6px; }
+  .modal-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; }
+  .modal-close { position: absolute; top: 16px; right: 16px; background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 4px; }
+  .modal-close:hover { color: var(--text-primary); }
+  .modal-close svg { width: 20px; height: 20px; display: block; }
+  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; }
+  /* TODAY GREETING */
+  .today-greeting { margin-bottom: 24px; }
+  .today-greeting .day { font-family: 'Bebas Neue', sans-serif; font-size: 48px; letter-spacing: 2px; line-height: 1; }
+  /* TOAST */
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary); padding: 12px 20px; border-radius: var(--radius); font-size: 14px; z-index: 200; white-space: nowrap; animation: toastIn .25s ease; pointer-events: none; }
+  @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(8px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+  /* CATEGORY COLORS */
+  .cat-upper { color: #fb923c; } .dot-upper { background: #fb923c; }
+  .cat-lower { color: #34d399; } .dot-lower { background: #34d399; }
+  .cat-core   { color: #60a5fa; } .dot-core   { background: #60a5fa; }
+  .cat-full   { color: #c084fc; } .dot-full   { background: #c084fc; }
+  #importFile { display: none; }
 
-/* ══════════════════════════════════
-   TOKENS
-══════════════════════════════════ */
-:root{
-  --s0:#0C0A07; --s1:#141210; --s2:#1B1915; --s3:#222019;
-  --sb:#2A2620; --st:#C6BCA8; --sm:#5E5648;
-  --g1:#C9A85C; --g2:#E0C078; --gw:rgba(201,168,92,.09);
-  --d0:#FEFCF7; --di:#18160E; --ds:#5C5040;
-  --ru:#C8BAA0; --ac:#8B6535;
-  --ay-bg:#FFFBEA; --ay-br:#D4A015;
-  --hd-bg:#F0F9F2; --hd-br:#3AA86A;
-  --at-bg:#EDF3FC; --at-br:#4A7EC8;
-  --sw:280px;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{font-size:16px;-webkit-font-smoothing:antialiased;}
-body{font-family:'Lato','Segoe UI','Helvetica Neue',Arial,sans-serif;
-  background:var(--s0);color:var(--st);height:100vh;overflow:hidden;}
-.shell{display:flex;height:100vh;}
+  /* ─── TUTORIAL ─────────────────────────────────────────── */
+  .tut-overlay {
+    position: fixed; inset: 0; z-index: 600;
+    pointer-events: none;
+    transition: opacity .35s ease;
+  }
+  .tut-overlay.active { pointer-events: all; }
+  .tut-overlay.hidden { display: none; }
 
-/* ══ SIDEBAR ══ */
-.sidebar{width:var(--sw);min-width:var(--sw);height:100vh;
-  background:linear-gradient(170deg,#141210 0%,#0C0A07 100%);
-  border-right:1px solid var(--sb);display:flex;flex-direction:column;
-  overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--sb) transparent;}
-.sidebar::-webkit-scrollbar{width:3px;}
-.sidebar::-webkit-scrollbar-thumb{background:var(--sb);border-radius:2px;}
+  /* Solid scrim — only for centered (welcome/done) steps */
+  .tut-scrim {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.84);
+    z-index: 601;
+  }
+  .tut-scrim.hidden { display: none; }
 
-.sb-head{padding:22px 20px 18px;border-bottom:1px solid var(--sb);
-  flex-shrink:0;position:relative;}
-.sb-logo{display:flex;align-items:center;gap:11px;margin-bottom:6px;}
-.sb-hex{width:28px;height:28px;flex-shrink:0;}
-.sb-name{font-family:'Playfair Display',Georgia,serif;font-size:16px;
-  font-weight:600;color:var(--g1);letter-spacing:.01em;}
-.sb-tag{font-size:9px;color:var(--sm);letter-spacing:.13em;
-  text-transform:uppercase;padding-left:39px;}
-.sb-qbtn{position:absolute;top:16px;right:16px;width:24px;height:24px;
-  background:var(--s2);border:1px solid var(--sb);border-radius:50%;
-  color:var(--sm);font-size:12px;font-weight:700;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  transition:all .2s;}
-.sb-qbtn:hover{color:var(--g1);border-color:var(--g1);background:var(--gw);}
+  /* Four dark panels that surround the spotlight.
+     They literally leave a gap over the target — no z-index tricks. */
+  .tut-panel {
+    position: fixed;
+    background: rgba(0,0,0,0.82);
+    z-index: 601;
+    pointer-events: all;
+    transition:
+      left .35s cubic-bezier(.34,1.2,.64,1),
+      top .35s cubic-bezier(.34,1.2,.64,1),
+      width .35s cubic-bezier(.34,1.2,.64,1),
+      height .35s cubic-bezier(.34,1.2,.64,1);
+  }
 
-.sb-sec{padding:15px 20px;border-bottom:1px solid var(--sb);flex-shrink:0;}
-.sb-ttl{font-size:8.5px;font-weight:700;letter-spacing:.15em;
-  text-transform:uppercase;color:var(--sm);margin-bottom:11px;}
+  /* Glowing border drawn over the spotlight gap */
+  .tut-highlight {
+    position: fixed;
+    border-radius: 12px;
+    border: 2px solid var(--accent);
+    background: transparent;
+    box-shadow:
+      0 0 0 4px rgba(249,115,22,0.12),
+      0 0 28px rgba(249,115,22,0.35);
+    z-index: 603;
+    pointer-events: none;
+    transition: top .35s cubic-bezier(.34,1.2,.64,1),
+                left .35s cubic-bezier(.34,1.2,.64,1),
+                width .35s cubic-bezier(.34,1.2,.64,1),
+                height .35s cubic-bezier(.34,1.2,.64,1),
+                opacity .25s ease;
+  }
+  /* Pulse ring on the highlight */
+  .tut-highlight::after {
+    content: '';
+    position: absolute; inset: -6px;
+    border-radius: 16px;
+    border: 1px solid rgba(249,115,22,0.25);
+    animation: tutPulse 2s ease-in-out infinite;
+  }
+  @keyframes tutPulse {
+    0%,100% { opacity: 0.5; transform: scale(1); }
+    50%      { opacity: 0.15; transform: scale(1.04); }
+  }
 
-.fi{margin-bottom:9px;}
-.fi:last-child{margin-bottom:0;}
-.fi>label{display:block;font-size:9.5px;color:var(--sm);
-  letter-spacing:.04em;margin-bottom:4px;}
-.fi input[type=text]{width:100%;background:var(--s1);
-  border:1px solid var(--sb);border-radius:4px;
-  padding:7px 10px;color:var(--st);font-size:12px;font-family:inherit;
-  outline:none;transition:border-color .2s,box-shadow .2s;}
-.fi input[type=text]:focus{border-color:rgba(201,168,92,.5);
-  box-shadow:0 0 0 3px rgba(201,168,92,.06);}
-.fi input[type=text]::placeholder{color:var(--sm);opacity:.55;}
+  /* The tooltip card */
+  .tut-card {
+    position: fixed;
+    z-index: 603;
+    width: min(360px, calc(100vw - 32px));
+    background: var(--bg-card);
+    border: 1px solid var(--border-accent);
+    border-radius: var(--radius-lg);
+    padding: 22px 22px 18px;
+    box-shadow:
+      0 24px 64px rgba(0,0,0,0.7),
+      0 0 0 1px rgba(249,115,22,0.08),
+      inset 0 1px 0 rgba(255,255,255,0.04);
+    animation: tutCardIn .35s cubic-bezier(.34,1.56,.64,1) both;
+  }
+  @keyframes tutCardIn {
+    from { opacity:0; transform: scale(0.9) translateY(12px); }
+    to   { opacity:1; transform: scale(1) translateY(0); }
+  }
+  /* ── Mobile: full-width bottom sheet ── */
+  @media (max-width: 600px) {
+    .tut-card {
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      top: auto !important;
+      transform: none !important;
+      width: 100% !important;
+      border-radius: 20px 20px 0 0 !important;
+      border-left: none !important;
+      border-right: none !important;
+      border-bottom: none !important;
+      padding: 20px 20px 36px !important;
+      animation: tutSlideUp .35s cubic-bezier(.34,1.2,.64,1) both !important;
+    }
+    /* drag handle pill */
+    .tut-card::before {
+      content: '';
+      display: block;
+      width: 36px; height: 4px;
+      background: var(--text-muted);
+      border-radius: 2px;
+      margin: 0 auto 16px;
+      opacity: 0.4;
+    }
+    @keyframes tutSlideUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    /* arrow connector not needed on mobile */
+    .tut-arrow { display: none !important; }
+    /* keep highlight visible but don't let it push layout */
+    .tut-highlight { z-index: 603; }
+  }
 
-.pgtype{display:flex;gap:4px;margin-top:2px;}
-.pgt{flex:1;padding:6px 8px;font-size:10px;font-family:inherit;
-  background:var(--s1);border:1px solid var(--sb);border-radius:4px;
-  color:var(--sm);cursor:pointer;transition:all .2s;text-align:center;line-height:1.35;}
-.pgt:hover{background:var(--s2);border-color:rgba(201,168,92,.3);color:var(--st);}
-.pgt.on{background:var(--gw);border-color:var(--g1);color:var(--g1);}
-.pgt-sub{font-size:8.5px;opacity:.65;display:block;margin-top:1px;}
+  /* Step dots */
+  .tut-dots {
+    display: flex; gap: 5px; margin-bottom: 14px; align-items: center;
+  }
+  .tut-dot {
+    height: 5px; width: 5px; border-radius: 99px;
+    background: var(--text-muted);
+    transition: width .25s ease, background .25s ease;
+  }
+  .tut-dot.active { width: 20px; background: var(--accent); }
 
-.pg-row{margin-top:9px;}
-.pg-inner{display:flex;align-items:center;gap:10px;margin-top:4px;}
-.pg-inner input{width:64px;background:var(--s1);border:1px solid var(--sb);
-  border-radius:4px;padding:6px 10px;color:var(--st);font-size:13px;
-  font-family:'Courier New',monospace;font-weight:600;outline:none;
-  text-align:center;transition:border-color .2s;}
-.pg-inner input:focus{border-color:rgba(201,168,92,.5);}
-.pg-hint{font-size:10.5px;color:var(--sm);}
-.pg-hint em{color:var(--st);font-style:normal;font-weight:600;}
+  /* Step number badge */
+  .tut-step-badge {
+    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--accent); font-weight: 600;
+    margin-left: auto;
+  }
 
-/* Legend */
-.legend{display:flex;flex-direction:column;gap:5px;}
-.leg{display:flex;align-items:center;gap:10px;padding:8px 10px;
-  background:var(--s1);border:1px solid var(--sb);border-radius:4px;
-  cursor:pointer;user-select:none;transition:border-color .2s,background .2s;}
-.leg:hover{background:var(--s2);border-color:rgba(201,168,92,.3);}
-.leg.on{border-color:var(--g1);background:var(--gw);}
-.ldot{width:12px;height:12px;border-radius:3px;flex-shrink:0;
-  box-shadow:0 0 8px rgba(255,255,255,.08);}
-.lb{flex:1;min-width:0;}
-.ln{font-size:12px;color:var(--st);}
-.ls{font-size:9.5px;color:var(--sm);margin-top:1px;}
+  .tut-card-icon {
+    font-size: 32px; line-height: 1; margin-bottom: 10px;
+  }
+  .tut-card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px; letter-spacing: 2px; line-height: 1.1;
+    margin-bottom: 8px; color: var(--text-primary);
+  }
+  .tut-card-title em { color: var(--accent); font-style: normal; }
+  .tut-card-body {
+    font-size: 13.5px; color: var(--text-secondary);
+    line-height: 1.65; margin-bottom: 18px;
+  }
 
-/* Key badges */
-.lk{font-family:'Courier New',Courier,monospace;font-size:9.5px;
-  color:var(--st);letter-spacing:.02em;
-  background:linear-gradient(to bottom,var(--s2),var(--s1));
-  border:1px solid var(--sb);border-bottom:2px solid var(--s0);
-  padding:2px 7px;border-radius:3px;flex-shrink:0;white-space:nowrap;}
+  /* Arrow connector between card and highlight */
+  .tut-arrow {
+    position: fixed; z-index: 602;
+    width: 0; height: 0; pointer-events: none;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+  }
+  .tut-arrow.down { border-top: 9px solid var(--border-accent); }
+  .tut-arrow.up   { border-bottom: 9px solid var(--border-accent); }
 
-.cur{display:flex;align-items:center;gap:9px;padding:7px 10px;
-  background:var(--s1);border:1px solid var(--sb);border-radius:4px;
-  margin-top:10px;font-size:11px;}
-.cur-dot{width:9px;height:9px;border-radius:3px;background:var(--sb);
-  transition:background .25s,box-shadow .25s;flex-shrink:0;}
-.cur-lbl{color:var(--sm);}
-.cur-val{color:var(--st);}
+  .tut-actions { display: flex; align-items: center; gap: 8px; }
+  .tut-skip {
+    font-size: 12px; color: var(--text-muted); cursor: pointer;
+    background: none; border: none; font-family: 'DM Sans', sans-serif;
+    margin-right: auto; padding: 4px 0;
+    transition: color .15s;
+  }
+  .tut-skip:hover { color: var(--text-secondary); }
 
-.sb-btns{display:flex;flex-direction:column;gap:6px;}
-.sbtn{width:100%;padding:9px 13px;border:1px solid var(--sb);border-radius:4px;
-  background:var(--s1);color:var(--st);font-size:12.5px;font-family:inherit;
-  cursor:pointer;display:flex;align-items:center;gap:9px;
-  transition:background .2s,border-color .2s,color .2s;}
-.sbtn:hover{background:var(--s2);border-color:rgba(201,168,92,.3);color:var(--g1);}
-.sbtn.gold{background:linear-gradient(135deg,var(--g1),#b8943c);
-  border-color:var(--g1);color:#0C0A07;font-weight:700;}
-.sbtn.gold:hover{background:linear-gradient(135deg,var(--g2),var(--g1));color:#0C0A07;}
-.sico{font-size:14px;line-height:1;}
-
-.scts{display:flex;flex-direction:column;gap:5px;}
-.sct{display:flex;justify-content:space-between;align-items:center;font-size:11px;}
-.sct-l{color:var(--sm);}
-.sct-k{font-family:'Courier New',monospace;font-size:9px;color:var(--st);
-  background:linear-gradient(to bottom,var(--s2),var(--s1));
-  border:1px solid var(--sb);border-bottom:2px solid var(--s0);
-  padding:2px 7px;border-radius:3px;letter-spacing:.02em;}
-
-.sb-foot{margin-top:auto;padding:11px 20px;font-size:9px;color:var(--sm);
-  letter-spacing:.04em;border-top:1px solid var(--sb);flex-shrink:0;}
-
-/* ══ PREVIEW ══ */
-.preview{flex:1;overflow-y:auto;background-color:#131110;
-  background-image:linear-gradient(rgba(255,255,255,.016) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.016) 1px,transparent 1px);
-  background-size:28px 28px;
-  display:flex;justify-content:center;padding:40px 32px 100px;
-  scrollbar-width:thin;scrollbar-color:#252220 transparent;}
-.preview::-webkit-scrollbar{width:7px;}
-.preview::-webkit-scrollbar-thumb{background:#252220;border-radius:4px;}
-.preview::-webkit-scrollbar-thumb:hover{background:#352E28;}
-
-.pages-cnt{display:flex;flex-direction:column;align-items:center;
-  gap:28px;width:794px;flex-shrink:0;}
-
-/* ══ A4 ══ */
-@keyframes pg-in{
-  from{opacity:0;transform:translateY(28px);}
-  to  {opacity:1;transform:translateY(0);}
-}
-.a4{width:794px;background:var(--d0);
-  padding:52px 64px 50px;flex-shrink:0;
-  box-shadow:0 0 0 1px rgba(0,0,0,.22),0 4px 18px rgba(0,0,0,.32),
-    0 16px 52px rgba(0,0,0,.28),0 40px 80px rgba(0,0,0,.18);}
-.a4.new{animation:pg-in .42s cubic-bezier(.22,.8,.36,1) both;}
-
-.page-body{min-height:768px;}
-.a4:not([data-page="1"]) .page-body{min-height:888px;}
-
-.page-body.empty::before{
-  content:'Click  +  in the sidebar to add a block, or  ?  for the tutorial.';
-  display:block;text-align:center;margin-top:52px;padding:0 48px;
-  color:rgba(92,80,64,.22);font-style:italic;font-size:13px;line-height:1.7;
-  pointer-events:none;user-select:none;}
-
-/* ─ Full header ─ */
-.doc-head{text-align:center;margin-bottom:28px;}
-.orn{display:block;width:320px;height:28px;margin:0 auto 20px;}
-
-.doc-title{font-family:'Playfair Display',Georgia,serif;font-size:27px;
-  font-weight:600;font-style:italic;color:var(--di);text-align:center;
-  outline:none;border-bottom:1.5px solid transparent;
-  padding:2px 8px 5px;transition:border-color .25s;
-  word-break:break-word;white-space:pre-wrap;min-height:40px;cursor:text;line-height:1.25;}
-.doc-title:hover,.doc-title:focus{border-bottom-color:rgba(200,186,160,.5);}
-
-.meta-row{display:flex;justify-content:center;align-items:baseline;
-  gap:6px;margin-top:11px;flex-wrap:wrap;}
-.doc-meta{font-family:'Lato',Arial,sans-serif;font-size:11px;font-weight:300;
-  letter-spacing:.12em;text-transform:uppercase;color:var(--ds);text-align:center;
-  outline:none;border-bottom:1px solid transparent;padding:1px 5px;
-  min-width:44px;max-width:270px;word-break:break-word;
-  white-space:pre-wrap;cursor:text;transition:border-color .25s;}
-.doc-meta:hover,.doc-meta:focus{border-bottom-color:rgba(200,186,160,.45);}
-.msep{color:var(--ru);font-size:14px;pointer-events:none;line-height:2;}
-.rule-svg{display:block;width:100%;height:18px;margin-top:20px;}
-
-/* ─ Mini header ─ */
-.pmini{display:flex;align-items:center;gap:12px;margin-bottom:24px;
-  font-family:'Lato',Arial,sans-serif;font-size:9.5px;font-weight:300;
-  letter-spacing:.14em;text-transform:uppercase;color:var(--ru);}
-.pmini::before,.pmini::after{content:'';flex:1;height:1px;
-  background:linear-gradient(to right,transparent,var(--ru),transparent);opacity:.45;}
-.pmh-sep{opacity:.4;}
-.a4[data-page="1"] .p1mini{display:none;}
-.a4[data-page="1"] .doc-head{display:block;}
-.a4[data-page="1"].cont .doc-head{display:none;}
-.a4[data-page="1"].cont .p1mini{display:flex;}
-
-/* ─ Blocks ─ */
-.block{position:relative;display:flex;align-items:stretch;
-  margin-bottom:3px;border-radius:3px;transition:background-color .2s;}
-@keyframes type-flash{0%{opacity:.6;}100%{opacity:1;}}
-.block.flashed{animation:type-flash .3s ease;}
-
-/* LEFT BAR — clickable to cycle type */
-.bar{width:4px;flex-shrink:0;border-radius:3px 0 0 3px;
-  background:transparent;transition:background .2s;
-  cursor:pointer;}
-.bar:hover{filter:brightness(1.3);}
-.bar::after{content:'';position:absolute;left:0;top:0;bottom:0;width:10px;}
-
-.block-text{flex:1;min-height:40px;padding:9px 44px 9px 13px;
-  font-family:'Lato','Segoe UI',Arial,sans-serif;
-  font-size:13px;line-height:1.9;color:var(--di);outline:none;
-  word-break:break-word;direction:ltr;text-align:left;}
-[contenteditable][data-ph]:empty::before{content:attr(data-ph);
-  color:rgba(92,80,64,.24);pointer-events:none;font-style:italic;}
-.block.focused{box-shadow:0 0 0 1.5px rgba(139,101,53,.14),
-  inset 1px 0 0 rgba(139,101,53,.06);}
-
-.block[data-type=ayah]   {background-color:var(--ay-bg);}
-.block[data-type=ayah]   .bar{background:var(--ay-br);}
-.block[data-type=hadith] {background-color:var(--hd-bg);}
-.block[data-type=hadith] .bar{background:var(--hd-br);}
-.block[data-type=athar]  {background-color:var(--at-bg);}
-.block[data-type=athar]  .bar{background:var(--at-br);}
-.block[data-type=note]   {background-color:transparent;}
-
-.block-tools{position:absolute;right:6px;top:50%;transform:translateY(-50%);
-  display:none;gap:2px;z-index:10;}
-.block:hover .block-tools{display:flex;}
-.bt{width:20px;height:20px;background:rgba(255,255,255,.92);
-  border:1px solid rgba(200,186,160,.55);border-radius:3px;cursor:pointer;
-  font-size:9px;color:var(--ds);display:flex;align-items:center;justify-content:center;
-  box-shadow:0 1px 3px rgba(0,0,0,.08);transition:color .15s,border-color .15s;}
-.bt:hover{color:var(--ac);border-color:var(--ac);}
-
-/* ─ Footer ─ */
-.doc-foot{display:flex;align-items:center;justify-content:space-between;
-  margin-top:36px;padding-top:12px;border-top:1px solid var(--ru);}
-.ft{font-size:9.5px;color:var(--ru);letter-spacing:.08em;
-  max-width:230px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.fo{width:50px;height:12px;flex-shrink:0;}
-
-/* ══ TOAST ══ */
-.toast{position:fixed;bottom:24px;right:408px;background:var(--s2);
-  border:1px solid var(--sb);border-left:3px solid var(--g1);
-  color:var(--st);font-size:12px;padding:9px 16px;border-radius:4px;
-  box-shadow:0 4px 24px rgba(0,0,0,.55);opacity:0;transform:translateY(8px);
-  transition:opacity .2s,transform .2s;pointer-events:none;z-index:9999;}
-.toast.show{opacity:1;transform:translateY(0);}
-
-/* ══ HOTKEY FLASH OVERLAY ══ */
-@keyframes hk-flash{
-  0%{opacity:0;transform:scale(.92);}
-  30%{opacity:1;transform:scale(1);}
-  100%{opacity:0;transform:scale(1.02);}
-}
-.hk-badge{
-  position:fixed;bottom:80px;right:408px;
-  background:var(--g1);color:#0C0A07;
-  font-family:'Playfair Display',Georgia,serif;
-  font-size:14px;font-weight:600;font-style:italic;
-  padding:8px 18px;border-radius:20px;
-  box-shadow:0 4px 24px rgba(201,168,92,.4);
-  opacity:0;pointer-events:none;z-index:9998;
-  animation:hk-flash .65s ease both;
-}
-
-/* ══ TUTORIAL HIGHLIGHT ══ */
-@keyframes hl-pulse{
-  0%,100%{outline-color:rgba(201,168,92,.9);}
-  50%{outline-color:rgba(201,168,92,.25);}
-}
-.tut-hl{outline:2.5px solid var(--g1)!important;outline-offset:5px!important;
-  animation:hl-pulse 2s ease-in-out infinite!important;
-  position:relative!important;z-index:20!important;border-radius:4px!important;}
-
-/* ══ TUTORIAL CARD ══ */
-@keyframes tut-in{
-  from{opacity:0;transform:translateY(24px);}
-  to  {opacity:1;transform:translateY(0);}
-}
-.tut-card{position:fixed;bottom:28px;right:28px;width:366px;
-  background:linear-gradient(160deg,#191510,#100D09);
-  border:1px solid var(--sb);border-top:3px solid var(--g1);
-  border-radius:6px;
-  box-shadow:0 24px 64px rgba(0,0,0,.75),0 4px 16px rgba(0,0,0,.5),
-    inset 0 1px 0 rgba(255,255,255,.02);
-  z-index:500;overflow:hidden;
-  animation:tut-in .45s cubic-bezier(.22,.8,.36,1) backwards;
-  transition:opacity .28s,transform .28s;}
-.tut-card.gone{opacity:0;transform:translateY(16px);pointer-events:none;}
-.tut-prog{height:3px;background:rgba(201,168,92,.1);}
-.tut-fill{height:100%;background:linear-gradient(to right,var(--g1),var(--g2));transition:width .5s ease;}
-.tut-inner{padding:18px 20px 16px;}
-.tut-dots{display:flex;gap:5px;margin-bottom:12px;}
-.tut-dot{width:5px;height:5px;border-radius:50%;background:var(--sb);transition:background .25s,transform .25s;}
-.tut-dot.d{background:rgba(201,168,92,.3);}
-.tut-dot.a{background:var(--g1);transform:scale(1.6);}
-.tut-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;
-  color:var(--sm);margin-bottom:6px;min-height:14px;}
-.tut-ttl{font-family:'Playfair Display',Georgia,serif;font-size:16px;font-weight:600;
-  color:var(--st);margin-bottom:9px;line-height:1.3;}
-.tut-desc{font-size:12px;color:var(--sm);line-height:1.75;margin-bottom:10px;}
-.tut-hint{font-size:11px;color:rgba(200,188,170,.8);background:rgba(201,168,92,.05);
-  border:1px solid rgba(201,168,92,.13);border-left:2px solid rgba(201,168,92,.35);
-  border-radius:3px;padding:8px 11px;line-height:1.65;margin-bottom:13px;display:none;}
-.tut-hint.on{display:block;}
-.tut-hint strong{color:var(--g1);}
-.tut-foot{display:flex;align-items:center;justify-content:space-between;
-  padding-top:11px;border-top:1px solid var(--sb);}
-.tut-skip{font-size:11px;color:var(--sm);background:none;border:none;
-  cursor:pointer;font-family:inherit;padding:0;transition:color .2s;}
-.tut-skip:hover{color:var(--st);}
-.tut-nav{display:flex;gap:7px;}
-.tbtn{padding:6px 16px;border-radius:4px;font-size:12px;font-family:inherit;
-  cursor:pointer;transition:background .2s,color .2s,border-color .2s;}
-.tg{background:none;border:1px solid var(--sb);color:var(--sm);}
-.tg:hover:not(:disabled){border-color:rgba(201,168,92,.4);color:var(--st);}
-.tg:disabled{opacity:.2;cursor:default;}
-.tp{background:linear-gradient(135deg,var(--g1),#b8943c);border:1px solid var(--g1);
-  color:#0C0A07;font-weight:700;}
-.tp:hover{background:linear-gradient(135deg,var(--g2),var(--g1));}
-
-/* ══ PRINT ══ */
-@media print{
-  @page{size:A4 portrait;margin:20mm;}
-  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important;}
-  html,body{overflow:visible!important;background:white!important;height:auto!important;}
-  .sidebar,.toast,.tut-card,.block-tools,.hk-badge{display:none!important;}
-  .shell{display:block!important;}
-  .preview{display:block!important;padding:0!important;background:white!important;
-    background-image:none!important;overflow:visible!important;}
-  .pages-cnt{display:block!important;width:100%!important;}
-  .a4{width:100%!important;padding:0!important;box-shadow:none!important;
-    animation:none!important;page-break-after:always!important;break-after:page!important;}
-  .a4:last-child{page-break-after:auto!important;break-after:auto!important;}
-  .page-body{min-height:auto!important;}
-  .page-body.empty::before{display:none!important;}
-  .block{page-break-inside:avoid!important;break-inside:avoid!important;}
-  .block[data-type=ayah]  {background-color:var(--ay-bg)!important;}
-  .block[data-type=hadith]{background-color:var(--hd-bg)!important;}
-  .block[data-type=athar] {background-color:var(--at-bg)!important;}
-  .block[data-type=ayah]  .bar{background:var(--ay-br)!important;}
-  .block[data-type=hadith].bar{background:var(--hd-br)!important;}
-  .block[data-type=athar] .bar{background:var(--at-br)!important;}
-  .doc-title,.doc-meta{border-color:transparent!important;}
-  .block.focused,.tut-hl{outline:none!important;box-shadow:none!important;animation:none!important;}
-  [contenteditable][data-ph]:empty::before{content:''!important;}
-  .a4[data-page="1"].cont .doc-head{display:none!important;}
-  .a4[data-page="1"].cont .p1mini{display:flex!important;}
-}
+  /* Welcome step decoration */
+  .tut-welcome-deco {
+    display: flex; align-items: center; justify-content: center;
+    gap: 0; margin-bottom: 16px;
+  }
+  .tut-logo-big {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 44px; letter-spacing: 4px; line-height: 1;
+    color: var(--text-primary);
+  }
+  .tut-logo-big span { color: var(--accent); }
+  .tut-divider {
+    height: 1px; background: linear-gradient(90deg, transparent, var(--border-accent), transparent);
+    margin: 12px 0 14px;
+  }
 </style>
 </head>
 <body>
-<div class="shell">
-
-<!-- ══════════ SIDEBAR ══════════ -->
-<aside class="sidebar">
-  <div class="sb-head">
-    <div class="sb-logo">
-      <svg class="sb-hex" viewBox="0 0 28 28" fill="none">
-        <polygon points="14,1.5 25.5,7.75 25.5,20.25 14,26.5 2.5,20.25 2.5,7.75"
-                 stroke="#C9A85C" stroke-width="1.1" fill="none"/>
-        <polygon points="14,6.5 21,10.75 21,19.25 14,23.5 7,19.25 7,10.75"
-                 stroke="#C9A85C" stroke-width="0.65" fill="none" opacity=".38"/>
-        <circle cx="14" cy="14" r="2.8" fill="#C9A85C" opacity=".6"/>
-      </svg>
-      <span class="sb-name">Talib al-ʿIlm</span>
+<div class="app-wrapper">
+  <!-- HEADER -->
+  <div class="header">
+    <div>
+      <div class="logo">MAX<span>OUT</span></div>
+      <div class="header-sub">Ein Satz. Alles geben إن شاء الله</div>
     </div>
-    <div class="sb-tag">Islamic Study Notes</div>
-    <button class="sb-qbtn" id="tut-btn" title="Open interactive tutorial">?</button>
-  </div>
-
-  <div class="sb-sec">
-    <div class="sb-ttl">Document</div>
-    <div class="fi"><label for="i-title">Book Title</label>
-      <input id="i-title" type="text" placeholder="e.g. Kitāb at-Tawḥīd" autocomplete="off" spellcheck="false"></div>
-    <div class="fi"><label for="i-author">Author</label>
-      <input id="i-author" type="text" placeholder="e.g. Ibn ʿAbd al-Wahhāb" autocomplete="off" spellcheck="false"></div>
-    <div class="fi"><label for="i-chapter">Chapter / Section</label>
-      <input id="i-chapter" type="text" placeholder="e.g. Chapter 1" autocomplete="off" spellcheck="false"></div>
-    <div class="fi">
-      <label>First Page Layout</label>
-      <div class="pgtype">
-        <button class="pgt on" data-pt="chapter" id="pgt-ch">
-          Title Page<span class="pgt-sub">Ornament header</span>
-        </button>
-        <button class="pgt" data-pt="cont" id="pgt-co">
-          Continuation<span class="pgt-sub">Minimal header</span>
-        </button>
-      </div>
-    </div>
-    <div class="fi pg-row" id="pg-row" style="display:none;">
-      <label>Which page number is this?</label>
-      <div class="pg-inner">
-        <input id="pg-start" type="number" min="1" value="2" placeholder="2">
-        <span class="pg-hint">= <em id="pg-prev">Page 2</em></span>
-      </div>
+    <div class="header-actions" id="headerActions">
+      <button class="btn btn-sm" onclick="exportData()" title="Exportieren">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      </button>
+      <button class="btn btn-sm" onclick="document.getElementById('importFile').click()" title="Importieren">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      </button>
+      <input type="file" id="importFile" accept=".json" onchange="importData(event)">
     </div>
   </div>
-
-  <div class="sb-sec">
-    <div class="sb-ttl">Note Types &nbsp;·&nbsp; click legend or use Alt+key</div>
-    <div class="legend" id="legend">
-      <div class="leg" data-type="ayah">
-        <div class="ldot" style="background:#D4A015;box-shadow:0 0 8px rgba(212,160,21,.35);"></div>
-        <div class="lb"><div class="ln">Āyah</div><div class="ls">Quranic Verse</div></div>
-        <div class="lk">Alt+1</div>
-      </div>
-      <div class="leg" data-type="hadith">
-        <div class="ldot" style="background:#3AA86A;box-shadow:0 0 8px rgba(58,168,106,.35);"></div>
-        <div class="lb"><div class="ln">Ḥadīth</div><div class="ls">Prophetic Narration</div></div>
-        <div class="lk">Alt+2</div>
-      </div>
-      <div class="leg" data-type="athar">
-        <div class="ldot" style="background:#4A7EC8;box-shadow:0 0 8px rgba(74,126,200,.35);"></div>
-        <div class="lb"><div class="ln">Athar / Sharḥ</div><div class="ls">Scholar Commentary</div></div>
-        <div class="lk">Alt+3</div>
-      </div>
-      <div class="leg" data-type="note">
-        <div class="ldot" style="background:#3A3530;border:1px solid #4A4540;"></div>
-        <div class="lb"><div class="ln">Note</div><div class="ls">Personal Analysis</div></div>
-        <div class="lk">Alt+0</div>
+  <!-- TABS -->
+  <div class="tabs" id="mainTabs">
+    <button class="tab active" onclick="switchTab('today',this)">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <span class="tab-label">Heute</span>
+    </button>
+    <button class="tab" onclick="switchTab('history',this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span class="tab-label">Historie</span>
+    </button>
+    <button class="tab" id="tabExercises" onclick="switchTab('exercises',this)">
+      <svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+      <span class="tab-label">Übungen</span>
+    </button>
+    <button class="tab" onclick="switchTab('progress',this)">
+      <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      <span class="tab-label">Fortschritt</span>
+    </button>
+  </div>
+  <!-- TODAY -->
+  <div id="tab-today">
+    <div class="today-greeting">
+      <div class="day" id="todayLabel">Heute</div>
+    </div>
+    <div class="stats-row" id="statsRow">
+      <div class="stat-card"><div class="stat-val orange" id="statToday">0</div><div class="stat-label">Heute</div></div>
+      <div class="stat-card"><div class="stat-val" id="statStreak">0</div><div class="stat-label">Tage Serie</div></div>
+      <div class="stat-card"><div class="stat-val" id="statTotal">0</div><div class="stat-label">Gesamt</div></div>
+    </div>
+    <div class="info-bar">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Geh in jedem Satz bis zu deinem absoluten Maximum — kein Reps übrig lassen.
+    </div>
+    <div class="section-head" id="todaySectionHead">
+      <div class="section-title">Heutiges Training</div>
+      <button class="btn btn-primary btn-sm" id="newSetBtn" onclick="openLogModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Neuer Satz
+      </button>
+    </div>
+    <div id="todayLogs"></div>
+  </div>
+  <!-- HISTORY -->
+  <div id="tab-history" style="display:none">
+    <div class="section-head">
+      <div>
+        <div class="section-title">Trainingshistorie</div>
+        <div class="section-subtitle" id="historyCount">—</div>
       </div>
     </div>
-    <div class="cur" id="cur">
-      <div class="cur-dot" id="cur-dot"></div>
-      <span class="cur-lbl">Active block:&nbsp;</span>
-      <span class="cur-val" id="cur-val">—</span>
-    </div>
+    <div id="historyList"></div>
   </div>
-
-  <div class="sb-sec">
-    <div class="sb-ttl">Actions</div>
-    <div class="sb-btns">
-      <button class="sbtn" id="btn-add"><span class="sico">＋</span> Add Block</button>
-      <button class="sbtn gold" id="btn-print"><span class="sico">⎙</span> Print / Save as PDF</button>
-    </div>
-  </div>
-
-  <div class="sb-sec">
-    <div class="sb-ttl">Keyboard Shortcuts</div>
-    <div class="scts">
-      <div class="sct"><span class="sct-l">New block</span>          <span class="sct-k">Enter</span></div>
-      <div class="sct"><span class="sct-l">Line break</span>          <span class="sct-k">Shift+Enter</span></div>
-      <div class="sct"><span class="sct-l">Delete empty block</span>  <span class="sct-k">⌫</span></div>
-      <div class="sct"><span class="sct-l">Reorder block</span>        <span class="sct-k">Shift+↑↓</span></div>
-      <div class="sct"><span class="sct-l">→ Āyah</span>              <span class="sct-k">Alt+1</span></div>
-      <div class="sct"><span class="sct-l">→ Ḥadīth</span>            <span class="sct-k">Alt+2</span></div>
-      <div class="sct"><span class="sct-l">→ Athar / Sharḥ</span>     <span class="sct-k">Alt+3</span></div>
-      <div class="sct"><span class="sct-l">→ Note</span>              <span class="sct-k">Alt+0</span></div>
-      <div class="sct"><span class="sct-l">Cycle type (mouse)</span>   <span class="sct-k">Click bar ▌</span></div>
-      <div class="sct"><span class="sct-l">Print / PDF</span>          <span class="sct-k">Ctrl+P</span></div>
-    </div>
-  </div>
-
-  <div class="sb-foot">
-    Click <strong style="color:var(--sm);">?</strong> for the interactive tutorial.
-    <br>Alt = Option on Mac.
-  </div>
-</aside>
-
-<!-- ══════════ PREVIEW ══════════ -->
-<main class="preview" id="preview">
-  <div class="pages-cnt" id="pages">
-
-    <div class="a4" data-page="1">
-      <!-- Mini-header (Continuation mode) -->
-      <div class="pmini p1mini" id="p1mini">
-        <span class="pmh"></span>
-        <span class="pmh-sep">·</span>
-        <span class="pg-lbl">Page 1</span>
+  <!-- EXERCISES -->
+  <div id="tab-exercises" style="display:none">
+    <div class="section-head">
+      <div>
+        <div class="section-title">Übungsbibliothek</div>
+        <div class="section-subtitle" id="exercisesCount">—</div>
       </div>
-      <!-- Full header (Title Page mode) -->
-      <header class="doc-head" id="doc-head">
-        <svg class="orn" viewBox="0 0 320 28" fill="none">
-          <line x1="0" y1="14" x2="110" y2="14" stroke="#C8BAA0" stroke-width=".6"/>
-          <polygon points="124,6 132,14 124,22 116,14" fill="none" stroke="#C8BAA0" stroke-width=".75" opacity=".6"/>
-          <polygon points="160,2 174,14 160,26 146,14" fill="rgba(200,186,160,.12)" stroke="#C8BAA0" stroke-width="1"/>
-          <polygon points="196,6 204,14 196,22 188,14" fill="none" stroke="#C8BAA0" stroke-width=".75" opacity=".6"/>
-          <line x1="210" y1="14" x2="320" y2="14" stroke="#C8BAA0" stroke-width=".6"/>
-        </svg>
-        <div class="doc-title" id="doc-title" contenteditable="true"
-             spellcheck="false" data-ph="Book Title" aria-label="Book title"></div>
-        <div class="meta-row">
-          <div class="doc-meta" id="doc-author" contenteditable="true"
-               spellcheck="false" data-ph="Author" aria-label="Author"></div>
-          <span class="msep" id="meta-sep" style="display:none;">·</span>
-          <div class="doc-meta" id="doc-chapter" contenteditable="true"
-               spellcheck="false" data-ph="Chapter" aria-label="Chapter"></div>
+      <button class="btn btn-primary btn-sm" onclick="toggleAddForm()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Hinzufügen
+      </button>
+    </div>
+    <div class="add-exercise-form" id="addExerciseForm" style="display:none">
+      <div class="section-title" style="font-size:18px;margin-bottom:16px">Neue Übung</div>
+      <div class="form-grid">
+        <div class="input-group">
+          <div class="input-label">Name</div>
+          <input type="text" class="input-styled" id="newExName" placeholder="z.B. Klimmzüge" onkeydown="if(event.key==='Enter')addExercise()">
         </div>
-        <svg class="rule-svg" viewBox="0 0 666 18" fill="none">
-          <line x1="0" y1="9" x2="302" y2="9" stroke="#C8BAA0" stroke-width=".5"/>
-          <polygon points="312,4 318,9 312,14 306,9" fill="none" stroke="#C8BAA0" stroke-width=".65" opacity=".65"/>
-          <polygon points="333,3 340,9 333,15 326,9" fill="rgba(200,186,160,.18)" stroke="#C8BAA0" stroke-width=".75"/>
-          <polygon points="354,4 360,9 354,14 348,9" fill="none" stroke="#C8BAA0" stroke-width=".65" opacity=".65"/>
-          <line x1="364" y1="9" x2="666" y2="9" stroke="#C8BAA0" stroke-width=".5"/>
-        </svg>
-      </header>
-      <div class="page-body empty" id="body-1"></div>
-      <footer class="doc-foot">
-        <span class="ft pft" id="ft1"></span>
-        <svg class="fo" viewBox="0 0 50 12" fill="none">
-          <line x1="0" y1="6" x2="17" y2="6" stroke="#C8BAA0" stroke-width=".55"/>
-          <polygon points="25,1 32,6 25,11 18,6" fill="rgba(200,186,160,.12)" stroke="#C8BAA0" stroke-width=".65"/>
-          <line x1="33" y1="6" x2="50" y2="6" stroke="#C8BAA0" stroke-width=".55"/>
-        </svg>
-        <span class="ft pg-lbl">Page 1</span>
-      </footer>
+        <div class="input-group">
+          <div class="input-label">Kategorie</div>
+          <select class="select-styled" id="newExCat">
+            <option value="upper">Oberkörper</option>
+            <option value="lower">Unterkörper</option>
+            <option value="core">Core</option>
+            <option value="full">Ganzkörper</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <div class="input-label">Einheit</div>
+          <select class="select-styled" id="newExUnit">
+            <option value="Wdh.">Wiederholungen</option>
+            <option value="Sek.">Sekunden</option>
+            <option value="m">Meter</option>
+          </select>
+        </div>
+        <div class="input-group" style="display:flex;align-items:flex-end;gap:8px">
+          <button class="btn btn-primary" style="flex:1;justify-content:center" onclick="addExercise()">Speichern</button>
+          <button class="btn" onclick="toggleAddForm()">Abbrechen</button>
+        </div>
+      </div>
     </div>
-
+    <div id="exerciseList"></div>
   </div>
-</main>
+  <!-- PROGRESS -->
+  <div id="tab-progress" style="display:none">
+    <div class="section-head">
+      <div>
+        <div class="section-title">Fortschritt</div>
+        <div class="section-subtitle">Persönliche Bestleistung pro Übung</div>
+      </div>
+    </div>
+    <div id="progressCharts"></div>
+  </div>
+</div><!-- /app-wrapper -->
+
+<!-- LOG MODAL -->
+<div class="modal-overlay hidden" id="logModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeLogModal()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="modal-title">Satz <span style="color:var(--accent)">Loggen</span></div>
+    <div class="modal-sub">Ein Satz — raus aus der Komfortzone</div>
+    <div class="input-group" style="margin-bottom:14px">
+      <div class="input-label">Übung</div>
+      <select class="select-styled" id="logExerciseSelect" onchange="updateLogModal()"></select>
+    </div>
+    <div class="input-group" style="margin-bottom:20px">
+      <div class="input-label" id="logRepLabel">Wiederholungen (Max)</div>
+      <div class="rep-counter">
+        <button class="rep-btn" onclick="adjustRep(-1)">−</button>
+        <input type="number" class="rep-input" id="logReps" value="10" min="0" max="9999">
+        <button class="rep-btn" onclick="adjustRep(1)">+</button>
+      </div>
+    </div>
+    <div id="logPRInfo" style="display:none" class="info-bar">
+      <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      <span id="logPRText">—</span>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeLogModal()">Abbrechen</button>
+      <button class="btn btn-primary" onclick="saveLog()">Speichern</button>
+    </div>
+  </div>
 </div>
 
-<div class="toast" id="toast"></div>
-
-<!-- ══════════ TUTORIAL ══════════ -->
-<div class="tut-card gone" id="tut">
-  <div class="tut-prog"><div class="tut-fill" id="tf"></div></div>
-  <div class="tut-inner">
-    <div class="tut-dots" id="tdots"></div>
-    <div class="tut-lbl"  id="tlbl"></div>
-    <h2  class="tut-ttl"  id="tttl"></h2>
-    <p   class="tut-desc" id="tdesc"></p>
-    <div class="tut-hint" id="thint"></div>
-    <div class="tut-foot">
-      <button class="tut-skip" id="tskip">Close (Esc)</button>
-      <div class="tut-nav">
-        <button class="tbtn tg" id="tback" disabled>← Back</button>
-        <button class="tbtn tp" id="tnext">Next →</button>
-      </div>
+<!-- ═══════════════ TUTORIAL OVERLAY ═══════════════ -->
+<div class="tut-overlay hidden" id="tutOverlay">
+  <div class="tut-scrim hidden" id="tutScrim"></div>
+  <div class="tut-panel" id="tutPanelTop"></div>
+  <div class="tut-panel" id="tutPanelBottom"></div>
+  <div class="tut-panel" id="tutPanelLeft"></div>
+  <div class="tut-panel" id="tutPanelRight"></div>
+  <div class="tut-highlight" id="tutHighlight" style="opacity:0"></div>
+  <div class="tut-arrow" id="tutArrow" style="opacity:0"></div>
+  <div class="tut-card" id="tutCard">
+    <div class="tut-dots" id="tutDots"></div>
+    <div class="tut-card-icon" id="tutIcon" style="display:none"></div>
+    <div class="tut-card-title" id="tutTitle"></div>
+    <div class="tut-card-body"  id="tutBody"></div>
+    <div class="tut-actions">
+      <button class="tut-skip" id="tutSkipBtn" onclick="skipTutorial()">Überspringen</button>
+      <button class="btn" id="tutNextBtn" onclick="nextTutorialStep()">Weiter →</button>
     </div>
   </div>
 </div>
 
 <script>
-'use strict';
-
-/* ══════════════════════════════════════════
-   TYPES CONFIG
-══════════════════════════════════════════ */
-const TYPES = {
-  note:  {label:'Note',          ph:'Enter your analysis or notes…', dot:'#3A3530', order:0},
-  ayah:  {label:'Āyah',          ph:'Enter Quranic verse…',          dot:'#D4A015', order:1},
-  hadith:{label:'Ḥadīth',        ph:'Enter Ḥadīth narration…',       dot:'#3AA86A', order:2},
-  athar: {label:'Athar / Sharḥ', ph:'Enter scholar commentary…',     dot:'#4A7EC8', order:3},
-};
-const TYPE_CYCLE = ['note','ayah','hadith','athar'];
-
-/* Page limits */
-const PGN   = 870;
-let pgType  = 'chapter';
-let pgStart = 2;
-const pg1Lim = () => pgType === 'cont' ? PGN : 710;
-const pgLabel = n => pgType === 'cont' ? 'Page '+(pgStart+n-1) : 'Page '+n;
-
-/* Footer SVG template */
-const FSVG = `<svg class="fo" viewBox="0 0 50 12" fill="none">
-  <line x1="0" y1="6" x2="17" y2="6" stroke="#C8BAA0" stroke-width=".55"/>
-  <polygon points="25,1 32,6 25,11 18,6" fill="rgba(200,186,160,.12)" stroke="#C8BAA0" stroke-width=".65"/>
-  <line x1="33" y1="6" x2="50" y2="6" stroke="#C8BAA0" stroke-width=".55"/>
-</svg>`;
-
-/* ══════════════════════════════════════════
-   STATE
-══════════════════════════════════════════ */
-let focused  = null;   /* currently focused .block element */
-let blockId  = 0;
-let layoutRunning = false;
-
-/* ══════════════════════════════════════════
-   DOM
-══════════════════════════════════════════ */
-const pages   = document.getElementById('pages');
-const iTitle  = document.getElementById('i-title');
-const iAuthor = document.getElementById('i-author');
-const iChap   = document.getElementById('i-chapter');
-const dTitle  = document.getElementById('doc-title');
-const dAuthor = document.getElementById('doc-author');
-const dChap   = document.getElementById('doc-chapter');
-const mSep    = document.getElementById('meta-sep');
-const toastEl = document.getElementById('toast');
-const cDot    = document.getElementById('cur-dot');
-const cVal    = document.getElementById('cur-val');
-
-/* ── Contenteditable helpers ── */
-const gT = el => el.textContent.trim();
-const sT = (el,v) => { if(el.textContent !== v) el.textContent = v; };
-
-/* Plain-text paste; no Enter in header fields */
-[dTitle,dAuthor,dChap].forEach(el => {
-  el.addEventListener('paste', e => {
-    e.preventDefault();
-    document.execCommand('insertText',false,
-      (e.clipboardData||window.clipboardData).getData('text/plain'));
-  });
-  el.addEventListener('keydown', e => { if(e.key==='Enter') e.preventDefault(); });
-});
-
-/* ══════════════════════════════════════════
-   SYNC
-══════════════════════════════════════════ */
-function syncMeta(){
-  const t = gT(dTitle);
-  document.querySelectorAll('.pft').forEach(el=>el.textContent=t);
-  document.querySelectorAll('.pmh').forEach(el=>el.textContent=t);
-  document.querySelectorAll('.pmh-sep').forEach(el=>el.style.display=t?'':'none');
-}
-function syncSep(){
-  mSep.style.display = (gT(dAuthor)&&gT(dChap)) ? '' : 'none';
-}
-function syncLabels(){
-  document.querySelectorAll('.a4').forEach(a=>{
-    const n=parseInt(a.dataset.page);
-    a.querySelectorAll('.pg-lbl').forEach(el=>el.textContent=pgLabel(n));
-  });
-}
-
-iTitle.addEventListener('input',  ()=>{ sT(dTitle,  iTitle.value);  syncMeta(); });
-iAuthor.addEventListener('input', ()=>{ sT(dAuthor, iAuthor.value); syncSep();  });
-iChap.addEventListener('input',   ()=>{ sT(dChap,   iChap.value);   syncSep();  });
-dTitle.addEventListener('input',  ()=>{ iTitle.value  =gT(dTitle);  syncMeta(); });
-dAuthor.addEventListener('input', ()=>{ iAuthor.value =gT(dAuthor); syncSep();  });
-dChap.addEventListener('input',   ()=>{ iChap.value   =gT(dChap);   syncSep();  });
-
-/* ══════════════════════════════════════════
-   PAGE TYPE & START NUMBER
-══════════════════════════════════════════ */
-const pgRow  = document.getElementById('pg-row');
-const pgInp  = document.getElementById('pg-start');
-const pgPrev = document.getElementById('pg-prev');
-
-document.querySelectorAll('.pgt').forEach(b=>{
-  b.addEventListener('click',()=>{
-    pgType=b.dataset.pt;
-    document.querySelectorAll('.pgt').forEach(x=>x.classList.remove('on'));
-    b.classList.add('on');
-    pgRow.style.display=pgType==='cont'?'':'none';
-    document.querySelector('.a4[data-page="1"]').classList.toggle('cont',pgType==='cont');
-    syncLabels(); layoutSched();
-  });
-});
-pgInp.addEventListener('input',()=>{
-  pgStart=Math.max(1,parseInt(pgInp.value)||1);
-  pgPrev.textContent='Page '+pgStart;
-  syncLabels();
-});
-
-/* ══════════════════════════════════════════
-   INDICATORS
-══════════════════════════════════════════ */
-function setInd(t){
-  const c=TYPES[t]||TYPES.note;
-  cVal.textContent=c.label;
-  cDot.style.background=c.dot;
-  cDot.style.boxShadow='0 0 8px '+c.dot+'66';
-}
-function clearInd(){ cVal.textContent='—'; cDot.style.background='var(--sb)'; cDot.style.boxShadow='none'; }
-function setLeg(t){ document.querySelectorAll('.leg').forEach(l=>l.classList.toggle('on',l.dataset.type===t)); }
-
-/* ══════════════════════════════════════════
-   BLOCK FACTORY
-══════════════════════════════════════════ */
-function mkBlock(type,html){
-  type=type||'note'; blockId++;
-  const w=document.createElement('div');
-  w.className='block'; w.dataset.type=type;
-
-  /* Colored left bar — also clickable to cycle type */
-  const bar=document.createElement('div');
-  bar.className='bar';
-  bar.title='Click to cycle block type · Alt+1/2/3/0';
-  bar.addEventListener('click',()=>{
-    const cur=w.dataset.type||'note';
-    const ni=(TYPE_CYCLE.indexOf(cur)+1)%TYPE_CYCLE.length;
-    applyType(w,TYPE_CYCLE[ni]);
-    w.querySelector('.block-text').focus();
-  });
-
-  const ed=document.createElement('div');
-  ed.className='block-text'; ed.contentEditable='true';
-  ed.dir='ltr'; ed.spellcheck=true;
-  ed.dataset.ph=TYPES[type].ph;
-  if(html) ed.innerHTML=html;
-
-  const tools=document.createElement('div'); tools.className='block-tools';
-  const mkb=(ico,tip,fn)=>{
-    const b=document.createElement('button');
-    b.className='bt'; b.title=tip; b.textContent=ico;
-    b.addEventListener('mousedown',e=>{e.preventDefault();fn();});
-    return b;
+/* ─── DATA ──────────────────────────────────────────────── */
+const CAT_LABELS = { upper:'Oberkörper', lower:'Unterkörper', core:'Core', full:'Ganzkörper' };
+const CAT_COLORS = { upper:'#fb923c', lower:'#34d399', core:'#60a5fa', full:'#c084fc' };
+function loadData() {
+  return {
+    exercises: JSON.parse(localStorage.getItem('mo_exercises') || '[]'),
+    logs: JSON.parse(localStorage.getItem('mo_logs') || '[]'),
   };
-  tools.append(
-    mkb('↑','Move up   (Shift+↑)',  ()=>moveB(w,-1)),
-    mkb('↓','Move down (Shift+↓)', ()=>moveB(w, 1)),
-    mkb('✕','Delete block',          ()=>delB(w))
-  );
-  w.append(bar,ed,tools);
-
-  ed.addEventListener('focus',()=>{
-    if(focused&&focused!==w) focused.classList.remove('focused');
-    focused=w; w.classList.add('focused');
-    setLeg(w.dataset.type); setInd(w.dataset.type);
-  });
-  ed.addEventListener('blur',()=>{
-    setTimeout(()=>{
-      if(focused===w){ w.classList.remove('focused'); focused=null; clearInd(); setLeg(null); }
-    },120);
-  });
-  ed.addEventListener('keydown',e=>onKey(e,w));
-  ed.addEventListener('input',layoutSched);
-  return w;
 }
-
-/* ══════════════════════════════════════════
-   APPLY TYPE (with flash animation)
-══════════════════════════════════════════ */
-function applyType(b,t){
-  if(!TYPES[t]) return;
-  b.dataset.type=t;
-  b.querySelector('.block-text').dataset.ph=TYPES[t].ph;
-  setLeg(t); setInd(t);
-  /* Flash the block */
-  b.classList.remove('flashed');
-  void b.offsetWidth;
-  b.classList.add('flashed');
-  /* Show floating badge */
-  showHkBadge(TYPES[t].label);
-  toast('→ '+TYPES[t].label);
-}
-
-/* ══════════════════════════════════════════
-   HK BADGE (floating confirmation)
-══════════════════════════════════════════ */
-let hkTimer;
-function showHkBadge(label){
-  let badge=document.getElementById('hk-badge');
-  if(!badge){ badge=document.createElement('div'); badge.id='hk-badge'; badge.className='hk-badge'; document.body.appendChild(badge); }
-  badge.textContent=label;
-  badge.style.animation='none'; void badge.offsetWidth;
-  badge.style.animation='hk-flash .65s ease both';
-  clearTimeout(hkTimer);
-  hkTimer=setTimeout(()=>badge.style.animation='none',700);
-}
-
-/* ══════════════════════════════════════════
-   BLOCK OPERATIONS
-══════════════════════════════════════════ */
-const allBlocks=()=>[...document.querySelectorAll('.page-body .block')];
-const lastBody =()=>{ const a=document.querySelectorAll('.page-body'); return a[a.length-1]; };
-
-function insertB(type,html,after){
-  const b=mkBlock(type,html||'');
-  if(after&&after.parentNode&&after.parentNode.classList.contains('page-body')){
-    after.insertAdjacentElement('afterend',b);
-  } else { lastBody().appendChild(b); }
-  layoutSched();
-  return b;
-}
-
-function focusB(b,end=true){
-  const ed=b.querySelector('.block-text'); ed.focus();
-  if(end) caretEnd(ed);
-}
-
-function delB(b){
-  const all=allBlocks();
-  if(all.length<=1){
-    const ed=b.querySelector('.block-text'); ed.innerHTML=''; applyType(b,'note'); ed.focus(); return;
+function saveExercises(ex) { localStorage.setItem('mo_exercises', JSON.stringify(ex)); }
+function saveLogs(logs) { localStorage.setItem('mo_logs', JSON.stringify(logs)); }
+let data = loadData();
+function todayStr() { return new Date().toISOString().slice(0,10); }
+function formatDate(str) { return new Date(str+'T12:00:00').toLocaleDateString('de-DE',{weekday:'long',day:'numeric',month:'long'}); }
+function formatDateShort(str) { return new Date(str+'T12:00:00').toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'}); }
+function getExercise(id) { return data.exercises.find(e => e.id === id); }
+function getPersonalBest(exId) { const r = data.logs.filter(l => l.exerciseId===exId).map(l=>l.reps); return r.length ? Math.max(...r) : null; }
+function getTodayLogs() { return data.logs.filter(l => l.date===todayStr()); }
+function getStreak() {
+  const days = [...new Set(data.logs.map(l=>l.date))].sort().reverse();
+  if (!days.length) return 0;
+  let streak=0, cur=new Date(); cur.setHours(0,0,0,0);
+  for (let i=0;i<365;i++) {
+    const s=cur.toISOString().slice(0,10);
+    if (days.includes(s)) { streak++; cur.setDate(cur.getDate()-1); }
+    else if (i===0) { cur.setDate(cur.getDate()-1); }
+    else break;
   }
-  const i=all.indexOf(b); b.remove(); layoutSched();
-  const rem=allBlocks(); if(rem.length) focusB(rem[Math.max(0,i-1)]);
+  return streak;
 }
 
-function moveB(b,d){
-  const all=allBlocks(),i=all.indexOf(b);
-  if(d===-1&&i>0)              all[i-1].insertAdjacentElement('beforebegin',b);
-  else if(d===1&&i<all.length-1) all[i+1].insertAdjacentElement('afterend',b);
-  layoutSched(); focusB(b);
+/* ─── TABS ──────────────────────────────────────────────── */
+function switchTab(name, btn) {
+  document.querySelectorAll('[id^="tab-"]').forEach(t => t.style.display='none');
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-'+name).style.display='block';
+  btn.classList.add('active');
+  if (name==='today')     renderToday();
+  if (name==='history')   renderHistory();
+  if (name==='exercises') renderExercises();
+  if (name==='progress')  renderProgress();
 }
 
-/* ══════════════════════════════════════════
-   KEYBOARD HANDLER (per-block)
-   Regular editing shortcuts only.
-   Type-change shortcuts are handled globally.
-══════════════════════════════════════════ */
-function onKey(e,b){
-  const ed=e.target;
-  if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); focusB(insertB('note','',b)); return; }
-  if(e.key==='Backspace'&&isEmpty(ed)){ e.preventDefault(); delB(b); return; }
-  if(e.shiftKey&&!e.ctrlKey){
-    if(e.key==='ArrowUp')  { e.preventDefault(); moveB(b,-1); return; }
-    if(e.key==='ArrowDown'){ e.preventDefault(); moveB(b, 1); return; }
+/* ─── TODAY ─────────────────────────────────────────────── */
+function renderToday() {
+  const d = new Date();
+  document.getElementById('todayLabel').innerHTML = `<span style="color:var(--accent);font-family:'Bebas Neue',sans-serif;font-size:48px;letter-spacing:2px;line-height:1">${d.toLocaleDateString('de-DE',{weekday:'long'})}</span>`;
+  const todayLogs = getTodayLogs();
+  document.getElementById('statToday').textContent = todayLogs.length;
+  document.getElementById('statStreak').textContent = getStreak();
+  document.getElementById('statTotal').textContent = data.logs.length;
+  const container = document.getElementById('todayLogs');
+  if (!todayLogs.length) {
+    container.innerHTML = `<div class="empty-state"><div class="empty-state-text">Noch kein Satz heute</div>Klick auf "Neuer Satz" und gib alles!</div>`;
+    return;
   }
+  container.innerHTML = todayLogs.slice().reverse().map(log => {
+    const ex = getExercise(log.exerciseId);
+    if (!ex) return '';
+    const allReps = data.logs.filter(l=>l.exerciseId===log.exerciseId).map(l=>l.reps);
+    const isActualPR = log.reps===Math.max(...allReps) && allReps.filter(r=>r===log.reps).length===1;
+    return `<div class="log-entry">
+      <div class="log-entry-dot dot-${ex.category}"></div>
+      <div class="log-entry-name">${ex.name}</div>
+      ${isActualPR ? '<div class="pr-badge">PR</div>' : ''}
+      <div style="text-align:right">
+        <div class="log-entry-reps">${log.reps}</div>
+        <div class="log-entry-unit">${ex.unit}</div>
+      </div>
+      <button class="delete-btn" onclick="deleteLog('${log.id}')" title="Löschen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+      </button>
+    </div>`;
+  }).join('');
 }
-const isEmpty=el=>el.textContent.trim()===''&&el.innerHTML.replace(/<br\s*\/?>/gi,'').trim()==='';
-
-/* ══════════════════════════════════════════════════════════════
-   ★  GLOBAL HOTKEYS — Alt + 1/2/3/0
-   ────────────────────────────────────────────────────────────
-   Registered on DOCUMENT (not per-block) so they always fire.
-   Alt/Option key:
-     • Has NO browser tab-switching behavior (unlike Ctrl/Cmd+N)
-     • Works identically on Mac (⌥), Windows, Linux, Chromebook
-     • e.code = physical key, layout-independent (US, AZERTY, etc.)
-     • e.preventDefault() prevents the Option+key special char on Mac
-   ══════════════════════════════════════════════════════════════ */
-document.addEventListener('keydown', function(e){
-  /* Only fire when Alt is held and no other modifier */
-  if(!e.altKey || e.ctrlKey || e.shiftKey || e.metaKey) return;
-  /* Require a focused block */
-  if(!focused) return;
-
-  let type = null;
-  if(e.code==='Digit1') type='ayah';
-  else if(e.code==='Digit2') type='hadith';
-  else if(e.code==='Digit3') type='athar';
-  else if(e.code==='Digit0') type='note';
-
-  if(!type) return;
-
-  /* Prevent the Alt+key's default (e.g. "¡" on Mac, menu focus on Windows) */
-  e.preventDefault();
-  applyType(focused, type);
-}, true); /* useCapture=true ensures it runs before other listeners */
-
-/* ══════════════════════════════════════════
-   LEGEND CLICKS
-══════════════════════════════════════════ */
-document.getElementById('legend').addEventListener('click',e=>{
-  const item=e.target.closest('.leg'); if(!item) return;
-  if(focused){ applyType(focused,item.dataset.type); setTimeout(()=>focused&&focusB(focused,false),80); }
-  else toast('Click a block first');
-});
-
-/* ══════════════════════════════════════════
-   ACTION BUTTONS
-══════════════════════════════════════════ */
-document.getElementById('btn-add').addEventListener('click',()=>focusB(insertB('note','',focused)));
-document.getElementById('btn-print').addEventListener('click',()=>window.print());
-
-/* ══════════════════════════════════════════
-   LAYOUT ENGINE
-   Smooth multi-page redistribution:
-   1. Save focus + caret
-   2. Measure heights
-   3. Detach all blocks
-   4. Sync page count
-   5. Re-attach to assigned bodies
-   6. Restore focus + scroll
-══════════════════════════════════════════ */
-let layoutTimer;
-function layoutSched(){
-  clearTimeout(layoutTimer);
-  layoutTimer=setTimeout(()=>requestAnimationFrame(()=>requestAnimationFrame(doLayout)),160);
+function deleteLog(id) {
+  data.logs = data.logs.filter(l=>l.id!==id);
+  saveLogs(data.logs);
+  renderToday();
 }
 
-function doLayout(){
-  if(layoutRunning) return;
-  layoutRunning=true;
+/* ─── LOG MODAL ─────────────────────────────────────────── */
+function openLogModal() {
+  if (!data.exercises.length) { showToast('Erst eine Übung anlegen!'); switchTab('exercises', document.querySelectorAll('.tab')[2]); return; }
+  const sel = document.getElementById('logExerciseSelect');
+  sel.innerHTML = data.exercises.map(e=>`<option value="${e.id}">${e.name} (${CAT_LABELS[e.category]})</option>`).join('');
+  document.getElementById('logModal').classList.remove('hidden');
+  updateLogModal();
+}
+function closeLogModal() { document.getElementById('logModal').classList.add('hidden'); }
+function updateLogModal() {
+  const ex = getExercise(document.getElementById('logExerciseSelect').value);
+  if (!ex) return;
+  document.getElementById('logRepLabel').textContent = ex.unit==='Sek.' ? 'Sekunden (Max)' : 'Wiederholungen (Max)';
+  const pb = getPersonalBest(ex.id);
+  const infoEl = document.getElementById('logPRInfo');
+  if (pb!==null) { infoEl.style.display='flex'; document.getElementById('logPRText').innerHTML = `Aktueller Rekord: <strong style="color:var(--pr-color)">${pb} ${ex.unit}</strong> — übertriff ihn!`; }
+  else { infoEl.style.display='none'; }
+}
+function adjustRep(delta) { const inp=document.getElementById('logReps'); inp.value=Math.max(0,(parseInt(inp.value)||0)+delta); }
+function saveLog() {
+  const exId = document.getElementById('logExerciseSelect').value;
+  const reps = parseInt(document.getElementById('logReps').value)||0;
+  if (!exId || reps<0) return;
+  const pb = getPersonalBest(exId);
+  const isNewPR = pb===null || reps>pb;
+  data.logs.push({ id:'log_'+Date.now(), exerciseId:exId, reps, date:todayStr(), ts:Date.now() });
+  saveLogs(data.logs);
+  closeLogModal();
+  renderToday();
+  showToast(isNewPR && pb!==null ? 'Neuer Persönlicher Rekord!' : 'Satz gespeichert.', isNewPR && pb!==null);
+}
 
-  /* Save focus */
-  const ae=document.activeElement;
-  const isFB=ae&&ae.classList.contains('block-text');
-  let fNode=null,fOff=0;
-  if(isFB){ const s=window.getSelection(); if(s&&s.focusNode){fNode=s.focusNode;fOff=s.focusOffset;} }
+/* ─── HISTORY ───────────────────────────────────────────── */
+function renderHistory() {
+  const byDate={};
+  data.logs.forEach(l=>{ if(!byDate[l.date]) byDate[l.date]=[]; byDate[l.date].push(l); });
+  const dates=Object.keys(byDate).sort().reverse();
+  document.getElementById('historyCount').textContent = `${dates.length} Trainingstage · ${data.logs.length} Sätze`;
+  if (!dates.length) { document.getElementById('historyList').innerHTML=`<div class="empty-state"><div class="empty-state-text">Noch keine Einträge</div>Starte dein erstes Training!</div>`; return; }
+  document.getElementById('historyList').innerHTML = dates.map(date => {
+    const logs=byDate[date];
+    const entries=logs.map(log=>{
+      const ex=getExercise(log.exerciseId); if(!ex) return '';
+      const allRepsEx=data.logs.filter(l=>l.exerciseId===log.exerciseId).map(l=>l.reps);
+      const isMax=log.reps===Math.max(...allRepsEx);
+      return `<div class="history-entry">
+        <div class="ex-dot dot-${ex.category}"></div>
+        <div class="history-name">${ex.name}</div>
+        ${isMax?'<div class="pr-badge">PR</div>':''}
+        <div style="text-align:right"><div class="history-reps">${log.reps}</div><div class="history-unit">${ex.unit}</div></div>
+      </div>`;
+    }).join('');
+    return `<div class="history-day-header">${formatDate(date)}</div>${entries}`;
+  }).join('');
+}
 
-  /* Measure */
-  const all=allBlocks();
-  if(all.length) all[0].getBoundingClientRect();
-  const hts=all.map(b=>b.offsetHeight+3);
-
-  /* Distribute */
-  const dist=[[]]; let acc=0;
-  hts.forEach((h,i)=>{
-    const lim=dist.length===1?pg1Lim():PGN;
-    if(acc>0&&acc+h>lim){dist.push([]);acc=0;}
-    dist[dist.length-1].push(all[i]); acc+=h;
-  });
-  const need=Math.max(1,dist.length);
-
-  /* Detach */
-  all.forEach(b=>b.parentNode&&b.parentNode.removeChild(b));
-
-  /* Sync pages */
-  const cur=pages.querySelectorAll('.a4').length;
-  if(need>cur) for(let i=cur+1;i<=need;i++) pages.appendChild(mkPage(i));
-  else if(need<cur){
-    const pgs=[...pages.querySelectorAll('.a4')];
-    for(let i=need;i<pgs.length;i++) pgs[i].remove();
+/* ─── EXERCISES ─────────────────────────────────────────── */
+function renderExercises() {
+  document.getElementById('exercisesCount').textContent = `${data.exercises.length} Übungen`;
+  if (!data.exercises.length) {
+    document.getElementById('exerciseList').innerHTML=`<div class="empty-state"><div class="empty-state-text">Keine Übungen angelegt</div>Füge deine erste Übung hinzu!</div>`;
+    return;
   }
+  document.getElementById('exerciseList').innerHTML = data.exercises.map(ex=>{
+    const pb=getPersonalBest(ex.id);
+    return `<div class="ex-item">
+      <div class="ex-dot dot-${ex.category}"></div>
+      <div class="ex-name">${ex.name}</div>
+      <div class="ex-cat cat-${ex.category}">${CAT_LABELS[ex.category]}</div>
+      <div class="ex-unit">${ex.unit}</div>
+      ${pb!==null?`<div class="ex-pb">${pb}</div>`:''}
+      <button class="delete-btn" onclick="deleteExercise('${ex.id}')" title="Löschen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+      </button>
+    </div>`;
+  }).join('');
+}
+function toggleAddForm() {
+  const f=document.getElementById('addExerciseForm');
+  f.style.display = f.style.display==='none'?'block':'none';
+  if(f.style.display==='block') document.getElementById('newExName').focus();
+}
+function addExercise() {
+  const name=document.getElementById('newExName').value.trim();
+  if (!name) { showToast('Name eingeben!'); return; }
+  data.exercises.push({ id:'ex_'+Date.now(), name, category:document.getElementById('newExCat').value, unit:document.getElementById('newExUnit').value });
+  saveExercises(data.exercises);
+  document.getElementById('newExName').value='';
+  document.getElementById('addExerciseForm').style.display='none';
+  renderExercises();
+  showToast('Übung hinzugefügt.');
+}
+function deleteExercise(id) {
+  if (!confirm('Übung und alle zugehörigen Logs löschen?')) return;
+  data.exercises=data.exercises.filter(e=>e.id!==id);
+  data.logs=data.logs.filter(l=>l.exerciseId!==id);
+  saveExercises(data.exercises); saveLogs(data.logs);
+  renderExercises(); showToast('Übung gelöscht.');
+}
 
-  /* Re-attach */
-  const bodies=[...document.querySelectorAll('.page-body')];
-  dist.forEach((blks,pi)=>{ if(bodies[pi]) blks.forEach(bl=>bodies[pi].appendChild(bl)); });
-
-  /* Update */
-  syncMeta(); syncLabels();
-  const b1=document.getElementById('body-1');
-  if(b1) b1.classList.toggle('empty',b1.querySelectorAll('.block').length===0);
-
-  /* Restore focus */
-  if(isFB&&document.body.contains(ae)){
-    requestAnimationFrame(()=>{
-      ae.focus({preventScroll:true});
-      if(fNode&&document.body.contains(fNode)){
-        try{
-          const r=document.createRange();
-          const mx=fNode.nodeType===3?fNode.textContent.length:fNode.childNodes.length;
-          r.setStart(fNode,Math.min(fOff,mx)); r.collapse(true);
-          const s=window.getSelection(); s.removeAllRanges(); s.addRange(r);
-        }catch(_){caretEnd(ae);}
+/* ─── PROGRESS ──────────────────────────────────────────── */
+const chartInstances={};
+function renderProgress() {
+  const container=document.getElementById('progressCharts');
+  const withLogs=data.exercises.filter(ex=>data.logs.some(l=>l.exerciseId===ex.id));
+  if (!withLogs.length) { container.innerHTML=`<div class="empty-state"><div class="empty-state-text">Noch keine Daten</div>Logge Sätze, um deine Entwicklung zu sehen!</div>`; return; }
+  Object.values(chartInstances).forEach(c=>c.destroy());
+  container.innerHTML=withLogs.map(ex=>{
+    const pb=getPersonalBest(ex.id);
+    return `<div class="chart-container">
+      <div class="chart-head">
+        <div><div class="chart-title" style="color:${CAT_COLORS[ex.category]}">${ex.name}</div><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px">${CAT_LABELS[ex.category]}</div></div>
+        <div class="chart-best">Rekord <span>${pb} ${ex.unit}</span></div>
+      </div>
+      <div class="chart-wrap"><canvas id="chart_${ex.id}"></canvas></div>
+    </div>`;
+  }).join('');
+  withLogs.forEach(ex=>{
+    const logs=data.logs.filter(l=>l.exerciseId===ex.id).sort((a,b)=>a.date.localeCompare(b.date));
+    const byDate={};
+    logs.forEach(l=>{ if(!byDate[l.date]||l.reps>byDate[l.date]) byDate[l.date]=l.reps; });
+    const labels=Object.keys(byDate).map(d=>formatDateShort(d));
+    const vals=Object.values(byDate);
+    const ctx=document.getElementById('chart_'+ex.id); if(!ctx) return;
+    const color=CAT_COLORS[ex.category];
+    chartInstances[ex.id]=new Chart(ctx,{
+      type:'line',
+      data:{ labels, datasets:[{ data:vals, borderColor:color, backgroundColor:color+'18', borderWidth:2.5, pointBackgroundColor:color, pointRadius:5, pointHoverRadius:7, fill:true, tension:0.35 }] },
+      options:{ responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{display:false}, tooltip:{ backgroundColor:'#202020', borderColor:color+'44', borderWidth:1, titleColor:'#f5f0e8', bodyColor:color, callbacks:{label:c=>`${c.parsed.y} ${ex.unit}`} }},
+        scales:{
+          x:{ grid:{color:'rgba(255,255,255,0.04)'}, ticks:{color:'#585048',font:{family:'DM Sans',size:11}}, border:{display:false} },
+          y:{ grid:{color:'rgba(255,255,255,0.04)'}, ticks:{color:'#585048',font:{family:'DM Sans',size:11}}, border:{display:false}, min:0 }
+        }
       }
-      requestAnimationFrame(()=>{
-        ae.scrollIntoView({behavior:'smooth',block:'nearest',inline:'nearest'});
-        layoutRunning=false;
-      });
     });
-  } else { layoutRunning=false; }
+  });
 }
 
-function mkPage(n){
-  const a=document.createElement('div');
-  a.className='a4 new'; a.dataset.page=n;
-  a.addEventListener('animationend',()=>a.classList.remove('new'),{once:true});
-  const t=gT(dTitle);
-  const mh=document.createElement('div'); mh.className='pmini';
-  mh.innerHTML=
-    `<span class="pmh">${t}</span>`+
-    `<span class="pmh-sep" ${t?'':'style="display:none"'}>·</span>`+
-    `<span class="pg-lbl">${pgLabel(n)}</span>`;
-  a.appendChild(mh);
-  const pb=document.createElement('div'); pb.className='page-body'; a.appendChild(pb);
-  const pf=document.createElement('footer'); pf.className='doc-foot';
-  pf.innerHTML=`<span class="ft pft">${t}</span>${FSVG}<span class="ft pg-lbl">${pgLabel(n)}</span>`;
-  a.appendChild(pf);
-  return a;
+/* ─── EXPORT / IMPORT ───────────────────────────────────── */
+function exportData() {
+  const blob=new Blob([JSON.stringify({version:1,exported:new Date().toISOString(),exercises:data.exercises,logs:data.logs},null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`maxout_backup_${todayStr()}.json`; a.click();
+  showToast('Export erfolgreich.');
+}
+function importData(event) {
+  const file=event.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    try {
+      const p=JSON.parse(e.target.result);
+      if (!p.exercises||!p.logs) throw new Error();
+      data.exercises=p.exercises; data.logs=p.logs;
+      saveExercises(data.exercises); saveLogs(data.logs);
+      renderToday(); showToast(`${data.logs.length} Logs importiert.`);
+    } catch { showToast('Ungültige Datei.'); }
+  };
+  reader.readAsText(file); event.target.value='';
 }
 
-/* ══════════════════════════════════════════
-   TOAST + CARET
-══════════════════════════════════════════ */
-let toastTmr;
-function toast(m){
-  toastEl.textContent=m; toastEl.classList.add('show');
-  clearTimeout(toastTmr); toastTmr=setTimeout(()=>toastEl.classList.remove('show'),2000);
-}
-function caretEnd(el){
-  try{const r=document.createRange();r.selectNodeContents(el);r.collapse(false);
-    const s=window.getSelection();s.removeAllRanges();s.addRange(r);}catch(_){}
+/* ─── TOAST ─────────────────────────────────────────────── */
+let _tt;
+function showToast(msg, special=false) {
+  const e=document.querySelector('.toast'); if(e) e.remove(); clearTimeout(_tt);
+  const t=document.createElement('div'); t.className='toast'; t.textContent=msg;
+  if(special) t.style.borderColor='var(--border-accent)';
+  document.body.appendChild(t); _tt=setTimeout(()=>t.remove(),2800);
 }
 
-/* ══════════════════════════════════════════
-   TUTORIAL
-══════════════════════════════════════════ */
-const TUT=document.getElementById('tut');
-const tf=document.getElementById('tf');
-const tdots=document.getElementById('tdots');
-const tlbl=document.getElementById('tlbl');
-const tttl=document.getElementById('tttl');
-const tdesc=document.getElementById('tdesc');
-const thint=document.getElementById('thint');
-const tback=document.getElementById('tback');
-const tnext=document.getElementById('tnext');
+/* ═══════════════════════════════════════════════════════════
+   TUTORIAL SYSTEM
+   ═══════════════════════════════════════════════════════════ */
+const TUT_KEY = 'mo_tutorial_v1_done';
 
-let tStep=0;
-const tDone=new Set();
-
-const STEPS=[
-  /* 0 */ {t:'Welcome to Talib al-ʿIlm',d:'Your structured, print-ready companion for Islamic study notes. This tour walks through every feature and builds a live multi-page example. Click Next to begin.',h:null,hl:null,act:null},
-  /* 1 */ {t:'The Document Header',d:'Click the title directly in the document to edit it — text wraps automatically. Author and chapter work the same way. The sidebar fields stay in sync.',h:'<strong>Tip:</strong> Edit in the sidebar for speed; edit in the document for a live view.',hl:'doc-head',
-    act:()=>{sT(dTitle,'Kitāb at-Tawḥīd');sT(dAuthor,'Muhammad ibn ʿAbd al-Wahhāb');sT(dChap,'Chapter 1 — Obligation of Tawḥīd');iTitle.value=gT(dTitle);iAuthor.value=gT(dAuthor);iChap.value=gT(dChap);syncMeta();syncSep();}},
-  /* 2 */ {t:'First Page Layout',d:'"Title Page" shows the ornamental header — for chapter starts. "Continuation" uses a minimal header. Set the starting page number when continuing a longer document.',h:'<strong>Tip:</strong> Switch layouts at any time without losing your notes.',hl:'pgt-ch',act:null},
-  /* 3 */ {t:'Four Color-Coded Note Types',d:'Every block has a type that sets its color. Colors survive printing — making notes instantly scannable on paper and screen.',h:'<strong>Tip:</strong> Click the colored left bar on any block to cycle through types with the mouse.',hl:'legend',act:null},
-  /* 4 */ {t:'Āyah — Quranic Verse  (Alt+1)',d:'Focus a block and press Alt+1 (Option+1 on Mac) to mark it as an Āyah. The amber highlight and golden left bar identify Quranic text at a glance.',h:'<strong>Tip:</strong> Shift+Enter inserts a line break inside a block — ideal for verse + translation pairs.',hl:null,
-    act:()=>{const b=insertB('ayah');b.querySelector('.block-text').innerHTML='قُلْ هُوَ ٱللَّهُ أَحَدٌ — ٱللَّهُ ٱلصَّمَدُ<br>"Say: He is Allah, the One — Allah, the Eternal Refuge."<br>(Sūrat Al-Ikhlāṣ 112:1–2)';layoutSched();return b;}},
-  /* 5 */ {t:'Ḥadīth — Prophetic Narration  (Alt+2)',d:'Press Alt+2 to mark a block as a Ḥadīth. Green signals an authentic prophetic narration. Change type at any time without losing text.',h:'<strong>Works everywhere:</strong> Alt = Option on Mac, Alt on Windows/Linux/Chromebook. No browser shortcuts conflict.',hl:null,
-    act:()=>{const b=insertB('hadith');b.querySelector('.block-text').innerHTML='«إِنَّمَا ٱلْأَعْمَالُ بِٱلنِّيَّاتِ»<br>"Actions are judged by their intentions."<br>ʿUmar ibn al-Khaṭṭāb (رضي الله عنه) — al-Bukhārī, Ḥadīth 1';layoutSched();return b;}},
-  /* 6 */ {t:'Athar / Sharḥ — Scholar Commentary  (Alt+3)',d:'Press Alt+3 for Athar or Sharḥ. Blue marks traditional scholarship, clearly distinguished from primary sources.',h:'<strong>Tip:</strong> Shift+↑ and Shift+↓ reorder the focused block — no cut-and-paste needed.',hl:null,
-    act:()=>{const b=insertB('athar');b.querySelector('.block-text').innerHTML='Ibn al-Qayyim al-Jawziyyah (رحمه الله) wrote:<br>"The heart becomes ill as the body does — its remedy is repentance, dhikr, and returning to Allah."<br><em>— Madārij al-Sālikīn, Vol. 1</em>';layoutSched();return b;}},
-  /* 7 */ {t:'Note — Personal Analysis  (Alt+0)',d:'White blocks are for your own analysis, summaries, and cross-references. Press Alt+0 to reset any block to a plain note.',h:'<strong>Tip:</strong> Press Enter to create a new block below. Backspace on an empty block deletes it.',hl:null,
-    act:()=>{const b=insertB('note');b.querySelector('.block-text').innerHTML='Core principle: The author grounds Tawḥīd in the purpose of creation (Sūrat al-Dhāriyāt 51:56). The obligation of ʿibādah flows directly from acknowledging divine oneness.';layoutSched();return b;}},
-  /* 8 */ {t:'Automatic Page Breaks',d:'Watch a new A4 sheet slide in as this page fills. Blocks redistribute smoothly. No block is ever split mid-sentence across pages.',h:'<strong>Tip:</strong> Hover any block to reveal ↑ ↓ × controls. Extra pages collapse when content shrinks.',hl:null,
-    act:()=>{const ts=['Continuation 1: The document grows like real paper — fill a page and a new one appears.','Continuation 2: Each new sheet slides in with a smooth animation.','Continuation 3: Block colors and types carry seamlessly across all pages.','Continuation 4: Every footer shows the book title and correct page number.','Continuation 5: In print, each white sheet maps to exactly one A4 page.','Continuation 6: Delete blocks — extra pages collapse back automatically.'];ts.forEach(t=>{const b=insertB('note');b.querySelector('.block-text').textContent=t;});layoutSched();}},
-  /* 9 */ {t:'Print & PDF Export',d:'Click "Print / Save as PDF" or Ctrl+P. The sidebar disappears, colors print at full fidelity, and no block is split across a printed page.',h:'<strong>Chrome/Edge:</strong> Destination → Save as PDF → Paper: A4 → Margins: None.<br><strong>Mac Safari:</strong> File → Print → PDF → Save as PDF.',hl:'btn-print',act:null},
-  /* 10 */{t:'All Done — Happy Studying! 📖',d:'Your document has a full working example. Delete the sample blocks and start your own session. Click ? to reopen this tour anytime.',h:null,hl:null,act:()=>{const b=insertB('note');layoutSched();setTimeout(()=>focusB(b),320);return b;}},
+const TUT_STEPS = [
+  /* 0 — Welcome */
+  {
+    centered: true,
+    icon: '💪',
+    title: 'Willkommen bei <em>MAXOUT</em>',
+    body: 'Das Prinzip ist radikal einfach: Ein einziger Satz pro Übung — aber du gehst dabei bis an dein absolutes Limit. Keine Reserve. Kein Zurückhalten.\n\nIn 5 kurzen Schritten zeigen wir dir, wie alles funktioniert.',
+  },
+  /* 1 — Tabs */
+  {
+    targetId: 'mainTabs',
+    position: 'below',
+    icon: null,
+    title: 'Deine <em>Navigation</em>',
+    body: 'Vier Bereiche — alles was du brauchst:\n• Heute — dein tägliches Training\n• Historie — alle vergangenen Sätze\n• Übungen — deine Übungsbibliothek\n• Fortschritt — deine Kurvenverläufe',
+  },
+  /* 2 — Exercises tab */
+  {
+    targetId: 'tabExercises',
+    position: 'below',
+    icon: null,
+    title: '<em>Erst</em> Übungen anlegen',
+    body: 'Bevor du loggst: Klicke hier auf "Übungen" und lege deine Übungen an — Klimmzüge, Liegestütze, Dips, was auch immer du trainierst.',
+  },
+  /* 3 — Stats row */
+  {
+    targetId: 'statsRow',
+    position: 'below',
+    icon: null,
+    title: 'Dein täglicher <em>Überblick</em>',
+    body: 'Hier siehst du auf einen Blick: wie viele Sätze du heute gemacht hast, wie viele Tage deine aktuelle Tages-Serie läuft, und deine Gesamtzahl an Sätzen.',
+  },
+  /* 4 — New Set button */
+  {
+    targetId: 'newSetBtn',
+    position: 'above',
+    icon: null,
+    title: 'Satz <em>loggen</em>',
+    body: 'Drücke diesen Knopf nach jeder Übung. Wähle die Übung aus und trag dein Maximum ein. Das System zeigt dir automatisch deinen Rekord — und ob du ihn gebrochen hast.',
+  },
+  /* 5 — Export/Import */
+  {
+    targetId: 'headerActions',
+    position: 'below',
+    icon: null,
+    title: 'Backup & <em>Import</em>',
+    body: 'Exportiere deine Daten jederzeit als JSON-Datei und importiere sie auf einem anderen Gerät. Deine Fortschritte gehen nie verloren.',
+  },
+  /* 6 — Done */
+  {
+    centered: true,
+    icon: '🔥',
+    title: 'Bereit!',
+    body: 'Du kennst jetzt alles. Lege als Erstes deine Übungen an — dann kannst du deinen ersten Satz loggen.\n\nEin Satz. Alles geben.\nإن شاء الله',
+    finalBtn: 'Erste Übung anlegen →',
+  },
 ];
 
-const N=STEPS.length;
-STEPS.forEach(()=>{const d=document.createElement('div');d.className='tut-dot';tdots.appendChild(d);});
+let tutStep = 0;
 
-function showStep(i,dir){
-  if(i<0||i>=N) return;
-  const s=STEPS[i];
-  document.querySelectorAll('.tut-hl').forEach(e=>e.classList.remove('tut-hl'));
-  let hl=null;
-  if(s.act&&dir!=='back'&&!tDone.has(i)){hl=s.act();tDone.add(i);}
-  const hlEl=(hl&&hl.classList)?hl:s.hl?document.getElementById(s.hl):null;
-  if(hlEl){hlEl.classList.add('tut-hl');hlEl.scrollIntoView({behavior:'smooth',block:'nearest'});}
-  tlbl.textContent=i===0?'':i===N-1?'— COMPLETE —':`STEP ${i} / ${N-2}`;
-  tttl.textContent=s.t; tdesc.textContent=s.d;
-  if(s.h){thint.innerHTML=s.h;thint.classList.add('on');}else thint.classList.remove('on');
-  tf.style.width=(i/(N-1)*100)+'%';
-  document.querySelectorAll('.tut-dot').forEach((d,idx)=>{
-    d.className='tut-dot'+(idx<i?' d':idx===i?' a':'');
-  });
-  tback.disabled=i===0;tback.style.opacity=i===0?'.2':'1';
-  tnext.textContent=i===N-1?'Finish ✓':'Next →';
-  tStep=i;
+function initTutorial() {
+  if (localStorage.getItem(TUT_KEY)) return;
+  setTimeout(startTutorial, 500);
 }
 
-function closeTut(){
-  document.querySelectorAll('.tut-hl').forEach(e=>e.classList.remove('tut-hl'));
-  TUT.classList.add('gone');
-  if(!document.querySelector('.page-body .block')) focusB(insertB('note'));
+function startTutorial() {
+  tutStep = 0;
+  const ov = document.getElementById('tutOverlay');
+  ov.classList.remove('hidden');
+  ov.classList.add('active');
+  renderTutStep();
 }
 
-function openTut(){
-  if(document.querySelector('.page-body .block')&&
-    !confirm('Opening the tutorial will clear your notes. Continue?')) return;
-  document.querySelectorAll('.page-body').forEach(pb=>pb.innerHTML='');
-  [...pages.querySelectorAll('.a4')].slice(1).forEach(p=>p.remove());
-  sT(dTitle,'');sT(dAuthor,'');sT(dChap,'');
-  iTitle.value=iAuthor.value=iChap.value='';
-  syncMeta();syncSep();syncLabels();tDone.clear();
-  const b1=document.getElementById('body-1');
-  if(b1) b1.classList.add('empty');
-  TUT.classList.remove('gone');
-  TUT.style.animation='none';
-  requestAnimationFrame(()=>{TUT.style.animation='';showStep(0,'forward');});
+function renderTutStep() {
+  const step = TUT_STEPS[tutStep];
+  const total = TUT_STEPS.length;
+
+  /* — dots — */
+  document.getElementById('tutDots').innerHTML =
+    TUT_STEPS.map((_,i) =>
+      `<div class="tut-dot ${i===tutStep?'active':''}"></div>`
+    ).join('') +
+    `<span class="tut-step-badge">${tutStep+1} / ${total}</span>`;
+
+  /* — content — */
+  const iconEl = document.getElementById('tutIcon');
+  if (step.icon) { iconEl.style.display='block'; iconEl.textContent=step.icon; }
+  else           { iconEl.style.display='none'; }
+
+  document.getElementById('tutTitle').innerHTML = step.title;
+
+  /* convert \n to <br> */
+  document.getElementById('tutBody').innerHTML =
+    step.body.replace(/\n/g,'<br>');
+
+  const nextBtn = document.getElementById('tutNextBtn');
+  const isLast  = tutStep === total - 1;
+  nextBtn.textContent = isLast
+    ? (step.finalBtn || 'Fertig ✓')
+    : 'Weiter →';
+
+  document.getElementById('tutSkipBtn').style.display = isLast ? 'none' : 'inline';
+
+  /* — re-trigger card animation — */
+  const card = document.getElementById('tutCard');
+  card.style.animation = 'none';
+  card.offsetHeight; // reflow
+  card.style.animation = '';
+
+  /* — position — */
+  if (step.centered) {
+    positionCentered(card);
+    hideHighlight();
+  } else {
+    const target = step.targetId
+      ? document.getElementById(step.targetId)
+      : null;
+    if (!target) { nextTutorialStep(); return; }
+    positionOnTarget(card, target, step.position);
+  }
 }
 
-tnext.addEventListener('click',()=>tStep>=N-1?closeTut():showStep(tStep+1,'forward'));
-tback.addEventListener('click',()=>tStep>0&&showStep(tStep-1,'back'));
-document.getElementById('tskip').addEventListener('click',closeTut);
-document.getElementById('tut-btn').addEventListener('click',openTut);
-document.addEventListener('keydown',e=>{
-  if(!TUT.classList.contains('gone')&&e.key==='Escape') closeTut();
+const IS_MOBILE = () => window.innerWidth <= 600;
+
+function positionCentered(card) {
+  document.getElementById('tutScrim').classList.remove('hidden');
+  hidePanels();
+  hideHighlight();
+  if (IS_MOBILE()) {
+    /* bottom sheet — CSS handles it, just reset inline styles */
+    card.style.cssText = 'position: fixed;';
+  } else {
+    card.style.cssText = `
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      bottom: auto; right: auto;
+      width: min(380px, calc(100vw - 32px));
+    `;
+  }
+}
+
+function positionOnTarget(card, target, direction) {
+  document.getElementById('tutScrim').classList.add('hidden');
+
+  const PAD  = 10;  /* highlight padding */
+  const GAP  = 14;  /* gap between highlight and card */
+  const MARH = 16;  /* horizontal viewport margin */
+
+  const rect = target.getBoundingClientRect();
+  const vw   = window.innerWidth;
+  const vh   = window.innerHeight;
+
+  /* — spotlight panels — */
+  setSpotlightPanels(rect, PAD);
+
+  /* — highlight border — */
+  const hl = document.getElementById('tutHighlight');
+  hl.style.cssText = `
+    left:   ${rect.left - PAD}px;
+    top:    ${rect.top  - PAD}px;
+    width:  ${rect.width  + PAD*2}px;
+    height: ${rect.height + PAD*2}px;
+    opacity: 1;
+  `;
+
+  /* On mobile, CSS pins the card as a bottom sheet — skip JS positioning */
+  if (IS_MOBILE()) return;
+
+  /* — card width & horizontal position — */
+  const cardW = Math.min(360, vw - MARH*2);
+  let cardLeft = rect.left + rect.width/2 - cardW/2;
+  cardLeft = Math.max(MARH, Math.min(cardLeft, vw - cardW - MARH));
+
+  /* — card vertical position — */
+  card.style.cssText = `
+    position: fixed;
+    width: ${cardW}px;
+    left: ${cardLeft}px;
+    bottom: auto; right: auto; top: auto;
+    transform: none;
+  `;
+
+  const arrowEl = document.getElementById('tutArrow');
+
+  if (direction === 'below') {
+    const top = rect.bottom + PAD + GAP;
+    /* if card would overflow bottom, flip to above */
+    if (top + 240 > vh) {
+      positionAbove(card, arrowEl, rect, PAD, GAP, cardLeft, cardW);
+    } else {
+      card.style.top = top + 'px';
+      /* arrow pointing up (card is below highlight) */
+      arrowEl.className = 'tut-arrow up';
+      const arrowLeft = Math.min(
+        Math.max(rect.left + rect.width/2 - 8, cardLeft + 16),
+        cardLeft + cardW - 24
+      );
+      arrowEl.style.cssText = `
+        left: ${arrowLeft}px;
+        top:  ${rect.bottom + PAD + GAP - 9}px;
+        opacity: 1;
+      `;
+    }
+  } else {
+    positionAbove(card, arrowEl, rect, PAD, GAP, cardLeft, cardW);
+  }
+}
+
+function positionAbove(card, arrowEl, rect, PAD, GAP, cardLeft, cardW) {
+  /* measure card height roughly */
+  const cardH = card.offsetHeight || 220;
+  const top = rect.top - PAD - GAP - cardH;
+  card.style.top = Math.max(8, top) + 'px';
+  /* arrow pointing down (card is above highlight) */
+  arrowEl.className = 'tut-arrow down';
+  const arrowLeft = Math.min(
+    Math.max(rect.left + rect.width/2 - 8, cardLeft + 16),
+    cardLeft + cardW - 24
+  );
+  arrowEl.style.cssText = `
+    left: ${arrowLeft}px;
+    top:  ${rect.top - PAD - GAP}px;
+    opacity: 1;
+  `;
+}
+
+function setSpotlightPanels(rect, pad) {
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  const x1 = Math.max(0, rect.left  - pad);
+  const y1 = Math.max(0, rect.top   - pad);
+  const x2 = Math.min(vw, rect.right  + pad);
+  const y2 = Math.min(vh, rect.bottom + pad);
+
+  /* On mobile the card is a bottom sheet — leave ~260px at the bottom free */
+  const bottomLimit = IS_MOBILE() ? vh - 260 : vh;
+
+  setPanel('tutPanelTop',    0,  0,  vw,      y1);
+  setPanel('tutPanelBottom', 0,  y2, vw,      bottomLimit - y2);
+  setPanel('tutPanelLeft',   0,  y1, x1,      y2 - y1);
+  setPanel('tutPanelRight',  x2, y1, vw - x2, y2 - y1);
+}
+function setPanel(id, x, y, w, h) {
+  const el = document.getElementById(id);
+  el.style.left   = x + 'px';
+  el.style.top    = y + 'px';
+  el.style.width  = Math.max(0, w) + 'px';
+  el.style.height = Math.max(0, h) + 'px';
+  el.style.display = (w > 0 && h > 0) ? 'block' : 'none';
+}
+function hidePanels() {
+  ['tutPanelTop','tutPanelBottom','tutPanelLeft','tutPanelRight']
+    .forEach(id => { document.getElementById(id).style.display = 'none'; });
+}
+function hideHighlight() {
+  document.getElementById('tutHighlight').style.opacity = '0';
+  document.getElementById('tutArrow').style.opacity    = '0';
+  hidePanels();
+}
+
+function nextTutorialStep() {
+  const isLast = tutStep === TUT_STEPS.length - 1;
+  if (isLast) { completeTutorial(); return; }
+  tutStep++;
+  renderTutStep();
+}
+
+function skipTutorial() { completeTutorial(false); }
+
+function completeTutorial(goToExercises = true) {
+  localStorage.setItem(TUT_KEY, '1');
+  const ov = document.getElementById('tutOverlay');
+  ov.style.opacity = '0';
+  ov.style.transition = 'opacity .35s ease';
+  setTimeout(() => {
+    ov.classList.add('hidden');
+    ov.classList.remove('active');
+    ov.style.opacity = '';
+    ov.style.transition = '';
+  }, 360);
+  if (goToExercises) {
+    switchTab('exercises', document.querySelectorAll('.tab')[2]);
+    setTimeout(() => toggleAddForm(), 400);
+  }
+}
+
+/* reposition on resize */
+let _resizeTut;
+window.addEventListener('resize', () => {
+  clearTimeout(_resizeTut);
+  _resizeTut = setTimeout(() => {
+    if (!document.getElementById('tutOverlay').classList.contains('hidden')) {
+      renderTutStep();
+    }
+  }, 80);
 });
 
-/* ══════════════════════════════════════════
-   INIT
-══════════════════════════════════════════ */
-(function(){ syncMeta(); syncSep(); syncLabels(); })();
+/* ─── INIT ──────────────────────────────────────────────── */
+renderToday();
+initTutorial();
 </script>
 </body>
 </html>
