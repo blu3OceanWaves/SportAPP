@@ -34,20 +34,19 @@
   html { font-size: 16px; }
   body { font-family: 'DM Sans', sans-serif; background: var(--bg-base); color: var(--text-primary); min-height: 100vh; overflow-x: hidden; }
   .app-wrapper { max-width: 780px; margin: 0 auto; padding: 0 16px 100px; }
-  /* HEADER */
   .header { display: flex; align-items: center; justify-content: space-between; padding: 24px 0 20px; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
   .logo { font-family: 'Bebas Neue', sans-serif; font-size: 38px; letter-spacing: 3px; color: var(--text-primary); line-height: 1; }
   .logo span { color: var(--accent); }
   .header-sub { font-size: 11px; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; margin-top: 2px; }
   .header-actions { display: flex; gap: 8px; }
-  /* BUTTONS */
   .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; border: 1px solid var(--border); background: var(--bg-elevated); color: var(--text-secondary); transition: all .18s; text-decoration: none; white-space: nowrap; }
   .btn:hover { border-color: var(--border-accent); color: var(--text-primary); background: var(--bg-card); }
   .btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
   .btn-primary:hover { background: #ea6a0a; border-color: #ea6a0a; }
   .btn svg { width: 16px; height: 16px; flex-shrink: 0; }
   .btn-sm { padding: 5px 10px; font-size: 12px; }
-  /* TABS */
+  .btn-warmup { background: rgba(249,115,22,0.12); border-color: var(--border-accent); color: var(--accent); font-weight: 600; }
+  .btn-warmup:hover { background: rgba(249,115,22,0.22); border-color: var(--accent); color: var(--accent); }
   .tabs { display: flex; gap: 2px; margin-bottom: 28px; background: var(--bg-surface); border-radius: var(--radius); padding: 4px; border: 1px solid var(--border); }
   .tab { flex: 1; padding: 9px 8px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; color: var(--text-muted); cursor: pointer; text-align: center; transition: all .18s; border: none; background: transparent; font-family: 'DM Sans', sans-serif; display: flex; align-items: center; justify-content: center; gap: 6px; }
   .tab:hover { color: var(--text-secondary); }
@@ -56,17 +55,14 @@
   .tab svg { width: 16px; height: 16px; flex-shrink: 0; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke .18s; }
   .tab-label { display: none; }
   @media (min-width: 480px) { .tab-label { display: inline; } }
-  /* SECTION */
   .section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
   .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 1.5px; color: var(--text-primary); }
   .section-subtitle { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
-  /* STATS */
   .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 24px; }
   .stat-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
   .stat-val { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 1px; color: var(--text-primary); line-height: 1; }
   .stat-val.orange { color: var(--accent); }
   .stat-label { font-size: 11px; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; }
-  /* INPUTS */
   .select-styled { width: 100%; padding: 12px 14px; background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-primary); font-family: 'DM Sans', sans-serif; font-size: 14px; appearance: none; cursor: pointer; }
   .select-styled:focus { outline: none; border-color: var(--border-accent); }
   .select-styled option { background: #1c1c1c; }
@@ -75,7 +71,6 @@
   .input-styled::placeholder { color: var(--text-muted); }
   .input-group { flex: 1; }
   .input-label { font-size: 11px; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
-  /* LOG ENTRY */
   .log-entry { display: flex; align-items: center; gap: 14px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 8px; transition: border-color .18s; }
   .log-entry:hover { border-color: var(--border-accent); }
   .log-entry-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
@@ -86,21 +81,17 @@
   .delete-btn { color: var(--text-muted); cursor: pointer; padding: 4px; border-radius: 4px; border: none; background: none; transition: color .18s; }
   .delete-btn:hover { color: var(--danger); }
   .delete-btn svg { width: 15px; height: 15px; display: block; }
-  /* EMPTY STATE */
   .empty-state { text-align: center; padding: 48px 24px; color: var(--text-muted); font-size: 14px; }
   .empty-state-icon { font-size: 38px; margin-bottom: 12px; }
   .empty-state-text { margin-bottom: 6px; color: var(--text-secondary); font-weight: 500; font-size: 16px; }
-  /* INFO BAR */
   .info-bar { background: var(--accent-subtle); border: 1px solid var(--border-accent); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 13px; color: var(--text-secondary); margin-bottom: 20px; display: flex; gap: 10px; align-items: center; }
   .info-bar svg { width: 16px; height: 16px; stroke: var(--accent); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
-  /* HISTORY */
   .history-day-header { font-size: 11px; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; padding: 8px 0 10px; border-top: 1px solid var(--border); margin-top: 8px; }
   .history-day-header:first-child { border-top: none; margin-top: 0; }
   .history-entry { display: flex; align-items: center; gap: 12px; padding: 11px 14px; margin-bottom: 6px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius); }
   .history-name { flex: 1; font-size: 14px; font-weight: 500; }
   .history-reps { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--accent); letter-spacing: 1px; line-height: 1; }
   .history-unit { font-size: 11px; color: var(--text-muted); }
-  /* EXERCISES */
   .ex-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 8px; transition: border-color .18s; }
   .ex-item:hover { border-color: var(--border-accent); }
   .ex-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
@@ -111,21 +102,18 @@
   .add-exercise-form { background: var(--bg-surface); border: 1px solid var(--border-accent); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 20px; }
   .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   @media (max-width: 500px) { .form-grid { grid-template-columns: 1fr; } }
-  /* PROGRESS */
   .chart-container { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 16px; }
   .chart-head { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px; }
   .chart-title { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 1px; }
   .chart-best { font-size: 12px; color: var(--text-muted); text-align: right; }
   .chart-best span { color: var(--pr-color); font-weight: 600; }
   .chart-wrap { position: relative; height: 180px; }
-  /* REP COUNTER */
   .rep-counter { display: flex; align-items: center; background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
   .rep-btn { width: 48px; height: 48px; background: none; border: none; color: var(--text-secondary); font-size: 24px; font-weight: 300; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .15s, color .15s; flex-shrink: 0; }
   .rep-btn:hover { background: var(--bg-elevated); color: var(--accent); }
   .rep-input { flex: 1; text-align: center; background: none; border: none; font-family: 'Bebas Neue', sans-serif; font-size: 34px; letter-spacing: 2px; color: var(--accent); padding: 4px 0; -moz-appearance: textfield; }
   .rep-input::-webkit-outer-spin-button, .rep-input::-webkit-inner-spin-button { -webkit-appearance: none; }
   .rep-input:focus { outline: none; }
-  /* MODAL */
   .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
   .modal-overlay.hidden { display: none; }
   .modal { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px; width: 100%; max-width: 420px; position: relative; }
@@ -135,17 +123,13 @@
   .modal-close:hover { color: var(--text-primary); }
   .modal-close svg { width: 20px; height: 20px; display: block; }
   .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; }
-  /* TODAY GREETING */
   .today-greeting { margin-bottom: 24px; }
   .today-greeting .day { font-family: 'Bebas Neue', sans-serif; font-size: 48px; letter-spacing: 2px; line-height: 1; }
-  /* TOAST */
   .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary); padding: 12px 20px; border-radius: var(--radius); font-size: 14px; z-index: 200; white-space: nowrap; animation: toastIn .25s ease; pointer-events: none; }
   @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(8px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
-  /* SCROLLBAR */
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-  /* CATEGORY COLORS */
   .cat-upper { color: #fb923c; } .dot-upper { background: #fb923c; }
   .cat-lower { color: #34d399; } .dot-lower { background: #34d399; }
   .cat-core   { color: #60a5fa; } .dot-core   { background: #60a5fa; }
@@ -153,187 +137,247 @@
   #importFile { display: none; }
 
   /* ─── TUTORIAL ─────────────────────────────────────────── */
-  .tut-overlay {
-    position: fixed; inset: 0; z-index: 600;
-    pointer-events: none;
-    transition: opacity .35s ease;
-  }
+  .tut-overlay { position: fixed; inset: 0; z-index: 600; pointer-events: none; transition: opacity .35s ease; }
   .tut-overlay.active { pointer-events: all; }
   .tut-overlay.hidden { display: none; }
-
-  /* Solid scrim — only for centered (welcome/done) steps */
-  .tut-scrim {
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.84);
-    z-index: 601;
-  }
+  .tut-scrim { position: fixed; inset: 0; background: rgba(0,0,0,0.84); z-index: 601; }
   .tut-scrim.hidden { display: none; }
-
-  /* Four dark panels that surround the spotlight.
-     They literally leave a gap over the target — no z-index tricks. */
-  .tut-panel {
-    position: fixed;
-    background: rgba(0,0,0,0.82);
-    z-index: 601;
-    pointer-events: all;
-    transition:
-      left .35s cubic-bezier(.34,1.2,.64,1),
-      top .35s cubic-bezier(.34,1.2,.64,1),
-      width .35s cubic-bezier(.34,1.2,.64,1),
-      height .35s cubic-bezier(.34,1.2,.64,1);
-  }
-
-  /* Glowing border drawn over the spotlight gap */
-  .tut-highlight {
-    position: fixed;
-    border-radius: 12px;
-    border: 2px solid var(--accent);
-    background: transparent;
-    box-shadow:
-      0 0 0 4px rgba(249,115,22,0.12),
-      0 0 28px rgba(249,115,22,0.35);
-    z-index: 603;
-    pointer-events: none;
-    transition: top .35s cubic-bezier(.34,1.2,.64,1),
-                left .35s cubic-bezier(.34,1.2,.64,1),
-                width .35s cubic-bezier(.34,1.2,.64,1),
-                height .35s cubic-bezier(.34,1.2,.64,1),
-                opacity .25s ease;
-  }
-  /* Pulse ring on the highlight */
-  .tut-highlight::after {
-    content: '';
-    position: absolute; inset: -6px;
-    border-radius: 16px;
-    border: 1px solid rgba(249,115,22,0.25);
-    animation: tutPulse 2s ease-in-out infinite;
-  }
-  @keyframes tutPulse {
-    0%,100% { opacity: 0.5; transform: scale(1); }
-    50%      { opacity: 0.15; transform: scale(1.04); }
-  }
-
-  /* The tooltip card */
-  .tut-card {
-    position: fixed;
-    z-index: 603;
-    width: min(360px, calc(100vw - 32px));
-    background: var(--bg-card);
-    border: 1px solid var(--border-accent);
-    border-radius: var(--radius-lg);
-    padding: 22px 22px 18px;
-    box-shadow:
-      0 24px 64px rgba(0,0,0,0.7),
-      0 0 0 1px rgba(249,115,22,0.08),
-      inset 0 1px 0 rgba(255,255,255,0.04);
-    animation: tutCardIn .35s cubic-bezier(.34,1.56,.64,1) both;
-  }
-  @keyframes tutCardIn {
-    from { opacity:0; transform: scale(0.9) translateY(12px); }
-    to   { opacity:1; transform: scale(1) translateY(0); }
-  }
-  /* ── Mobile: full-width bottom sheet ── */
+  .tut-panel { position: fixed; background: rgba(0,0,0,0.82); z-index: 601; pointer-events: all; transition: left .35s cubic-bezier(.34,1.2,.64,1), top .35s cubic-bezier(.34,1.2,.64,1), width .35s cubic-bezier(.34,1.2,.64,1), height .35s cubic-bezier(.34,1.2,.64,1); }
+  .tut-highlight { position: fixed; border-radius: 12px; border: 2px solid var(--accent); background: transparent; box-shadow: 0 0 0 4px rgba(249,115,22,0.12), 0 0 28px rgba(249,115,22,0.35); z-index: 603; pointer-events: none; transition: top .35s cubic-bezier(.34,1.2,.64,1), left .35s cubic-bezier(.34,1.2,.64,1), width .35s cubic-bezier(.34,1.2,.64,1), height .35s cubic-bezier(.34,1.2,.64,1), opacity .25s ease; }
+  .tut-highlight::after { content: ''; position: absolute; inset: -6px; border-radius: 16px; border: 1px solid rgba(249,115,22,0.25); animation: tutPulse 2s ease-in-out infinite; }
+  @keyframes tutPulse { 0%,100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 0.15; transform: scale(1.04); } }
+  .tut-card { position: fixed; z-index: 603; width: min(360px, calc(100vw - 32px)); background: var(--bg-card); border: 1px solid var(--border-accent); border-radius: var(--radius-lg); padding: 22px 22px 18px; box-shadow: 0 24px 64px rgba(0,0,0,0.7), 0 0 0 1px rgba(249,115,22,0.08), inset 0 1px 0 rgba(255,255,255,0.04); animation: tutCardIn .35s cubic-bezier(.34,1.56,.64,1) both; }
+  @keyframes tutCardIn { from { opacity:0; transform: scale(0.9) translateY(12px); } to { opacity:1; transform: scale(1) translateY(0); } }
   @media (max-width: 600px) {
-    .tut-card {
-      left: 0 !important;
-      right: 0 !important;
-      bottom: 0 !important;
-      top: auto !important;
-      transform: none !important;
-      width: 100% !important;
-      border-radius: 20px 20px 0 0 !important;
-      border-left: none !important;
-      border-right: none !important;
-      border-bottom: none !important;
-      padding: 20px 20px 36px !important;
-      animation: tutSlideUp .35s cubic-bezier(.34,1.2,.64,1) both !important;
-    }
-    /* drag handle pill */
-    .tut-card::before {
-      content: '';
-      display: block;
-      width: 36px; height: 4px;
-      background: var(--text-muted);
-      border-radius: 2px;
-      margin: 0 auto 16px;
-      opacity: 0.4;
-    }
-    @keyframes tutSlideUp {
-      from { opacity: 0; transform: translateY(40px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    /* arrow connector not needed on mobile */
+    .tut-card { left: 0 !important; right: 0 !important; bottom: 0 !important; top: auto !important; transform: none !important; width: 100% !important; border-radius: 20px 20px 0 0 !important; border-left: none !important; border-right: none !important; border-bottom: none !important; padding: 20px 20px 36px !important; animation: tutSlideUp .35s cubic-bezier(.34,1.2,.64,1) both !important; }
+    .tut-card::before { content: ''; display: block; width: 36px; height: 4px; background: var(--text-muted); border-radius: 2px; margin: 0 auto 16px; opacity: 0.4; }
+    @keyframes tutSlideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
     .tut-arrow { display: none !important; }
-    /* keep highlight visible but don't let it push layout */
-    .tut-highlight { z-index: 603; }
   }
-
-  /* Step dots */
-  .tut-dots {
-    display: flex; gap: 5px; margin-bottom: 14px; align-items: center;
-  }
-  .tut-dot {
-    height: 5px; width: 5px; border-radius: 99px;
-    background: var(--text-muted);
-    transition: width .25s ease, background .25s ease;
-  }
+  .tut-dots { display: flex; gap: 5px; margin-bottom: 14px; align-items: center; }
+  .tut-dot { height: 5px; width: 5px; border-radius: 99px; background: var(--text-muted); transition: width .25s ease, background .25s ease; }
   .tut-dot.active { width: 20px; background: var(--accent); }
-
-  /* Step number badge */
-  .tut-step-badge {
-    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
-    color: var(--accent); font-weight: 600;
-    margin-left: auto;
-  }
-
-  .tut-card-icon {
-    font-size: 32px; line-height: 1; margin-bottom: 10px;
-  }
-  .tut-card-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 26px; letter-spacing: 2px; line-height: 1.1;
-    margin-bottom: 8px; color: var(--text-primary);
-  }
+  .tut-step-badge { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-left: auto; }
+  .tut-card-icon { font-size: 32px; line-height: 1; margin-bottom: 10px; }
+  .tut-card-title { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 2px; line-height: 1.1; margin-bottom: 8px; color: var(--text-primary); }
   .tut-card-title em { color: var(--accent); font-style: normal; }
-  .tut-card-body {
-    font-size: 13.5px; color: var(--text-secondary);
-    line-height: 1.65; margin-bottom: 18px;
-  }
-
-  /* Arrow connector between card and highlight */
-  .tut-arrow {
-    position: fixed; z-index: 602;
-    width: 0; height: 0; pointer-events: none;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-  }
+  .tut-card-body { font-size: 13.5px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 18px; }
+  .tut-arrow { position: fixed; z-index: 602; width: 0; height: 0; pointer-events: none; border-left: 8px solid transparent; border-right: 8px solid transparent; }
   .tut-arrow.down { border-top: 9px solid var(--border-accent); }
   .tut-arrow.up   { border-bottom: 9px solid var(--border-accent); }
-
   .tut-actions { display: flex; align-items: center; gap: 8px; }
-  .tut-skip {
-    font-size: 12px; color: var(--text-muted); cursor: pointer;
-    background: none; border: none; font-family: 'DM Sans', sans-serif;
-    margin-right: auto; padding: 4px 0;
-    transition: color .15s;
-  }
+  .tut-skip { font-size: 12px; color: var(--text-muted); cursor: pointer; background: none; border: none; font-family: 'DM Sans', sans-serif; margin-right: auto; padding: 4px 0; transition: color .15s; }
   .tut-skip:hover { color: var(--text-secondary); }
-
-  /* Welcome step decoration */
-  .tut-welcome-deco {
-    display: flex; align-items: center; justify-content: center;
-    gap: 0; margin-bottom: 16px;
-  }
-  .tut-logo-big {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 44px; letter-spacing: 4px; line-height: 1;
-    color: var(--text-primary);
-  }
+  .tut-welcome-deco { display: flex; align-items: center; justify-content: center; gap: 0; margin-bottom: 16px; }
+  .tut-logo-big { font-family: 'Bebas Neue', sans-serif; font-size: 44px; letter-spacing: 4px; line-height: 1; color: var(--text-primary); }
   .tut-logo-big span { color: var(--accent); }
-  .tut-divider {
-    height: 1px; background: linear-gradient(90deg, transparent, var(--border-accent), transparent);
-    margin: 12px 0 14px;
+  .tut-divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border-accent), transparent); margin: 12px 0 14px; }
+
+  /* ═══════════════════════════════════════════════
+     WARMUP OVERLAY
+  ═══════════════════════════════════════════════ */
+  .warmup-overlay {
+    position: fixed; inset: 0; z-index: 500;
+    background: #070707;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: flex-start;
+    overflow: hidden;
   }
+  .warmup-overlay.hidden { display: none; }
+
+  /* Subtle animated bg grain */
+  .warmup-overlay::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.6;
+  }
+
+  /* Top glow blobs */
+  .warmup-glow {
+    position: absolute; border-radius: 50%; pointer-events: none; filter: blur(80px); z-index: 0;
+    transition: opacity 1s ease, background 1.2s ease;
+  }
+  .warmup-glow-1 {
+    width: 400px; height: 400px;
+    top: -160px; left: 50%; transform: translateX(-50%);
+    background: radial-gradient(circle, rgba(249,115,22,0.18) 0%, transparent 70%);
+  }
+  .warmup-glow-2 {
+    width: 300px; height: 300px;
+    bottom: -80px; left: 50%; transform: translateX(-50%);
+    background: radial-gradient(circle, rgba(249,115,22,0.08) 0%, transparent 70%);
+  }
+
+  /* Top bar */
+  .warmup-topbar {
+    position: relative; z-index: 2;
+    width: 100%; max-width: 480px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 20px 0;
+  }
+  .warmup-close-btn {
+    background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+    color: var(--text-muted); cursor: pointer; padding: 8px 12px;
+    border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif;
+    font-size: 12px; display: flex; align-items: center; gap: 6px;
+    transition: all .2s;
+  }
+  .warmup-close-btn:hover { color: var(--text-primary); border-color: rgba(255,255,255,0.15); }
+  .warmup-close-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+  /* Progress pills */
+  .warmup-progress-pills {
+    display: flex; gap: 4px; flex: 1; margin: 0 16px;
+  }
+  .warmup-pill {
+    flex: 1; height: 3px; border-radius: 99px;
+    background: rgba(255,255,255,0.08);
+    overflow: hidden;
+  }
+  .warmup-pill-fill {
+    height: 100%; width: 0%; background: var(--accent);
+    border-radius: 99px;
+    transition: width .3s ease;
+  }
+  .warmup-pill.done .warmup-pill-fill { width: 100%; }
+  .warmup-pill.active .warmup-pill-fill { background: var(--accent); }
+
+  /* Step counter */
+  .warmup-step-label {
+    font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--text-muted); white-space: nowrap;
+  }
+
+  /* Phase label */
+  .warmup-phase {
+    position: relative; z-index: 2;
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    margin-top: 28px;
+    font-weight: 600;
+    transition: color .4s ease;
+  }
+  .warmup-phase.exercise { color: var(--accent); }
+  .warmup-phase.rest     { color: #60a5fa; }
+
+  /* Exercise name */
+  .warmup-ex-name {
+    position: relative; z-index: 2;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(38px, 9vw, 62px);
+    letter-spacing: 3px; line-height: 1.05;
+    text-align: center; padding: 0 20px;
+    margin-top: 10px;
+    transition: opacity .3s ease;
+  }
+
+  /* Exercise description */
+  .warmup-ex-desc {
+    position: relative; z-index: 2;
+    font-size: 14px; color: var(--text-muted);
+    margin-top: 6px; letter-spacing: 0.5px;
+    text-align: center;
+    min-height: 20px;
+  }
+
+  /* SVG Ring timer */
+  .warmup-ring-wrap {
+    position: relative; z-index: 2;
+    margin-top: 32px;
+    width: 200px; height: 200px;
+    flex-shrink: 0;
+  }
+  .warmup-ring-svg {
+    width: 200px; height: 200px;
+    transform: rotate(-90deg);
+  }
+  .warmup-ring-bg {
+    fill: none;
+    stroke: rgba(255,255,255,0.05);
+    stroke-width: 6;
+  }
+  .warmup-ring-track {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 6;
+    stroke-linecap: round;
+    stroke-dasharray: 534; /* 2π × 85 */
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset .95s linear, stroke .4s ease;
+  }
+  .warmup-ring-track.rest-mode {
+    stroke: #60a5fa;
+  }
+  .warmup-ring-center {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    pointer-events: none;
+  }
+  .warmup-countdown {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px; letter-spacing: 2px; line-height: 1;
+    transition: color .4s ease;
+  }
+  .warmup-countdown.rest-mode { color: #60a5fa; }
+  .warmup-ring-unit {
+    font-size: 11px; color: var(--text-muted);
+    letter-spacing: 2px; text-transform: uppercase; margin-top: -4px;
+  }
+
+  /* Next up preview */
+  .warmup-next {
+    position: relative; z-index: 2;
+    margin-top: 24px;
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 10px 16px;
+    max-width: 320px; width: calc(100% - 40px);
+  }
+  .warmup-next-label {
+    font-size: 10px; color: var(--text-muted); letter-spacing: 1.5px;
+    text-transform: uppercase; white-space: nowrap;
+  }
+  .warmup-next-name {
+    font-size: 14px; font-weight: 600; color: var(--text-secondary);
+    flex: 1; text-align: right;
+  }
+
+  /* Control buttons */
+  .warmup-controls {
+    position: relative; z-index: 2;
+    display: flex; gap: 10px; margin-top: 28px;
+    padding: 0 20px;
+  }
+  .warmup-ctrl-btn {
+    display: flex; align-items: center; gap: 8px;
+    padding: 12px 20px; border-radius: var(--radius);
+    font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600;
+    cursor: pointer; border: 1px solid var(--border);
+    transition: all .18s;
+  }
+  .warmup-ctrl-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+  .warmup-pause-btn { background: rgba(255,255,255,0.06); color: var(--text-primary); flex: 1; justify-content: center; }
+  .warmup-pause-btn:hover { background: rgba(255,255,255,0.1); }
+  .warmup-skip-btn { background: var(--accent-subtle); border-color: var(--border-accent); color: var(--accent); flex: 1; justify-content: center; }
+  .warmup-skip-btn:hover { background: rgba(249,115,22,0.18); }
+
+  /* Done state */
+  .warmup-done {
+    position: relative; z-index: 2;
+    text-align: center; padding: 0 20px;
+    display: none;
+    animation: wuFadeIn .5s ease both;
+  }
+  @keyframes wuFadeIn { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform: translateY(0); } }
+  .warmup-done-icon { font-size: 56px; margin-bottom: 16px; }
+  .warmup-done-title { font-family: 'Bebas Neue', sans-serif; font-size: 52px; letter-spacing: 3px; color: var(--accent); line-height: 1; }
+  .warmup-done-sub { font-size: 15px; color: var(--text-secondary); margin-top: 8px; margin-bottom: 28px; }
+  .warmup-content { display: flex; flex-direction: column; align-items: center; width: 100%; flex: 1; }
+
+  /* Pulse on digit change */
+  @keyframes wuPulse { 0% { transform: scale(1.18); opacity: 0.7; } 100% { transform: scale(1); opacity: 1; } }
+  .warmup-countdown.pulse { animation: wuPulse .25s ease both; }
 </style>
 </head>
 <body>
@@ -389,10 +433,16 @@
     </div>
     <div class="section-head" id="todaySectionHead">
       <div class="section-title">Heutiges Training</div>
-      <button class="btn btn-primary btn-sm" id="newSetBtn" onclick="openLogModal()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        Neuer Satz
-      </button>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-sm btn-warmup" id="warmupBtn" onclick="openWarmup()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          Aufwärmen
+        </button>
+        <button class="btn btn-primary btn-sm" id="newSetBtn" onclick="openLogModal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Neuer Satz
+        </button>
+      </div>
     </div>
     <div id="todayLogs"></div>
   </div>
@@ -489,6 +539,69 @@
     <div class="modal-actions">
       <button class="btn" onclick="closeLogModal()">Abbrechen</button>
       <button class="btn btn-primary" onclick="saveLog()">Speichern</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ WARMUP OVERLAY ═══════════════ -->
+<div class="warmup-overlay hidden" id="warmupOverlay">
+  <div class="warmup-glow warmup-glow-1" id="wuGlow1"></div>
+  <div class="warmup-glow warmup-glow-2" id="wuGlow2"></div>
+
+  <!-- Top bar -->
+  <div class="warmup-topbar">
+    <button class="warmup-close-btn" onclick="closeWarmup()">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      Beenden
+    </button>
+    <div class="warmup-progress-pills" id="wuPills"></div>
+    <div class="warmup-step-label" id="wuStepLabel">1 / 10</div>
+  </div>
+
+  <!-- Main content -->
+  <div class="warmup-content" id="wuContent">
+    <!-- Active state -->
+    <div id="wuActive" style="display:flex;flex-direction:column;align-items:center;width:100%">
+      <div class="warmup-phase exercise" id="wuPhase">AUFWÄRMEN</div>
+      <div class="warmup-ex-name" id="wuExName">Hampelmann</div>
+      <div class="warmup-ex-desc" id="wuExDesc">Gleichmäßiger Rhythmus</div>
+
+      <div class="warmup-ring-wrap">
+        <svg class="warmup-ring-svg" viewBox="0 0 200 200">
+          <circle class="warmup-ring-bg" cx="100" cy="100" r="85"/>
+          <circle class="warmup-ring-track" id="wuRingTrack" cx="100" cy="100" r="85"/>
+        </svg>
+        <div class="warmup-ring-center">
+          <div class="warmup-countdown" id="wuCountdown">30</div>
+          <div class="warmup-ring-unit">SEK</div>
+        </div>
+      </div>
+
+      <div class="warmup-next" id="wuNext">
+        <div class="warmup-next-label">Als nächstes</div>
+        <div class="warmup-next-name" id="wuNextName">Armkreisen</div>
+      </div>
+
+      <div class="warmup-controls">
+        <button class="warmup-ctrl-btn warmup-pause-btn" id="wuPauseBtn" onclick="toggleWarmupPause()">
+          <svg id="wuPauseIcon" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+          <span id="wuPauseLabel">Pause</span>
+        </button>
+        <button class="warmup-ctrl-btn warmup-skip-btn" onclick="skipWarmupStep()">
+          <svg viewBox="0 0 24 24"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
+          Überspringen
+        </button>
+      </div>
+    </div>
+
+    <!-- Done state -->
+    <div class="warmup-done" id="wuDone">
+      <div class="warmup-done-icon">🔥</div>
+      <div class="warmup-done-title">Aufgewärmt!</div>
+      <div class="warmup-done-sub">Perfekte Vorbereitung — jetzt alles geben إن شاء الله</div>
+      <button class="btn btn-primary" style="padding:14px 32px;font-size:15px;border-radius:var(--radius)" onclick="closeWarmup()">
+        Training starten →
+      </button>
     </div>
   </div>
 </div>
@@ -766,66 +879,239 @@ function showToast(msg, special=false) {
 }
 
 /* ═══════════════════════════════════════════════════════════
+   WARMUP SYSTEM
+   ═══════════════════════════════════════════════════════════ */
+
+const WARMUP_EXERCISES = [
+  { name: 'Hampelmann',           duration: 30, desc: 'Gleichmäßiger Rhythmus' },
+  { name: 'Armkreisen vorwärts',  duration: 20, desc: 'Große, langsame Kreise' },
+  { name: 'Armkreisen rückwärts', duration: 20, desc: 'Richtung wechseln' },
+  { name: 'Hüftkreisen',          duration: 20, desc: 'Hüfte locker kreisen' },
+  { name: 'Knieheben',            duration: 30, desc: 'Knie wechselseitig hochziehen' },
+  { name: 'Schulterkreisen',      duration: 20, desc: 'Beide Schultern gleichzeitig' },
+  { name: 'Rumpfrotation',        duration: 20, desc: 'Oberkörper seitlich drehen' },
+  { name: 'Ausfallschritte',      duration: 30, desc: 'Links und rechts abwechseln' },
+  { name: 'Wadenheben',           duration: 20, desc: 'Langsam auf Zehenspitzen' },
+  { name: 'Nackenkreisen',        duration: 15, desc: 'Langsam und kontrolliert' },
+];
+const REST_DUR = 8; // seconds rest between exercises
+const CIRC = 534;  // 2π × 85
+
+let wuStep       = 0;   // current exercise index
+let wuSecsLeft   = 0;   // countdown seconds
+let wuTotalSecs  = 0;   // duration of current phase
+let wuIsRest     = false;
+let wuPaused     = false;
+let wuInterval   = null;
+let wuLastDigit  = -1;
+
+function openWarmup() {
+  wuStep = 0; wuIsRest = false; wuPaused = false;
+  document.getElementById('warmupOverlay').classList.remove('hidden');
+  document.getElementById('wuActive').style.display = 'flex';
+  document.getElementById('wuDone').style.display   = 'none';
+  buildPills();
+  startWuPhase();
+}
+
+function closeWarmup() {
+  clearInterval(wuInterval); wuInterval = null;
+  document.getElementById('warmupOverlay').classList.add('hidden');
+}
+
+function buildPills() {
+  const n = WARMUP_EXERCISES.length;
+  document.getElementById('wuPills').innerHTML =
+    Array.from({length:n}, (_,i) =>
+      `<div class="warmup-pill" id="wuPill_${i}"><div class="warmup-pill-fill" id="wuPillFill_${i}"></div></div>`
+    ).join('');
+}
+
+function startWuPhase() {
+  clearInterval(wuInterval);
+  const ex = WARMUP_EXERCISES[wuStep];
+
+  if (wuIsRest) {
+    wuSecsLeft  = REST_DUR;
+    wuTotalSecs = REST_DUR;
+    setWuUI({
+      phase:    'PAUSE',
+      phaseClass:'rest',
+      name:     'Erholen',
+      desc:     `Nächste: ${ex.name}`,
+      ringRest: true,
+    });
+  } else {
+    wuSecsLeft  = ex.duration;
+    wuTotalSecs = ex.duration;
+    const next = WARMUP_EXERCISES[wuStep + 1];
+    setWuUI({
+      phase:    'AUFWÄRMEN',
+      phaseClass:'exercise',
+      name:     ex.name,
+      desc:     ex.desc,
+      ringRest: false,
+      nextName: next ? next.name : null,
+    });
+  }
+
+  updateWuStepLabel();
+  updateRing(wuSecsLeft, wuTotalSecs);
+  updateCountdown(wuSecsLeft);
+
+  wuInterval = setInterval(wuTick, 1000);
+}
+
+function setWuUI({ phase, phaseClass, name, desc, ringRest, nextName }) {
+  document.getElementById('wuPhase').textContent = phase;
+  document.getElementById('wuPhase').className   = `warmup-phase ${phaseClass}`;
+  document.getElementById('wuExName').textContent = name;
+  document.getElementById('wuExDesc').textContent  = desc;
+
+  const track = document.getElementById('wuRingTrack');
+  if (ringRest) track.classList.add('rest-mode');
+  else          track.classList.remove('rest-mode');
+
+  const countdown = document.getElementById('wuCountdown');
+  if (ringRest) countdown.classList.add('rest-mode');
+  else          countdown.classList.remove('rest-mode');
+
+  const nextEl = document.getElementById('wuNext');
+  if (nextName) {
+    nextEl.style.display = 'flex';
+    document.getElementById('wuNextName').textContent = nextName;
+  } else {
+    nextEl.style.display = 'none';
+  }
+
+  // glow colour
+  const glow = document.getElementById('wuGlow1');
+  glow.style.background = ringRest
+    ? 'radial-gradient(circle, rgba(96,165,250,0.15) 0%, transparent 70%)'
+    : 'radial-gradient(circle, rgba(249,115,22,0.18) 0%, transparent 70%)';
+}
+
+function updateWuStepLabel() {
+  document.getElementById('wuStepLabel').textContent = `${wuStep + 1} / ${WARMUP_EXERCISES.length}`;
+  // highlight active pill
+  WARMUP_EXERCISES.forEach((_,i) => {
+    const pill = document.getElementById(`wuPill_${i}`);
+    if (!pill) return;
+    pill.classList.remove('done','active');
+    if (i < wuStep) pill.classList.add('done');
+    else if (i === wuStep) pill.classList.add('active');
+  });
+  if (!wuIsRest) {
+    const fill = document.getElementById(`wuPillFill_${wuStep}`);
+    if (fill) fill.style.width = '0%';
+  }
+}
+
+function updateRing(left, total) {
+  const frac    = total > 0 ? left / total : 0;
+  const offset  = CIRC * (1 - frac);
+  document.getElementById('wuRingTrack').style.strokeDashoffset = offset;
+}
+
+function updateCountdown(secs) {
+  const el = document.getElementById('wuCountdown');
+  if (secs !== wuLastDigit) {
+    el.textContent = secs;
+    el.classList.remove('pulse');
+    void el.offsetWidth;
+    el.classList.add('pulse');
+    wuLastDigit = secs;
+  }
+}
+
+function wuTick() {
+  if (wuPaused) return;
+  wuSecsLeft--;
+
+  // animate active pill fill
+  if (!wuIsRest) {
+    const fill = document.getElementById(`wuPillFill_${wuStep}`);
+    if (fill) {
+      const pct = ((wuTotalSecs - wuSecsLeft) / wuTotalSecs) * 100;
+      fill.style.width = pct + '%';
+      fill.style.transition = 'width 0.95s linear';
+    }
+  }
+
+  updateRing(wuSecsLeft, wuTotalSecs);
+  updateCountdown(wuSecsLeft);
+
+  if (wuSecsLeft <= 0) {
+    if (wuIsRest) {
+      // rest done → next exercise
+      wuIsRest = false;
+      startWuPhase();
+    } else {
+      // exercise done
+      // mark pill done
+      const pill = document.getElementById(`wuPill_${wuStep}`);
+      if (pill) { pill.classList.remove('active'); pill.classList.add('done'); const f=pill.querySelector('.warmup-pill-fill'); if(f) f.style.width='100%'; }
+
+      wuStep++;
+      if (wuStep >= WARMUP_EXERCISES.length) {
+        showWarmupDone();
+      } else {
+        wuIsRest = true;
+        startWuPhase();
+      }
+    }
+  }
+}
+
+function skipWarmupStep() {
+  clearInterval(wuInterval); wuInterval = null;
+  wuLastDigit = -1;
+  if (wuIsRest) {
+    wuIsRest = false;
+    startWuPhase();
+  } else {
+    const pill = document.getElementById(`wuPill_${wuStep}`);
+    if (pill) { pill.classList.remove('active'); pill.classList.add('done'); }
+    wuStep++;
+    if (wuStep >= WARMUP_EXERCISES.length) { showWarmupDone(); return; }
+    wuIsRest = true;
+    startWuPhase();
+  }
+}
+
+function toggleWarmupPause() {
+  wuPaused = !wuPaused;
+  const icon  = document.getElementById('wuPauseIcon');
+  const label = document.getElementById('wuPauseLabel');
+  if (wuPaused) {
+    icon.innerHTML = '<polygon points="5 3 19 12 5 21 5 3"/>';
+    label.textContent = 'Fortsetzen';
+  } else {
+    icon.innerHTML = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
+    label.textContent = 'Pause';
+  }
+}
+
+function showWarmupDone() {
+  clearInterval(wuInterval); wuInterval = null;
+  document.getElementById('wuActive').style.display = 'none';
+  document.getElementById('wuDone').style.display   = 'block';
+}
+
+/* ═══════════════════════════════════════════════════════════
    TUTORIAL SYSTEM
    ═══════════════════════════════════════════════════════════ */
 const TUT_KEY = 'mo_tutorial_v1_done';
 
 const TUT_STEPS = [
-  /* 0 — Welcome */
-  {
-    centered: true,
-    icon: '💪',
-    title: 'Willkommen bei <em>MAXOUT</em>',
-    body: 'Das Prinzip ist einfach: Ein einziger Satz pro Übung — aber du gehst dabei bis an dein absolutes Limit. Keine Reserve. Kein Zurückhalten.\n\nIn 5 kurzen Schritten zeigen wir dir, wie alles funktioniert إن شاء الله',
-  },
-  /* 1 — Tabs */
-  {
-    targetId: 'mainTabs',
-    position: 'below',
-    icon: null,
-    title: 'Deine <em>Navigation</em>',
-    body: 'Vier Bereiche — alles was du brauchst:\n• Heute — dein tägliches Training\n• Historie — alle vergangenen Sätze\n• Übungen — deine Übungsbibliothek\n• Fortschritt — deine Kurvenverläufe',
-  },
-  /* 2 — Exercises tab */
-  {
-    targetId: 'tabExercises',
-    position: 'below',
-    icon: null,
-    title: '<em>Erst</em> Übungen anlegen',
-    body: 'Bevor du loggst: Klicke hier auf "Übungen" und lege deine Übungen an — Klimmzüge, Liegestütze, Dips, was auch immer du trainierst.',
-  },
-  /* 3 — Stats row */
-  {
-    targetId: 'statsRow',
-    position: 'below',
-    icon: null,
-    title: 'Dein täglicher <em>Überblick</em>',
-    body: 'Hier siehst du auf einen Blick: wie viele Sätze du heute gemacht hast, wie viele Tage deine aktuelle Tages-Serie läuft, und deine Gesamtzahl an Sätzen.',
-  },
-  /* 4 — New Set button */
-  {
-    targetId: 'newSetBtn',
-    position: 'above',
-    icon: null,
-    title: 'Satz <em>loggen</em>',
-    body: 'Drücke diesen Knopf nach jeder Übung. Wähle die Übung aus und trag dein Maximum ein. Das System zeigt dir automatisch deinen Rekord — und ob du ihn gebrochen hast.',
-  },
-  /* 5 — Export/Import */
-  {
-    targetId: 'headerActions',
-    position: 'below',
-    icon: null,
-    title: 'Backup & <em>Import</em>',
-    body: 'Exportiere deine Daten jederzeit als JSON-Datei und importiere sie auf einem anderen Gerät. Deine Fortschritte gehen nie verloren.',
-  },
-  /* 6 — Done */
-  {
-    centered: true,
-    icon: '✔️',
-    title: 'Bereit!',
-    body: 'Du kennst jetzt alles الحمد لله . Lege als Erstes deine Übungen an إن شاء الله — dann kannst du deinen ersten Satz loggen.\n\nEin Satz. Alles geben.\nإن شاء الله',
-    finalBtn: 'Erste Übung anlegen →',
-  },
+  { centered:true, icon:'💪', title:'Willkommen bei <em>MAXOUT</em>', body:'Das Prinzip ist einfach: Ein einziger Satz pro Übung — aber du gehst dabei bis an dein absolutes Limit. Keine Reserve. Kein Zurückhalten.\n\nIn 5 kurzen Schritten zeigen wir dir, wie alles funktioniert إن شاء الله' },
+  { targetId:'mainTabs', position:'below', icon:null, title:'Deine <em>Navigation</em>', body:'Vier Bereiche — alles was du brauchst:\n• Heute — dein tägliches Training\n• Historie — alle vergangenen Sätze\n• Übungen — deine Übungsbibliothek\n• Fortschritt — deine Kurvenverläufe' },
+  { targetId:'tabExercises', position:'below', icon:null, title:'<em>Erst</em> Übungen anlegen', body:'Bevor du loggst: Klicke hier auf "Übungen" und lege deine Übungen an — Klimmzüge, Liegestütze, Dips, was auch immer du trainierst.' },
+  { targetId:'statsRow', position:'below', icon:null, title:'Dein täglicher <em>Überblick</em>', body:'Hier siehst du auf einen Blick: wie viele Sätze du heute gemacht hast, wie viele Tage deine aktuelle Tages-Serie läuft, und deine Gesamtzahl an Sätzen.' },
+  { targetId:'warmupBtn', position:'above', icon:null, title:'<em>Aufwärmen</em> vor dem Training', body:'Starte immer mit dem Aufwärm-Programm إن شاء الله - Die Übungen sind mit automatisch mit Pausen. Schützt vor Verletzungen und bereitet den Körper vor بإذن الله' },
+  { targetId:'newSetBtn', position:'above', icon:null, title:'Satz <em>loggen</em>', body:'Drücke diesen Knopf nach jeder Übung. Wähle die Übung aus und trag dein Maximum ein. Das System zeigt dir automatisch deinen Rekord — und ob du ihn gebrochen hast.' },
+  { targetId:'headerActions', position:'below', icon:null, title:'Backup & <em>Import</em>', body:'Exportiere deine Daten jederzeit als JSON-Datei und importiere sie auf einem anderen Gerät. Deine Fortschritte gehen nie verloren.' },
+  { centered:true, icon:'✔️', title:'Bereit!', body:'Du kennst jetzt alles الحمد لله . Lege als Erstes deine Übungen an إن شاء الله — dann kannst du deinen ersten Satz loggen.\n\nEin Satz. Alles geben.\nإن شاء الله', finalBtn:'Erste Übung anlegen →' },
 ];
 
 let tutStep = 0;
@@ -834,7 +1120,6 @@ function initTutorial() {
   if (localStorage.getItem(TUT_KEY)) return;
   setTimeout(startTutorial, 500);
 }
-
 function startTutorial() {
   tutStep = 0;
   const ov = document.getElementById('tutOverlay');
@@ -842,230 +1127,113 @@ function startTutorial() {
   ov.classList.add('active');
   renderTutStep();
 }
-
 function renderTutStep() {
   const step = TUT_STEPS[tutStep];
   const total = TUT_STEPS.length;
-
-  /* — dots — */
   document.getElementById('tutDots').innerHTML =
-    TUT_STEPS.map((_,i) =>
-      `<div class="tut-dot ${i===tutStep?'active':''}"></div>`
-    ).join('') +
+    TUT_STEPS.map((_,i) => `<div class="tut-dot ${i===tutStep?'active':''}"></div>`).join('') +
     `<span class="tut-step-badge">${tutStep+1} / ${total}</span>`;
-
-  /* — content — */
   const iconEl = document.getElementById('tutIcon');
   if (step.icon) { iconEl.style.display='block'; iconEl.textContent=step.icon; }
   else           { iconEl.style.display='none'; }
-
   document.getElementById('tutTitle').innerHTML = step.title;
-
-  /* convert \n to <br> */
-  document.getElementById('tutBody').innerHTML =
-    step.body.replace(/\n/g,'<br>');
-
+  document.getElementById('tutBody').innerHTML  = step.body.replace(/\n/g,'<br>');
   const nextBtn = document.getElementById('tutNextBtn');
   const isLast  = tutStep === total - 1;
-  nextBtn.textContent = isLast
-    ? (step.finalBtn || 'Fertig ✓')
-    : 'Weiter →';
-
+  nextBtn.textContent = isLast ? (step.finalBtn || 'Fertig ✓') : 'Weiter →';
   document.getElementById('tutSkipBtn').style.display = isLast ? 'none' : 'inline';
-
-  /* — re-trigger card animation — */
   const card = document.getElementById('tutCard');
   card.style.animation = 'none';
-  card.offsetHeight; // reflow
+  card.offsetHeight;
   card.style.animation = '';
-
-  /* — position — */
-  if (step.centered) {
-    positionCentered(card);
-    hideHighlight();
-  } else {
-    const target = step.targetId
-      ? document.getElementById(step.targetId)
-      : null;
+  if (step.centered) { positionCentered(card); hideHighlight(); }
+  else {
+    const target = step.targetId ? document.getElementById(step.targetId) : null;
     if (!target) { nextTutorialStep(); return; }
     positionOnTarget(card, target, step.position);
   }
 }
-
 const IS_MOBILE = () => window.innerWidth <= 600;
-
 function positionCentered(card) {
   document.getElementById('tutScrim').classList.remove('hidden');
-  hidePanels();
-  hideHighlight();
-  if (IS_MOBILE()) {
-    /* bottom sheet — CSS handles it, just reset inline styles */
-    card.style.cssText = 'position: fixed;';
-  } else {
-    card.style.cssText = `
-      position: fixed;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      bottom: auto; right: auto;
-      width: min(380px, calc(100vw - 32px));
-    `;
-  }
+  hidePanels(); hideHighlight();
+  if (IS_MOBILE()) { card.style.cssText = 'position: fixed;'; }
+  else { card.style.cssText = `position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);bottom:auto;right:auto;width:min(380px,calc(100vw - 32px));`; }
 }
-
 function positionOnTarget(card, target, direction) {
   document.getElementById('tutScrim').classList.add('hidden');
-
-  const PAD  = 10;  /* highlight padding */
-  const GAP  = 14;  /* gap between highlight and card */
-  const MARH = 16;  /* horizontal viewport margin */
-
-  const rect = target.getBoundingClientRect();
-  const vw   = window.innerWidth;
-  const vh   = window.innerHeight;
-
-  /* — spotlight panels — */
-  setSpotlightPanels(rect, PAD);
-
-  /* — highlight border — */
-  const hl = document.getElementById('tutHighlight');
-  hl.style.cssText = `
-    left:   ${rect.left - PAD}px;
-    top:    ${rect.top  - PAD}px;
-    width:  ${rect.width  + PAD*2}px;
-    height: ${rect.height + PAD*2}px;
-    opacity: 1;
-  `;
-
-  /* On mobile, CSS pins the card as a bottom sheet — skip JS positioning */
+  const PAD=10, GAP=14, MARH=16;
+  const rect=target.getBoundingClientRect();
+  const vw=window.innerWidth, vh=window.innerHeight;
+  setSpotlightPanels(rect,PAD);
+  const hl=document.getElementById('tutHighlight');
+  hl.style.cssText=`left:${rect.left-PAD}px;top:${rect.top-PAD}px;width:${rect.width+PAD*2}px;height:${rect.height+PAD*2}px;opacity:1;`;
   if (IS_MOBILE()) return;
-
-  /* — card width & horizontal position — */
-  const cardW = Math.min(360, vw - MARH*2);
-  let cardLeft = rect.left + rect.width/2 - cardW/2;
-  cardLeft = Math.max(MARH, Math.min(cardLeft, vw - cardW - MARH));
-
-  /* — card vertical position — */
-  card.style.cssText = `
-    position: fixed;
-    width: ${cardW}px;
-    left: ${cardLeft}px;
-    bottom: auto; right: auto; top: auto;
-    transform: none;
-  `;
-
-  const arrowEl = document.getElementById('tutArrow');
-
-  if (direction === 'below') {
-    const top = rect.bottom + PAD + GAP;
-    /* if card would overflow bottom, flip to above */
-    if (top + 240 > vh) {
-      positionAbove(card, arrowEl, rect, PAD, GAP, cardLeft, cardW);
-    } else {
-      card.style.top = top + 'px';
-      /* arrow pointing up (card is below highlight) */
-      arrowEl.className = 'tut-arrow up';
-      const arrowLeft = Math.min(
-        Math.max(rect.left + rect.width/2 - 8, cardLeft + 16),
-        cardLeft + cardW - 24
-      );
-      arrowEl.style.cssText = `
-        left: ${arrowLeft}px;
-        top:  ${rect.bottom + PAD + GAP - 9}px;
-        opacity: 1;
-      `;
+  const cardW=Math.min(360,vw-MARH*2);
+  let cardLeft=rect.left+rect.width/2-cardW/2;
+  cardLeft=Math.max(MARH,Math.min(cardLeft,vw-cardW-MARH));
+  card.style.cssText=`position:fixed;width:${cardW}px;left:${cardLeft}px;bottom:auto;right:auto;top:auto;transform:none;`;
+  const arrowEl=document.getElementById('tutArrow');
+  if (direction==='below') {
+    const top=rect.bottom+PAD+GAP;
+    if (top+240>vh) { positionAbove(card,arrowEl,rect,PAD,GAP,cardLeft,cardW); }
+    else {
+      card.style.top=top+'px';
+      arrowEl.className='tut-arrow up';
+      const al=Math.min(Math.max(rect.left+rect.width/2-8,cardLeft+16),cardLeft+cardW-24);
+      arrowEl.style.cssText=`left:${al}px;top:${rect.bottom+PAD+GAP-9}px;opacity:1;`;
     }
-  } else {
-    positionAbove(card, arrowEl, rect, PAD, GAP, cardLeft, cardW);
-  }
+  } else { positionAbove(card,arrowEl,rect,PAD,GAP,cardLeft,cardW); }
 }
-
-function positionAbove(card, arrowEl, rect, PAD, GAP, cardLeft, cardW) {
-  /* measure card height roughly */
-  const cardH = card.offsetHeight || 220;
-  const top = rect.top - PAD - GAP - cardH;
-  card.style.top = Math.max(8, top) + 'px';
-  /* arrow pointing down (card is above highlight) */
-  arrowEl.className = 'tut-arrow down';
-  const arrowLeft = Math.min(
-    Math.max(rect.left + rect.width/2 - 8, cardLeft + 16),
-    cardLeft + cardW - 24
-  );
-  arrowEl.style.cssText = `
-    left: ${arrowLeft}px;
-    top:  ${rect.top - PAD - GAP}px;
-    opacity: 1;
-  `;
+function positionAbove(card,arrowEl,rect,PAD,GAP,cardLeft,cardW) {
+  const cardH=card.offsetHeight||220;
+  const top=rect.top-PAD-GAP-cardH;
+  card.style.top=Math.max(8,top)+'px';
+  arrowEl.className='tut-arrow down';
+  const al=Math.min(Math.max(rect.left+rect.width/2-8,cardLeft+16),cardLeft+cardW-24);
+  arrowEl.style.cssText=`left:${al}px;top:${rect.top-PAD-GAP}px;opacity:1;`;
 }
-
-function setSpotlightPanels(rect, pad) {
-  const vw = window.innerWidth;
-  const vh = window.innerHeight;
-  const x1 = Math.max(0, rect.left  - pad);
-  const y1 = Math.max(0, rect.top   - pad);
-  const x2 = Math.min(vw, rect.right  + pad);
-  const y2 = Math.min(vh, rect.bottom + pad);
-
-  /* On mobile the card is a bottom sheet — leave ~260px at the bottom free */
-  const bottomLimit = IS_MOBILE() ? vh - 260 : vh;
-
+function setSpotlightPanels(rect,pad) {
+  const vw=window.innerWidth, vh=window.innerHeight;
+  const x1=Math.max(0,rect.left-pad), y1=Math.max(0,rect.top-pad);
+  const x2=Math.min(vw,rect.right+pad), y2=Math.min(vh,rect.bottom+pad);
+  const bottomLimit=IS_MOBILE()?vh-260:vh;
   setPanel('tutPanelTop',    0,  0,  vw,      y1);
-  setPanel('tutPanelBottom', 0,  y2, vw,      bottomLimit - y2);
-  setPanel('tutPanelLeft',   0,  y1, x1,      y2 - y1);
-  setPanel('tutPanelRight',  x2, y1, vw - x2, y2 - y1);
+  setPanel('tutPanelBottom', 0,  y2, vw,      bottomLimit-y2);
+  setPanel('tutPanelLeft',   0,  y1, x1,      y2-y1);
+  setPanel('tutPanelRight',  x2, y1, vw-x2,   y2-y1);
 }
-function setPanel(id, x, y, w, h) {
-  const el = document.getElementById(id);
-  el.style.left   = x + 'px';
-  el.style.top    = y + 'px';
-  el.style.width  = Math.max(0, w) + 'px';
-  el.style.height = Math.max(0, h) + 'px';
-  el.style.display = (w > 0 && h > 0) ? 'block' : 'none';
+function setPanel(id,x,y,w,h) {
+  const el=document.getElementById(id);
+  el.style.left=x+'px'; el.style.top=y+'px';
+  el.style.width=Math.max(0,w)+'px'; el.style.height=Math.max(0,h)+'px';
+  el.style.display=(w>0&&h>0)?'block':'none';
 }
 function hidePanels() {
-  ['tutPanelTop','tutPanelBottom','tutPanelLeft','tutPanelRight']
-    .forEach(id => { document.getElementById(id).style.display = 'none'; });
+  ['tutPanelTop','tutPanelBottom','tutPanelLeft','tutPanelRight'].forEach(id=>{ document.getElementById(id).style.display='none'; });
 }
 function hideHighlight() {
-  document.getElementById('tutHighlight').style.opacity = '0';
-  document.getElementById('tutArrow').style.opacity    = '0';
+  document.getElementById('tutHighlight').style.opacity='0';
+  document.getElementById('tutArrow').style.opacity='0';
   hidePanels();
 }
-
 function nextTutorialStep() {
-  const isLast = tutStep === TUT_STEPS.length - 1;
-  if (isLast) { completeTutorial(); return; }
+  if (tutStep===TUT_STEPS.length-1) { completeTutorial(); return; }
   tutStep++;
   renderTutStep();
 }
-
 function skipTutorial() { completeTutorial(false); }
-
-function completeTutorial(goToExercises = true) {
-  localStorage.setItem(TUT_KEY, '1');
-  const ov = document.getElementById('tutOverlay');
-  ov.style.opacity = '0';
-  ov.style.transition = 'opacity .35s ease';
-  setTimeout(() => {
-    ov.classList.add('hidden');
-    ov.classList.remove('active');
-    ov.style.opacity = '';
-    ov.style.transition = '';
-  }, 360);
-  if (goToExercises) {
-    switchTab('exercises', document.querySelectorAll('.tab')[2]);
-    setTimeout(() => toggleAddForm(), 400);
-  }
+function completeTutorial(goToExercises=true) {
+  localStorage.setItem(TUT_KEY,'1');
+  const ov=document.getElementById('tutOverlay');
+  ov.style.opacity='0'; ov.style.transition='opacity .35s ease';
+  setTimeout(()=>{ ov.classList.add('hidden'); ov.classList.remove('active'); ov.style.opacity=''; ov.style.transition=''; },360);
+  if (goToExercises) { switchTab('exercises',document.querySelectorAll('.tab')[2]); setTimeout(()=>toggleAddForm(),400); }
 }
-
-/* reposition on resize */
 let _resizeTut;
-window.addEventListener('resize', () => {
+window.addEventListener('resize', ()=>{
   clearTimeout(_resizeTut);
-  _resizeTut = setTimeout(() => {
-    if (!document.getElementById('tutOverlay').classList.contains('hidden')) {
-      renderTutStep();
-    }
-  }, 80);
+  _resizeTut=setTimeout(()=>{ if(!document.getElementById('tutOverlay').classList.contains('hidden')) renderTutStep(); },80);
 });
 
 /* ─── INIT ──────────────────────────────────────────────── */
